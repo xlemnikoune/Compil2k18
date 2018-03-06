@@ -37,8 +37,8 @@ declFun : 'fn' (IDF '(' args? ')' ('->' type)? block -> ^('fn' IDF args ^('->' t
 	|	{mainFound = true;}MAIN '(' ')' block -> ^('fn' MAIN block))
 ;
 
-type : | "i32"
-| "bool"
+type : | 'i32'
+| 'bool'
 |IDF
 	|	'vec' ('<' type '>') -> ^('vec' type) //Ok ! 
 | '&' type -> ^('&' type)
@@ -76,7 +76,7 @@ binExpr3 : binExpr4(ANDBOOL^ binExpr4)*;
 
 binExpr4 : binExpr5((PREV^|OPBOOLEQ^|NEXT^) binExpr5)*; 
 
-binExpr5 : binExpr6(ADDSUB^ binExpr6)*; rint
+binExpr5 : binExpr6((ADD^|SUB^)  binExpr6)*; 
 
 binExpr6 : unExpr ((STAR^|DIV^) unExpr)*; 
 
@@ -86,7 +86,7 @@ starExpr
 	:	 STAR^? moinsExpr;
 	
 moinsExpr 
-	:	 '-'^?atom;
+	:	 SUB^?atom;
 
 
 dotExpr : vectExpr ('.'^ (IDF | 'len' '('!')'! ))?;
@@ -112,7 +112,7 @@ bigbinExpr3 : bigbinExpr4(ANDBOOL^ bigbinExpr4)*;
 
 bigbinExpr4 : bigbinExpr5((PREV^|OPBOOLEQ^|NEXT^) bigbinExpr5)*; 
 
-bigbinExpr5 : bigbinExpr6(ADDSUB^ bigbinExpr6)*; 
+bigbinExpr5 : bigbinExpr6((ADD|SUB)^ bigbinExpr6)*; 
 
 bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*; 
 
@@ -145,7 +145,7 @@ NEXT 	:	 '>';
 
 OPBOOLEQ : '=='|'!='|'<='|'>=';
 
-ADDSUB : '+'|'-';
+ADD : '+';
 
 STAR 	:	 '*';
 
@@ -157,6 +157,8 @@ EPERLU 	:	 '&';
 
 IF 	:	 'if'
 ;
+
+SUB 	:	 '-';
 
 MAIN 	:	'main'
 	;

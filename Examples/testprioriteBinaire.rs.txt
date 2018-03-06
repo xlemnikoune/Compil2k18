@@ -1,0 +1,14 @@
+fn main () {
+	let a=3;
+	let e=-a;
+	print! (e);
+	if (!FALSE) {
+		let g=&e;
+		let f=*g;
+	}
+	if (!TRUE) {
+		if ( a>e || a<f && a!=0) {
+			print!(f);
+		}
+	}
+} 

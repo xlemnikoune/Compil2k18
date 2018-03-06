@@ -1,4 +1,4 @@
-// $ANTLR null /home/frosqh/workspace/raimondi3u/Grammar.g 2018-03-06 13:26:57
+// $ANTLR null /home/frosqh/workspace/raimondi3u/Grammar.g 2018-03-06 13:42:43
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -82,13 +82,13 @@ public class GrammarParser extends DebugParser {
 
 
 	public static final String[] ruleNames = new String[] {
-		"invalidRule", "fichier", "moinsExpr", "atom", "vectExpr", "instruct", 
-		"block", "dotExpr", "axiom", "decl", "binExpr5", "bigunExpr", "binExpr2", 
-		"bigbinExpr2", "type", "bigvectExpr", "bigatom", "ifExpr", "starExpr", 
-		"binExpr1", "bigbinExpr6", "newStruc", "dotIDF", "binExpr6", "unExpr", 
-		"bigdotExpr", "declStruct", "bigExpr", "binExpr4", "callFun", "args", 
-		"bigbinExpr3", "expr", "bigbinExpr1", "binExpr3", "bigbinExpr4", "bigbinExpr5", 
-		"declFun"
+		"invalidRule", "binExpr6", "decl", "newStruc", "binExpr4", "starExpr", 
+		"moinsExpr", "dotIDF", "instruct", "declStruct", "dotExpr", "atom", "args", 
+		"bigbinExpr2", "bigbinExpr4", "bigunExpr", "type", "bigatom", "bigExpr", 
+		"unExpr", "fichier", "callFun", "vectExpr", "binExpr5", "binExpr3", "ifExpr", 
+		"binExpr2", "bigvectExpr", "bigStarExpr", "bigbinExpr3", "bigbinExpr5", 
+		"axiom", "block", "expr", "bigdotExpr", "bigbinExpr1", "declFun", "binExpr1", 
+		"bigbinExpr6", "bigMoinsExpr"
 	};
 
 	public static final boolean[] decisionCanBacktrack = new boolean[] {
@@ -98,7 +98,7 @@ public class GrammarParser extends DebugParser {
 		    false, false, false, false, false, false, false, false, false, false, 
 		    false, false, false, false, false, false, false, false, false, false, 
 		    false, false, false, false, false, false, false, false, false, false, 
-		    false
+		    false, false, false
 	};
 
  
@@ -542,7 +542,7 @@ public class GrammarParser extends DebugParser {
 			stream_53.add(char_literal10);
 
 			// AST REWRITE
-			// elements: IDF, 49, args
+			// elements: IDF, args, 49
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -940,7 +940,7 @@ public class GrammarParser extends DebugParser {
 
 					stream_block.add(block25.getTree());
 					// AST REWRITE
-					// elements: 32, block, 41, type, IDF, args
+					// elements: 41, 32, IDF, block, type, args
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1011,7 +1011,7 @@ public class GrammarParser extends DebugParser {
 
 					stream_block.add(block29.getTree());
 					// AST REWRITE
-					// elements: block, MAIN, 41
+					// elements: 41, block, MAIN
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1253,7 +1253,7 @@ public class GrammarParser extends DebugParser {
 					}
 
 					// AST REWRITE
-					// elements: type, 50
+					// elements: 50, type
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1298,7 +1298,7 @@ public class GrammarParser extends DebugParser {
 
 					stream_type.add(type38.getTree());
 					// AST REWRITE
-					// elements: EPERLU, type
+					// elements: type, EPERLU
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1763,7 +1763,7 @@ public class GrammarParser extends DebugParser {
 			stream_53.add(char_literal55);
 
 			// AST REWRITE
-			// elements: bigExpr, IDF
+			// elements: IDF, bigExpr
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1783,7 +1783,7 @@ public class GrammarParser extends DebugParser {
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(NEW, "NEW"), root_1);
 				dbg.location(53,68);
 				// /home/frosqh/workspace/raimondi3u/Grammar.g:53:68: ( ^( IDF bigExpr ) )*
-				while ( stream_bigExpr.hasNext()||stream_IDF.hasNext() ) {
+				while ( stream_IDF.hasNext()||stream_bigExpr.hasNext() ) {
 					dbg.location(53,68);
 					// /home/frosqh/workspace/raimondi3u/Grammar.g:53:68: ^( IDF bigExpr )
 					{
@@ -1796,8 +1796,8 @@ public class GrammarParser extends DebugParser {
 					}
 
 				}
-				stream_bigExpr.reset();
 				stream_IDF.reset();
+				stream_bigExpr.reset();
 
 				adaptor.addChild(root_0, root_1);
 				}
@@ -2125,7 +2125,7 @@ public class GrammarParser extends DebugParser {
 					stream_35.add(char_literal66);
 
 					// AST REWRITE
-					// elements: 44, dotIDF, bigExpr, EQUAL, type, 46
+					// elements: bigExpr, type, 44, 46, EQUAL, dotIDF
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2199,7 +2199,7 @@ public class GrammarParser extends DebugParser {
 
 					stream_block.add(block69.getTree());
 					// AST REWRITE
-					// elements: block, 51, expr
+					// elements: 51, block, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2624,7 +2624,7 @@ public class GrammarParser extends DebugParser {
 			} finally {dbg.exitSubRule(17);}
 
 			// AST REWRITE
-			// elements: block, block, 40, IF, expr
+			// elements: block, IF, 40, block, expr
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -2646,7 +2646,7 @@ public class GrammarParser extends DebugParser {
 				adaptor.addChild(root_1, stream_expr.nextTree());dbg.location(69,58);
 				adaptor.addChild(root_1, stream_block.nextTree());dbg.location(69,64);
 				// /home/frosqh/workspace/raimondi3u/Grammar.g:69:64: ( ^( 'else' block ) )?
-				if ( stream_block.hasNext()||stream_40.hasNext() ) {
+				if ( stream_40.hasNext()||stream_block.hasNext() ) {
 					dbg.location(69,64);
 					// /home/frosqh/workspace/raimondi3u/Grammar.g:69:64: ^( 'else' block )
 					{
@@ -2659,8 +2659,8 @@ public class GrammarParser extends DebugParser {
 					}
 
 				}
-				stream_block.reset();
 				stream_40.reset();
+				stream_block.reset();
 
 				adaptor.addChild(root_0, root_1);
 				}
@@ -4469,7 +4469,7 @@ public class GrammarParser extends DebugParser {
 					stream_37.add(char_literal136);
 
 					// AST REWRITE
-					// elements: expr, 50
+					// elements: 50, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -4523,7 +4523,7 @@ public class GrammarParser extends DebugParser {
 					stream_30.add(char_literal141);
 
 					// AST REWRITE
-					// elements: 47, expr
+					// elements: expr, 47
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -4625,7 +4625,7 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigbinExpr1"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:107:1: bigbinExpr1 : bigbinExpr2 ( EQUAL ^ bigbinExpr2 )* ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:109:1: bigbinExpr1 : bigbinExpr2 ( EQUAL ^ bigbinExpr2 )* ;
 	public final GrammarParser.bigbinExpr1_return bigbinExpr1() throws RecognitionException {
 		GrammarParser.bigbinExpr1_return retval = new GrammarParser.bigbinExpr1_return();
 		retval.start = input.LT(1);
@@ -4641,25 +4641,25 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigbinExpr1");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(107, 0);
+		dbg.location(109, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:107:13: ( bigbinExpr2 ( EQUAL ^ bigbinExpr2 )* )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:109:13: ( bigbinExpr2 ( EQUAL ^ bigbinExpr2 )* )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:107:15: bigbinExpr2 ( EQUAL ^ bigbinExpr2 )*
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:109:15: bigbinExpr2 ( EQUAL ^ bigbinExpr2 )*
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(107,15);
-			pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1882);
+			dbg.location(109,15);
+			pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1884);
 			bigbinExpr2144=bigbinExpr2();
 			state._fsp--;
 
 			adaptor.addChild(root_0, bigbinExpr2144.getTree());
-			dbg.location(107,27);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:107:27: ( EQUAL ^ bigbinExpr2 )*
+			dbg.location(109,27);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:109:27: ( EQUAL ^ bigbinExpr2 )*
 			try { dbg.enterSubRule(36);
 
 			loop36:
@@ -4678,14 +4678,14 @@ public class GrammarParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:107:28: EQUAL ^ bigbinExpr2
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:109:28: EQUAL ^ bigbinExpr2
 					{
-					dbg.location(107,33);
-					EQUAL145=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_bigbinExpr1885); 
+					dbg.location(109,33);
+					EQUAL145=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_bigbinExpr1887); 
 					EQUAL145_tree = (CommonTree)adaptor.create(EQUAL145);
 					root_0 = (CommonTree)adaptor.becomeRoot(EQUAL145_tree, root_0);
-					dbg.location(107,35);
-					pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1888);
+					dbg.location(109,35);
+					pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1890);
 					bigbinExpr2146=bigbinExpr2();
 					state._fsp--;
 
@@ -4716,7 +4716,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(107, 47);
+		dbg.location(109, 47);
 
 		}
 		finally {
@@ -4738,7 +4738,7 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigbinExpr2"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:109:1: bigbinExpr2 : bigbinExpr3 ( ORBOOL ^ bigbinExpr3 )* ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:111:1: bigbinExpr2 : bigbinExpr3 ( ORBOOL ^ bigbinExpr3 )* ;
 	public final GrammarParser.bigbinExpr2_return bigbinExpr2() throws RecognitionException {
 		GrammarParser.bigbinExpr2_return retval = new GrammarParser.bigbinExpr2_return();
 		retval.start = input.LT(1);
@@ -4754,25 +4754,25 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigbinExpr2");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(109, 0);
+		dbg.location(111, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:109:13: ( bigbinExpr3 ( ORBOOL ^ bigbinExpr3 )* )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:111:13: ( bigbinExpr3 ( ORBOOL ^ bigbinExpr3 )* )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:109:15: bigbinExpr3 ( ORBOOL ^ bigbinExpr3 )*
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:111:15: bigbinExpr3 ( ORBOOL ^ bigbinExpr3 )*
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(109,15);
-			pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2899);
+			dbg.location(111,15);
+			pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2901);
 			bigbinExpr3147=bigbinExpr3();
 			state._fsp--;
 
 			adaptor.addChild(root_0, bigbinExpr3147.getTree());
-			dbg.location(109,26);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:109:26: ( ORBOOL ^ bigbinExpr3 )*
+			dbg.location(111,26);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:111:26: ( ORBOOL ^ bigbinExpr3 )*
 			try { dbg.enterSubRule(37);
 
 			loop37:
@@ -4791,14 +4791,14 @@ public class GrammarParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:109:27: ORBOOL ^ bigbinExpr3
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:111:27: ORBOOL ^ bigbinExpr3
 					{
-					dbg.location(109,33);
-					ORBOOL148=(Token)match(input,ORBOOL,FOLLOW_ORBOOL_in_bigbinExpr2901); 
+					dbg.location(111,33);
+					ORBOOL148=(Token)match(input,ORBOOL,FOLLOW_ORBOOL_in_bigbinExpr2903); 
 					ORBOOL148_tree = (CommonTree)adaptor.create(ORBOOL148);
 					root_0 = (CommonTree)adaptor.becomeRoot(ORBOOL148_tree, root_0);
-					dbg.location(109,35);
-					pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2904);
+					dbg.location(111,35);
+					pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2906);
 					bigbinExpr3149=bigbinExpr3();
 					state._fsp--;
 
@@ -4829,7 +4829,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(109, 47);
+		dbg.location(111, 47);
 
 		}
 		finally {
@@ -4851,7 +4851,7 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigbinExpr3"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:111:1: bigbinExpr3 : bigbinExpr4 ( ANDBOOL ^ bigbinExpr4 )* ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:113:1: bigbinExpr3 : bigbinExpr4 ( ANDBOOL ^ bigbinExpr4 )* ;
 	public final GrammarParser.bigbinExpr3_return bigbinExpr3() throws RecognitionException {
 		GrammarParser.bigbinExpr3_return retval = new GrammarParser.bigbinExpr3_return();
 		retval.start = input.LT(1);
@@ -4867,25 +4867,25 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigbinExpr3");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(111, 0);
+		dbg.location(113, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:111:13: ( bigbinExpr4 ( ANDBOOL ^ bigbinExpr4 )* )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:113:13: ( bigbinExpr4 ( ANDBOOL ^ bigbinExpr4 )* )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:111:15: bigbinExpr4 ( ANDBOOL ^ bigbinExpr4 )*
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:113:15: bigbinExpr4 ( ANDBOOL ^ bigbinExpr4 )*
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(111,15);
-			pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3915);
+			dbg.location(113,15);
+			pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3917);
 			bigbinExpr4150=bigbinExpr4();
 			state._fsp--;
 
 			adaptor.addChild(root_0, bigbinExpr4150.getTree());
-			dbg.location(111,26);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:111:26: ( ANDBOOL ^ bigbinExpr4 )*
+			dbg.location(113,26);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:113:26: ( ANDBOOL ^ bigbinExpr4 )*
 			try { dbg.enterSubRule(38);
 
 			loop38:
@@ -4904,14 +4904,14 @@ public class GrammarParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:111:27: ANDBOOL ^ bigbinExpr4
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:113:27: ANDBOOL ^ bigbinExpr4
 					{
-					dbg.location(111,34);
-					ANDBOOL151=(Token)match(input,ANDBOOL,FOLLOW_ANDBOOL_in_bigbinExpr3917); 
+					dbg.location(113,34);
+					ANDBOOL151=(Token)match(input,ANDBOOL,FOLLOW_ANDBOOL_in_bigbinExpr3919); 
 					ANDBOOL151_tree = (CommonTree)adaptor.create(ANDBOOL151);
 					root_0 = (CommonTree)adaptor.becomeRoot(ANDBOOL151_tree, root_0);
-					dbg.location(111,36);
-					pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3920);
+					dbg.location(113,36);
+					pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3922);
 					bigbinExpr4152=bigbinExpr4();
 					state._fsp--;
 
@@ -4942,7 +4942,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(111, 48);
+		dbg.location(113, 48);
 
 		}
 		finally {
@@ -4964,7 +4964,7 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigbinExpr4"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:113:1: bigbinExpr4 : bigbinExpr5 ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )* ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:115:1: bigbinExpr4 : bigbinExpr5 ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )* ;
 	public final GrammarParser.bigbinExpr4_return bigbinExpr4() throws RecognitionException {
 		GrammarParser.bigbinExpr4_return retval = new GrammarParser.bigbinExpr4_return();
 		retval.start = input.LT(1);
@@ -4984,25 +4984,25 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigbinExpr4");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(113, 0);
+		dbg.location(115, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:113:13: ( bigbinExpr5 ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )* )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:115:13: ( bigbinExpr5 ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )* )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:113:15: bigbinExpr5 ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )*
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:115:15: bigbinExpr5 ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )*
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(113,15);
-			pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4931);
+			dbg.location(115,15);
+			pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4933);
 			bigbinExpr5153=bigbinExpr5();
 			state._fsp--;
 
 			adaptor.addChild(root_0, bigbinExpr5153.getTree());
-			dbg.location(113,26);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:113:26: ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )*
+			dbg.location(115,26);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:115:26: ( ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5 )*
 			try { dbg.enterSubRule(40);
 
 			loop40:
@@ -5021,10 +5021,10 @@ public class GrammarParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:113:27: ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:115:27: ( PREV ^| OPBOOLEQ ^| NEXT ^) bigbinExpr5
 					{
-					dbg.location(113,27);
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:113:27: ( PREV ^| OPBOOLEQ ^| NEXT ^)
+					dbg.location(115,27);
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:115:27: ( PREV ^| OPBOOLEQ ^| NEXT ^)
 					int alt39=3;
 					try { dbg.enterSubRule(39);
 					try { dbg.enterDecision(39, decisionCanBacktrack[39]);
@@ -5057,10 +5057,10 @@ public class GrammarParser extends DebugParser {
 						case 1 :
 							dbg.enterAlt(1);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:113:28: PREV ^
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:115:28: PREV ^
 							{
-							dbg.location(113,32);
-							PREV154=(Token)match(input,PREV,FOLLOW_PREV_in_bigbinExpr4934); 
+							dbg.location(115,32);
+							PREV154=(Token)match(input,PREV,FOLLOW_PREV_in_bigbinExpr4936); 
 							PREV154_tree = (CommonTree)adaptor.create(PREV154);
 							root_0 = (CommonTree)adaptor.becomeRoot(PREV154_tree, root_0);
 
@@ -5069,10 +5069,10 @@ public class GrammarParser extends DebugParser {
 						case 2 :
 							dbg.enterAlt(2);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:113:34: OPBOOLEQ ^
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:115:34: OPBOOLEQ ^
 							{
-							dbg.location(113,42);
-							OPBOOLEQ155=(Token)match(input,OPBOOLEQ,FOLLOW_OPBOOLEQ_in_bigbinExpr4937); 
+							dbg.location(115,42);
+							OPBOOLEQ155=(Token)match(input,OPBOOLEQ,FOLLOW_OPBOOLEQ_in_bigbinExpr4939); 
 							OPBOOLEQ155_tree = (CommonTree)adaptor.create(OPBOOLEQ155);
 							root_0 = (CommonTree)adaptor.becomeRoot(OPBOOLEQ155_tree, root_0);
 
@@ -5081,10 +5081,10 @@ public class GrammarParser extends DebugParser {
 						case 3 :
 							dbg.enterAlt(3);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:113:44: NEXT ^
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:115:44: NEXT ^
 							{
-							dbg.location(113,48);
-							NEXT156=(Token)match(input,NEXT,FOLLOW_NEXT_in_bigbinExpr4940); 
+							dbg.location(115,48);
+							NEXT156=(Token)match(input,NEXT,FOLLOW_NEXT_in_bigbinExpr4942); 
 							NEXT156_tree = (CommonTree)adaptor.create(NEXT156);
 							root_0 = (CommonTree)adaptor.becomeRoot(NEXT156_tree, root_0);
 
@@ -5093,8 +5093,8 @@ public class GrammarParser extends DebugParser {
 
 					}
 					} finally {dbg.exitSubRule(39);}
-					dbg.location(113,51);
-					pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4944);
+					dbg.location(115,51);
+					pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4946);
 					bigbinExpr5157=bigbinExpr5();
 					state._fsp--;
 
@@ -5125,7 +5125,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(113, 63);
+		dbg.location(115, 63);
 
 		}
 		finally {
@@ -5147,7 +5147,7 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigbinExpr5"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:115:1: bigbinExpr5 : bigbinExpr6 ( ( ADD | SUB ) ^ bigbinExpr6 )* ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:117:1: bigbinExpr5 : bigbinExpr6 ( ( ADD | SUB ) ^ bigbinExpr6 )* ;
 	public final GrammarParser.bigbinExpr5_return bigbinExpr5() throws RecognitionException {
 		GrammarParser.bigbinExpr5_return retval = new GrammarParser.bigbinExpr5_return();
 		retval.start = input.LT(1);
@@ -5163,25 +5163,25 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigbinExpr5");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(115, 0);
+		dbg.location(117, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:115:13: ( bigbinExpr6 ( ( ADD | SUB ) ^ bigbinExpr6 )* )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:117:13: ( bigbinExpr6 ( ( ADD | SUB ) ^ bigbinExpr6 )* )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:115:15: bigbinExpr6 ( ( ADD | SUB ) ^ bigbinExpr6 )*
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:117:15: bigbinExpr6 ( ( ADD | SUB ) ^ bigbinExpr6 )*
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(115,15);
-			pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5955);
+			dbg.location(117,15);
+			pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5957);
 			bigbinExpr6158=bigbinExpr6();
 			state._fsp--;
 
 			adaptor.addChild(root_0, bigbinExpr6158.getTree());
-			dbg.location(115,26);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:115:26: ( ( ADD | SUB ) ^ bigbinExpr6 )*
+			dbg.location(117,26);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:117:26: ( ( ADD | SUB ) ^ bigbinExpr6 )*
 			try { dbg.enterSubRule(41);
 
 			loop41:
@@ -5200,9 +5200,9 @@ public class GrammarParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:115:27: ( ADD | SUB ) ^ bigbinExpr6
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:117:27: ( ADD | SUB ) ^ bigbinExpr6
 					{
-					dbg.location(115,36);
+					dbg.location(117,36);
 					set159=input.LT(1);
 					set159=input.LT(1);
 					if ( input.LA(1)==ADD||input.LA(1)==SUB ) {
@@ -5214,8 +5214,8 @@ public class GrammarParser extends DebugParser {
 						MismatchedSetException mse = new MismatchedSetException(null,input);
 						dbg.recognitionException(mse);
 						throw mse;
-					}dbg.location(115,38);
-					pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5964);
+					}dbg.location(117,38);
+					pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5966);
 					bigbinExpr6160=bigbinExpr6();
 					state._fsp--;
 
@@ -5246,7 +5246,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(115, 50);
+		dbg.location(117, 50);
 
 		}
 		finally {
@@ -5268,7 +5268,7 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigbinExpr6"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:117:1: bigbinExpr6 : bigunExpr ( ( STAR ^| DIV ^) bigunExpr )* ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:119:1: bigbinExpr6 : bigunExpr ( ( STAR ^| DIV ^) bigunExpr )* ;
 	public final GrammarParser.bigbinExpr6_return bigbinExpr6() throws RecognitionException {
 		GrammarParser.bigbinExpr6_return retval = new GrammarParser.bigbinExpr6_return();
 		retval.start = input.LT(1);
@@ -5286,25 +5286,25 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigbinExpr6");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(117, 0);
+		dbg.location(119, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:117:13: ( bigunExpr ( ( STAR ^| DIV ^) bigunExpr )* )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:119:13: ( bigunExpr ( ( STAR ^| DIV ^) bigunExpr )* )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:117:15: bigunExpr ( ( STAR ^| DIV ^) bigunExpr )*
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:119:15: bigunExpr ( ( STAR ^| DIV ^) bigunExpr )*
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(117,15);
-			pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6975);
+			dbg.location(119,15);
+			pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6977);
 			bigunExpr161=bigunExpr();
 			state._fsp--;
 
 			adaptor.addChild(root_0, bigunExpr161.getTree());
-			dbg.location(117,25);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:117:25: ( ( STAR ^| DIV ^) bigunExpr )*
+			dbg.location(119,25);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:119:25: ( ( STAR ^| DIV ^) bigunExpr )*
 			try { dbg.enterSubRule(43);
 
 			loop43:
@@ -5323,10 +5323,10 @@ public class GrammarParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:117:26: ( STAR ^| DIV ^) bigunExpr
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:119:26: ( STAR ^| DIV ^) bigunExpr
 					{
-					dbg.location(117,26);
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:117:26: ( STAR ^| DIV ^)
+					dbg.location(119,26);
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:119:26: ( STAR ^| DIV ^)
 					int alt42=2;
 					try { dbg.enterSubRule(42);
 					try { dbg.enterDecision(42, decisionCanBacktrack[42]);
@@ -5352,10 +5352,10 @@ public class GrammarParser extends DebugParser {
 						case 1 :
 							dbg.enterAlt(1);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:117:27: STAR ^
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:119:27: STAR ^
 							{
-							dbg.location(117,31);
-							STAR162=(Token)match(input,STAR,FOLLOW_STAR_in_bigbinExpr6979); 
+							dbg.location(119,31);
+							STAR162=(Token)match(input,STAR,FOLLOW_STAR_in_bigbinExpr6981); 
 							STAR162_tree = (CommonTree)adaptor.create(STAR162);
 							root_0 = (CommonTree)adaptor.becomeRoot(STAR162_tree, root_0);
 
@@ -5364,10 +5364,10 @@ public class GrammarParser extends DebugParser {
 						case 2 :
 							dbg.enterAlt(2);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:117:33: DIV ^
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:119:33: DIV ^
 							{
-							dbg.location(117,36);
-							DIV163=(Token)match(input,DIV,FOLLOW_DIV_in_bigbinExpr6982); 
+							dbg.location(119,36);
+							DIV163=(Token)match(input,DIV,FOLLOW_DIV_in_bigbinExpr6984); 
 							DIV163_tree = (CommonTree)adaptor.create(DIV163);
 							root_0 = (CommonTree)adaptor.becomeRoot(DIV163_tree, root_0);
 
@@ -5376,8 +5376,8 @@ public class GrammarParser extends DebugParser {
 
 					}
 					} finally {dbg.exitSubRule(42);}
-					dbg.location(117,39);
-					pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6986);
+					dbg.location(119,39);
+					pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6988);
 					bigunExpr164=bigunExpr();
 					state._fsp--;
 
@@ -5408,7 +5408,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(117, 49);
+		dbg.location(119, 49);
 
 		}
 		finally {
@@ -5430,7 +5430,7 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigvectExpr"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:119:1: bigvectExpr : bigatom ( '[' bigExpr ']' )? ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:121:1: bigvectExpr : bigStarExpr ( '[' bigExpr ']' )? ;
 	public final GrammarParser.bigvectExpr_return bigvectExpr() throws RecognitionException {
 		GrammarParser.bigvectExpr_return retval = new GrammarParser.bigvectExpr_return();
 		retval.start = input.LT(1);
@@ -5439,7 +5439,7 @@ public class GrammarParser extends DebugParser {
 
 		Token char_literal166=null;
 		Token char_literal168=null;
-		ParserRuleReturnScope bigatom165 =null;
+		ParserRuleReturnScope bigStarExpr165 =null;
 		ParserRuleReturnScope bigExpr167 =null;
 
 		CommonTree char_literal166_tree=null;
@@ -5448,25 +5448,25 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigvectExpr");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(119, 0);
+		dbg.location(121, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:119:13: ( bigatom ( '[' bigExpr ']' )? )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:121:13: ( bigStarExpr ( '[' bigExpr ']' )? )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:119:15: bigatom ( '[' bigExpr ']' )?
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:121:15: bigStarExpr ( '[' bigExpr ']' )?
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(119,15);
-			pushFollow(FOLLOW_bigatom_in_bigvectExpr997);
-			bigatom165=bigatom();
+			dbg.location(121,15);
+			pushFollow(FOLLOW_bigStarExpr_in_bigvectExpr999);
+			bigStarExpr165=bigStarExpr();
 			state._fsp--;
 
-			adaptor.addChild(root_0, bigatom165.getTree());
-			dbg.location(119,23);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:119:23: ( '[' bigExpr ']' )?
+			adaptor.addChild(root_0, bigStarExpr165.getTree());
+			dbg.location(121,27);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:121:27: ( '[' bigExpr ']' )?
 			int alt44=2;
 			try { dbg.enterSubRule(44);
 			try { dbg.enterDecision(44, decisionCanBacktrack[44]);
@@ -5481,20 +5481,20 @@ public class GrammarParser extends DebugParser {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:119:24: '[' bigExpr ']'
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:121:28: '[' bigExpr ']'
 					{
-					dbg.location(119,24);
-					char_literal166=(Token)match(input,36,FOLLOW_36_in_bigvectExpr1000); 
+					dbg.location(121,28);
+					char_literal166=(Token)match(input,36,FOLLOW_36_in_bigvectExpr1002); 
 					char_literal166_tree = (CommonTree)adaptor.create(char_literal166);
 					adaptor.addChild(root_0, char_literal166_tree);
-					dbg.location(119,28);
-					pushFollow(FOLLOW_bigExpr_in_bigvectExpr1002);
+					dbg.location(121,32);
+					pushFollow(FOLLOW_bigExpr_in_bigvectExpr1004);
 					bigExpr167=bigExpr();
 					state._fsp--;
 
 					adaptor.addChild(root_0, bigExpr167.getTree());
-					dbg.location(119,36);
-					char_literal168=(Token)match(input,37,FOLLOW_37_in_bigvectExpr1004); 
+					dbg.location(121,40);
+					char_literal168=(Token)match(input,37,FOLLOW_37_in_bigvectExpr1006); 
 					char_literal168_tree = (CommonTree)adaptor.create(char_literal168);
 					adaptor.addChild(root_0, char_literal168_tree);
 
@@ -5520,7 +5520,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(119, 40);
+		dbg.location(121, 44);
 
 		}
 		finally {
@@ -5534,141 +5534,74 @@ public class GrammarParser extends DebugParser {
 	// $ANTLR end "bigvectExpr"
 
 
-	public static class bigdotExpr_return extends ParserRuleReturnScope {
+	public static class bigStarExpr_return extends ParserRuleReturnScope {
 		CommonTree tree;
 		@Override
 		public CommonTree getTree() { return tree; }
 	};
 
 
-	// $ANTLR start "bigdotExpr"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:121:1: bigdotExpr : bigvectExpr ( '.' ^ ( IDF | 'len' '(' ')' ) )? ;
-	public final GrammarParser.bigdotExpr_return bigdotExpr() throws RecognitionException {
-		GrammarParser.bigdotExpr_return retval = new GrammarParser.bigdotExpr_return();
+	// $ANTLR start "bigStarExpr"
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:123:1: bigStarExpr : ( STAR ^)? bigMoinsExpr ;
+	public final GrammarParser.bigStarExpr_return bigStarExpr() throws RecognitionException {
+		GrammarParser.bigStarExpr_return retval = new GrammarParser.bigStarExpr_return();
 		retval.start = input.LT(1);
 
 		CommonTree root_0 = null;
 
-		Token char_literal170=null;
-		Token IDF171=null;
-		Token string_literal172=null;
-		Token char_literal173=null;
-		Token char_literal174=null;
-		ParserRuleReturnScope bigvectExpr169 =null;
+		Token STAR169=null;
+		ParserRuleReturnScope bigMoinsExpr170 =null;
 
-		CommonTree char_literal170_tree=null;
-		CommonTree IDF171_tree=null;
-		CommonTree string_literal172_tree=null;
-		CommonTree char_literal173_tree=null;
-		CommonTree char_literal174_tree=null;
+		CommonTree STAR169_tree=null;
 
-		try { dbg.enterRule(getGrammarFileName(), "bigdotExpr");
+		try { dbg.enterRule(getGrammarFileName(), "bigStarExpr");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(121, 0);
+		dbg.location(123, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:121:12: ( bigvectExpr ( '.' ^ ( IDF | 'len' '(' ')' ) )? )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:123:13: ( ( STAR ^)? bigMoinsExpr )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:121:14: bigvectExpr ( '.' ^ ( IDF | 'len' '(' ')' ) )?
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:123:15: ( STAR ^)? bigMoinsExpr
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(121,14);
-			pushFollow(FOLLOW_bigvectExpr_in_bigdotExpr1014);
-			bigvectExpr169=bigvectExpr();
-			state._fsp--;
+			dbg.location(123,19);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:123:19: ( STAR ^)?
+			int alt45=2;
+			try { dbg.enterSubRule(45);
+			try { dbg.enterDecision(45, decisionCanBacktrack[45]);
 
-			adaptor.addChild(root_0, bigvectExpr169.getTree());
-			dbg.location(121,26);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:121:26: ( '.' ^ ( IDF | 'len' '(' ')' ) )?
-			int alt46=2;
-			try { dbg.enterSubRule(46);
-			try { dbg.enterDecision(46, decisionCanBacktrack[46]);
-
-			int LA46_0 = input.LA(1);
-			if ( (LA46_0==33) ) {
-				alt46=1;
+			int LA45_0 = input.LA(1);
+			if ( (LA45_0==STAR) ) {
+				alt45=1;
 			}
-			} finally {dbg.exitDecision(46);}
+			} finally {dbg.exitDecision(45);}
 
-			switch (alt46) {
+			switch (alt45) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:121:27: '.' ^ ( IDF | 'len' '(' ')' )
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:123:19: STAR ^
 					{
-					dbg.location(121,30);
-					char_literal170=(Token)match(input,33,FOLLOW_33_in_bigdotExpr1017); 
-					char_literal170_tree = (CommonTree)adaptor.create(char_literal170);
-					root_0 = (CommonTree)adaptor.becomeRoot(char_literal170_tree, root_0);
-					dbg.location(121,32);
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:121:32: ( IDF | 'len' '(' ')' )
-					int alt45=2;
-					try { dbg.enterSubRule(45);
-					try { dbg.enterDecision(45, decisionCanBacktrack[45]);
-
-					int LA45_0 = input.LA(1);
-					if ( (LA45_0==IDF) ) {
-						alt45=1;
-					}
-					else if ( (LA45_0==43) ) {
-						alt45=2;
-					}
-
-					else {
-						NoViableAltException nvae =
-							new NoViableAltException("", 45, 0, input);
-						dbg.recognitionException(nvae);
-						throw nvae;
-					}
-
-					} finally {dbg.exitDecision(45);}
-
-					switch (alt45) {
-						case 1 :
-							dbg.enterAlt(1);
-
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:121:33: IDF
-							{
-							dbg.location(121,33);
-							IDF171=(Token)match(input,IDF,FOLLOW_IDF_in_bigdotExpr1021); 
-							IDF171_tree = (CommonTree)adaptor.create(IDF171);
-							adaptor.addChild(root_0, IDF171_tree);
-
-							}
-							break;
-						case 2 :
-							dbg.enterAlt(2);
-
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:121:39: 'len' '(' ')'
-							{
-							dbg.location(121,39);
-							string_literal172=(Token)match(input,43,FOLLOW_43_in_bigdotExpr1025); 
-							string_literal172_tree = (CommonTree)adaptor.create(string_literal172);
-							adaptor.addChild(root_0, string_literal172_tree);
-							dbg.location(121,45);
-							char_literal173=(Token)match(input,29,FOLLOW_29_in_bigdotExpr1027); 
-							char_literal173_tree = (CommonTree)adaptor.create(char_literal173);
-							adaptor.addChild(root_0, char_literal173_tree);
-							dbg.location(121,48);
-							char_literal174=(Token)match(input,30,FOLLOW_30_in_bigdotExpr1028); 
-							char_literal174_tree = (CommonTree)adaptor.create(char_literal174);
-							adaptor.addChild(root_0, char_literal174_tree);
-
-							}
-							break;
-
-					}
-					} finally {dbg.exitSubRule(45);}
+					dbg.location(123,19);
+					STAR169=(Token)match(input,STAR,FOLLOW_STAR_in_bigStarExpr1017); 
+					STAR169_tree = (CommonTree)adaptor.create(STAR169);
+					root_0 = (CommonTree)adaptor.becomeRoot(STAR169_tree, root_0);
 
 					}
 					break;
 
 			}
-			} finally {dbg.exitSubRule(46);}
+			} finally {dbg.exitSubRule(45);}
+			dbg.location(123,22);
+			pushFollow(FOLLOW_bigMoinsExpr_in_bigStarExpr1021);
+			bigMoinsExpr170=bigMoinsExpr();
+			state._fsp--;
+
+			adaptor.addChild(root_0, bigMoinsExpr170.getTree());
 
 			}
 
@@ -5686,7 +5619,272 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(121, 53);
+		dbg.location(123, 33);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "bigStarExpr");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+		return retval;
+	}
+	// $ANTLR end "bigStarExpr"
+
+
+	public static class bigMoinsExpr_return extends ParserRuleReturnScope {
+		CommonTree tree;
+		@Override
+		public CommonTree getTree() { return tree; }
+	};
+
+
+	// $ANTLR start "bigMoinsExpr"
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:125:1: bigMoinsExpr : ( SUB ^)? bigatom ;
+	public final GrammarParser.bigMoinsExpr_return bigMoinsExpr() throws RecognitionException {
+		GrammarParser.bigMoinsExpr_return retval = new GrammarParser.bigMoinsExpr_return();
+		retval.start = input.LT(1);
+
+		CommonTree root_0 = null;
+
+		Token SUB171=null;
+		ParserRuleReturnScope bigatom172 =null;
+
+		CommonTree SUB171_tree=null;
+
+		try { dbg.enterRule(getGrammarFileName(), "bigMoinsExpr");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(125, 0);
+
+		try {
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:125:14: ( ( SUB ^)? bigatom )
+			dbg.enterAlt(1);
+
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:125:16: ( SUB ^)? bigatom
+			{
+			root_0 = (CommonTree)adaptor.nil();
+
+
+			dbg.location(125,19);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:125:19: ( SUB ^)?
+			int alt46=2;
+			try { dbg.enterSubRule(46);
+			try { dbg.enterDecision(46, decisionCanBacktrack[46]);
+
+			int LA46_0 = input.LA(1);
+			if ( (LA46_0==SUB) ) {
+				alt46=1;
+			}
+			} finally {dbg.exitDecision(46);}
+
+			switch (alt46) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:125:19: SUB ^
+					{
+					dbg.location(125,19);
+					SUB171=(Token)match(input,SUB,FOLLOW_SUB_in_bigMoinsExpr1029); 
+					SUB171_tree = (CommonTree)adaptor.create(SUB171);
+					root_0 = (CommonTree)adaptor.becomeRoot(SUB171_tree, root_0);
+
+					}
+					break;
+
+			}
+			} finally {dbg.exitSubRule(46);}
+			dbg.location(125,22);
+			pushFollow(FOLLOW_bigatom_in_bigMoinsExpr1033);
+			bigatom172=bigatom();
+			state._fsp--;
+
+			adaptor.addChild(root_0, bigatom172.getTree());
+
+			}
+
+			retval.stop = input.LT(-1);
+
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(125, 28);
+
+		}
+		finally {
+			dbg.exitRule(getGrammarFileName(), "bigMoinsExpr");
+			decRuleLevel();
+			if ( getRuleLevel()==0 ) {dbg.terminate();}
+		}
+
+		return retval;
+	}
+	// $ANTLR end "bigMoinsExpr"
+
+
+	public static class bigdotExpr_return extends ParserRuleReturnScope {
+		CommonTree tree;
+		@Override
+		public CommonTree getTree() { return tree; }
+	};
+
+
+	// $ANTLR start "bigdotExpr"
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:127:1: bigdotExpr : bigvectExpr ( '.' ^ ( IDF | 'len' '(' ')' ) )? ;
+	public final GrammarParser.bigdotExpr_return bigdotExpr() throws RecognitionException {
+		GrammarParser.bigdotExpr_return retval = new GrammarParser.bigdotExpr_return();
+		retval.start = input.LT(1);
+
+		CommonTree root_0 = null;
+
+		Token char_literal174=null;
+		Token IDF175=null;
+		Token string_literal176=null;
+		Token char_literal177=null;
+		Token char_literal178=null;
+		ParserRuleReturnScope bigvectExpr173 =null;
+
+		CommonTree char_literal174_tree=null;
+		CommonTree IDF175_tree=null;
+		CommonTree string_literal176_tree=null;
+		CommonTree char_literal177_tree=null;
+		CommonTree char_literal178_tree=null;
+
+		try { dbg.enterRule(getGrammarFileName(), "bigdotExpr");
+		if ( getRuleLevel()==0 ) {dbg.commence();}
+		incRuleLevel();
+		dbg.location(127, 0);
+
+		try {
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:127:12: ( bigvectExpr ( '.' ^ ( IDF | 'len' '(' ')' ) )? )
+			dbg.enterAlt(1);
+
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:127:14: bigvectExpr ( '.' ^ ( IDF | 'len' '(' ')' ) )?
+			{
+			root_0 = (CommonTree)adaptor.nil();
+
+
+			dbg.location(127,14);
+			pushFollow(FOLLOW_bigvectExpr_in_bigdotExpr1041);
+			bigvectExpr173=bigvectExpr();
+			state._fsp--;
+
+			adaptor.addChild(root_0, bigvectExpr173.getTree());
+			dbg.location(127,26);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:127:26: ( '.' ^ ( IDF | 'len' '(' ')' ) )?
+			int alt48=2;
+			try { dbg.enterSubRule(48);
+			try { dbg.enterDecision(48, decisionCanBacktrack[48]);
+
+			int LA48_0 = input.LA(1);
+			if ( (LA48_0==33) ) {
+				alt48=1;
+			}
+			} finally {dbg.exitDecision(48);}
+
+			switch (alt48) {
+				case 1 :
+					dbg.enterAlt(1);
+
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:127:27: '.' ^ ( IDF | 'len' '(' ')' )
+					{
+					dbg.location(127,30);
+					char_literal174=(Token)match(input,33,FOLLOW_33_in_bigdotExpr1044); 
+					char_literal174_tree = (CommonTree)adaptor.create(char_literal174);
+					root_0 = (CommonTree)adaptor.becomeRoot(char_literal174_tree, root_0);
+					dbg.location(127,32);
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:127:32: ( IDF | 'len' '(' ')' )
+					int alt47=2;
+					try { dbg.enterSubRule(47);
+					try { dbg.enterDecision(47, decisionCanBacktrack[47]);
+
+					int LA47_0 = input.LA(1);
+					if ( (LA47_0==IDF) ) {
+						alt47=1;
+					}
+					else if ( (LA47_0==43) ) {
+						alt47=2;
+					}
+
+					else {
+						NoViableAltException nvae =
+							new NoViableAltException("", 47, 0, input);
+						dbg.recognitionException(nvae);
+						throw nvae;
+					}
+
+					} finally {dbg.exitDecision(47);}
+
+					switch (alt47) {
+						case 1 :
+							dbg.enterAlt(1);
+
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:127:33: IDF
+							{
+							dbg.location(127,33);
+							IDF175=(Token)match(input,IDF,FOLLOW_IDF_in_bigdotExpr1048); 
+							IDF175_tree = (CommonTree)adaptor.create(IDF175);
+							adaptor.addChild(root_0, IDF175_tree);
+
+							}
+							break;
+						case 2 :
+							dbg.enterAlt(2);
+
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:127:39: 'len' '(' ')'
+							{
+							dbg.location(127,39);
+							string_literal176=(Token)match(input,43,FOLLOW_43_in_bigdotExpr1052); 
+							string_literal176_tree = (CommonTree)adaptor.create(string_literal176);
+							adaptor.addChild(root_0, string_literal176_tree);
+							dbg.location(127,45);
+							char_literal177=(Token)match(input,29,FOLLOW_29_in_bigdotExpr1054); 
+							char_literal177_tree = (CommonTree)adaptor.create(char_literal177);
+							adaptor.addChild(root_0, char_literal177_tree);
+							dbg.location(127,48);
+							char_literal178=(Token)match(input,30,FOLLOW_30_in_bigdotExpr1055); 
+							char_literal178_tree = (CommonTree)adaptor.create(char_literal178);
+							adaptor.addChild(root_0, char_literal178_tree);
+
+							}
+							break;
+
+					}
+					} finally {dbg.exitSubRule(47);}
+
+					}
+					break;
+
+			}
+			} finally {dbg.exitSubRule(48);}
+
+			}
+
+			retval.stop = input.LT(-1);
+
+			retval.tree = (CommonTree)adaptor.rulePostProcessing(root_0);
+			adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+
+		}
+		catch (RecognitionException re) {
+			reportError(re);
+			recover(input,re);
+			retval.tree = (CommonTree)adaptor.errorNode(input, retval.start, input.LT(-1), re);
+		}
+		finally {
+			// do for sure before leaving
+		}
+		dbg.location(127, 53);
 
 		}
 		finally {
@@ -5708,66 +5906,83 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigunExpr"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:123:1: bigunExpr : ( UNAIRE ^)? bigdotExpr ;
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:129:1: bigunExpr : ( UNAIRE ^| EPERLU ^)? bigdotExpr ;
 	public final GrammarParser.bigunExpr_return bigunExpr() throws RecognitionException {
 		GrammarParser.bigunExpr_return retval = new GrammarParser.bigunExpr_return();
 		retval.start = input.LT(1);
 
 		CommonTree root_0 = null;
 
-		Token UNAIRE175=null;
-		ParserRuleReturnScope bigdotExpr176 =null;
+		Token UNAIRE179=null;
+		Token EPERLU180=null;
+		ParserRuleReturnScope bigdotExpr181 =null;
 
-		CommonTree UNAIRE175_tree=null;
+		CommonTree UNAIRE179_tree=null;
+		CommonTree EPERLU180_tree=null;
 
 		try { dbg.enterRule(getGrammarFileName(), "bigunExpr");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(123, 0);
+		dbg.location(129, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:123:11: ( ( UNAIRE ^)? bigdotExpr )
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:129:11: ( ( UNAIRE ^| EPERLU ^)? bigdotExpr )
 			dbg.enterAlt(1);
 
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:123:13: ( UNAIRE ^)? bigdotExpr
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:129:13: ( UNAIRE ^| EPERLU ^)? bigdotExpr
 			{
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			dbg.location(123,19);
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:123:19: ( UNAIRE ^)?
-			int alt47=2;
-			try { dbg.enterSubRule(47);
-			try { dbg.enterDecision(47, decisionCanBacktrack[47]);
+			dbg.location(129,13);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:129:13: ( UNAIRE ^| EPERLU ^)?
+			int alt49=3;
+			try { dbg.enterSubRule(49);
+			try { dbg.enterDecision(49, decisionCanBacktrack[49]);
 
-			int LA47_0 = input.LA(1);
-			if ( (LA47_0==UNAIRE) ) {
-				alt47=1;
+			int LA49_0 = input.LA(1);
+			if ( (LA49_0==UNAIRE) ) {
+				alt49=1;
 			}
-			} finally {dbg.exitDecision(47);}
+			else if ( (LA49_0==EPERLU) ) {
+				alt49=2;
+			}
+			} finally {dbg.exitDecision(49);}
 
-			switch (alt47) {
+			switch (alt49) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:123:19: UNAIRE ^
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:129:14: UNAIRE ^
 					{
-					dbg.location(123,19);
-					UNAIRE175=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigunExpr1039); 
-					UNAIRE175_tree = (CommonTree)adaptor.create(UNAIRE175);
-					root_0 = (CommonTree)adaptor.becomeRoot(UNAIRE175_tree, root_0);
+					dbg.location(129,20);
+					UNAIRE179=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigunExpr1067); 
+					UNAIRE179_tree = (CommonTree)adaptor.create(UNAIRE179);
+					root_0 = (CommonTree)adaptor.becomeRoot(UNAIRE179_tree, root_0);
+
+					}
+					break;
+				case 2 :
+					dbg.enterAlt(2);
+
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:129:22: EPERLU ^
+					{
+					dbg.location(129,28);
+					EPERLU180=(Token)match(input,EPERLU,FOLLOW_EPERLU_in_bigunExpr1070); 
+					EPERLU180_tree = (CommonTree)adaptor.create(EPERLU180);
+					root_0 = (CommonTree)adaptor.becomeRoot(EPERLU180_tree, root_0);
 
 					}
 					break;
 
 			}
-			} finally {dbg.exitSubRule(47);}
-			dbg.location(123,22);
-			pushFollow(FOLLOW_bigdotExpr_in_bigunExpr1043);
-			bigdotExpr176=bigdotExpr();
+			} finally {dbg.exitSubRule(49);}
+			dbg.location(129,32);
+			pushFollow(FOLLOW_bigdotExpr_in_bigunExpr1075);
+			bigdotExpr181=bigdotExpr();
 			state._fsp--;
 
-			adaptor.addChild(root_0, bigdotExpr176.getTree());
+			adaptor.addChild(root_0, bigdotExpr181.getTree());
 
 			}
 
@@ -5785,7 +6000,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(123, 31);
+		dbg.location(129, 41);
 
 		}
 		finally {
@@ -5807,37 +6022,37 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigExpr"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:125:1: bigExpr : ( 'vec' '!' '[' expr ( ',' expr )* ']' -> ^( 'vec' ( expr )* ) | 'print' '!' '(' expr ')' -> ^( 'print' expr ) | block | bigbinExpr1 );
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:131:1: bigExpr : ( 'vec' '!' '[' expr ( ',' expr )* ']' -> ^( 'vec' ( expr )* ) | 'print' '!' '(' expr ')' -> ^( 'print' expr ) | block | bigbinExpr1 );
 	public final GrammarParser.bigExpr_return bigExpr() throws RecognitionException {
 		GrammarParser.bigExpr_return retval = new GrammarParser.bigExpr_return();
 		retval.start = input.LT(1);
 
 		CommonTree root_0 = null;
 
-		Token string_literal177=null;
-		Token char_literal178=null;
-		Token char_literal179=null;
-		Token char_literal181=null;
+		Token string_literal182=null;
 		Token char_literal183=null;
-		Token string_literal184=null;
-		Token char_literal185=null;
+		Token char_literal184=null;
 		Token char_literal186=null;
 		Token char_literal188=null;
-		ParserRuleReturnScope expr180 =null;
-		ParserRuleReturnScope expr182 =null;
+		Token string_literal189=null;
+		Token char_literal190=null;
+		Token char_literal191=null;
+		Token char_literal193=null;
+		ParserRuleReturnScope expr185 =null;
 		ParserRuleReturnScope expr187 =null;
-		ParserRuleReturnScope block189 =null;
-		ParserRuleReturnScope bigbinExpr1190 =null;
+		ParserRuleReturnScope expr192 =null;
+		ParserRuleReturnScope block194 =null;
+		ParserRuleReturnScope bigbinExpr1195 =null;
 
-		CommonTree string_literal177_tree=null;
-		CommonTree char_literal178_tree=null;
-		CommonTree char_literal179_tree=null;
-		CommonTree char_literal181_tree=null;
+		CommonTree string_literal182_tree=null;
 		CommonTree char_literal183_tree=null;
-		CommonTree string_literal184_tree=null;
-		CommonTree char_literal185_tree=null;
+		CommonTree char_literal184_tree=null;
 		CommonTree char_literal186_tree=null;
 		CommonTree char_literal188_tree=null;
+		CommonTree string_literal189_tree=null;
+		CommonTree char_literal190_tree=null;
+		CommonTree char_literal191_tree=null;
+		CommonTree char_literal193_tree=null;
 		RewriteRuleTokenStream stream_UNAIRE=new RewriteRuleTokenStream(adaptor,"token UNAIRE");
 		RewriteRuleTokenStream stream_36=new RewriteRuleTokenStream(adaptor,"token 36");
 		RewriteRuleTokenStream stream_47=new RewriteRuleTokenStream(adaptor,"token 47");
@@ -5851,108 +6066,111 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigExpr");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(125, 0);
+		dbg.location(131, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:126:3: ( 'vec' '!' '[' expr ( ',' expr )* ']' -> ^( 'vec' ( expr )* ) | 'print' '!' '(' expr ')' -> ^( 'print' expr ) | block | bigbinExpr1 )
-			int alt49=4;
-			try { dbg.enterDecision(49, decisionCanBacktrack[49]);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:132:3: ( 'vec' '!' '[' expr ( ',' expr )* ']' -> ^( 'vec' ( expr )* ) | 'print' '!' '(' expr ')' -> ^( 'print' expr ) | block | bigbinExpr1 )
+			int alt51=4;
+			try { dbg.enterDecision(51, decisionCanBacktrack[51]);
 
 			switch ( input.LA(1) ) {
 			case 50:
 				{
-				alt49=1;
+				alt51=1;
 				}
 				break;
 			case 47:
 				{
-				alt49=2;
+				alt51=2;
 				}
 				break;
 			case 52:
 				{
-				alt49=3;
+				alt51=3;
 				}
 				break;
 			case BOOL:
+			case EPERLU:
 			case IDF:
 			case INT:
+			case STAR:
+			case SUB:
 			case UNAIRE:
 			case 29:
 				{
-				alt49=4;
+				alt51=4;
 				}
 				break;
 			default:
 				NoViableAltException nvae =
-					new NoViableAltException("", 49, 0, input);
+					new NoViableAltException("", 51, 0, input);
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(49);}
+			} finally {dbg.exitDecision(51);}
 
-			switch (alt49) {
+			switch (alt51) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:126:3: 'vec' '!' '[' expr ( ',' expr )* ']'
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:132:3: 'vec' '!' '[' expr ( ',' expr )* ']'
 					{
-					dbg.location(126,3);
-					string_literal177=(Token)match(input,50,FOLLOW_50_in_bigExpr1052);  
-					stream_50.add(string_literal177);
-					dbg.location(126,9);
-					char_literal178=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1054);  
-					stream_UNAIRE.add(char_literal178);
-					dbg.location(126,13);
-					char_literal179=(Token)match(input,36,FOLLOW_36_in_bigExpr1056);  
-					stream_36.add(char_literal179);
-					dbg.location(126,17);
-					pushFollow(FOLLOW_expr_in_bigExpr1058);
-					expr180=expr();
+					dbg.location(132,3);
+					string_literal182=(Token)match(input,50,FOLLOW_50_in_bigExpr1084);  
+					stream_50.add(string_literal182);
+					dbg.location(132,9);
+					char_literal183=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1086);  
+					stream_UNAIRE.add(char_literal183);
+					dbg.location(132,13);
+					char_literal184=(Token)match(input,36,FOLLOW_36_in_bigExpr1088);  
+					stream_36.add(char_literal184);
+					dbg.location(132,17);
+					pushFollow(FOLLOW_expr_in_bigExpr1090);
+					expr185=expr();
 					state._fsp--;
 
-					stream_expr.add(expr180.getTree());dbg.location(126,22);
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:126:22: ( ',' expr )*
-					try { dbg.enterSubRule(48);
+					stream_expr.add(expr185.getTree());dbg.location(132,22);
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:132:22: ( ',' expr )*
+					try { dbg.enterSubRule(50);
 
-					loop48:
+					loop50:
 					while (true) {
-						int alt48=2;
-						try { dbg.enterDecision(48, decisionCanBacktrack[48]);
+						int alt50=2;
+						try { dbg.enterDecision(50, decisionCanBacktrack[50]);
 
-						int LA48_0 = input.LA(1);
-						if ( (LA48_0==31) ) {
-							alt48=1;
+						int LA50_0 = input.LA(1);
+						if ( (LA50_0==31) ) {
+							alt50=1;
 						}
 
-						} finally {dbg.exitDecision(48);}
+						} finally {dbg.exitDecision(50);}
 
-						switch (alt48) {
+						switch (alt50) {
 						case 1 :
 							dbg.enterAlt(1);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:126:23: ',' expr
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:132:23: ',' expr
 							{
-							dbg.location(126,23);
-							char_literal181=(Token)match(input,31,FOLLOW_31_in_bigExpr1061);  
-							stream_31.add(char_literal181);
-							dbg.location(126,27);
-							pushFollow(FOLLOW_expr_in_bigExpr1063);
-							expr182=expr();
+							dbg.location(132,23);
+							char_literal186=(Token)match(input,31,FOLLOW_31_in_bigExpr1093);  
+							stream_31.add(char_literal186);
+							dbg.location(132,27);
+							pushFollow(FOLLOW_expr_in_bigExpr1095);
+							expr187=expr();
 							state._fsp--;
 
-							stream_expr.add(expr182.getTree());
+							stream_expr.add(expr187.getTree());
 							}
 							break;
 
 						default :
-							break loop48;
+							break loop50;
 						}
 					}
-					} finally {dbg.exitSubRule(48);}
-					dbg.location(126,33);
-					char_literal183=(Token)match(input,37,FOLLOW_37_in_bigExpr1066);  
-					stream_37.add(char_literal183);
+					} finally {dbg.exitSubRule(50);}
+					dbg.location(132,33);
+					char_literal188=(Token)match(input,37,FOLLOW_37_in_bigExpr1098);  
+					stream_37.add(char_literal188);
 
 					// AST REWRITE
 					// elements: 50, expr
@@ -5965,18 +6183,18 @@ public class GrammarParser extends DebugParser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 126:37: -> ^( 'vec' ( expr )* )
+					// 132:37: -> ^( 'vec' ( expr )* )
 					{
-						dbg.location(126,40);
-						// /home/frosqh/workspace/raimondi3u/Grammar.g:126:40: ^( 'vec' ( expr )* )
+						dbg.location(132,40);
+						// /home/frosqh/workspace/raimondi3u/Grammar.g:132:40: ^( 'vec' ( expr )* )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(126,42);
+						dbg.location(132,42);
 						root_1 = (CommonTree)adaptor.becomeRoot(stream_50.nextNode(), root_1);
-						dbg.location(126,48);
-						// /home/frosqh/workspace/raimondi3u/Grammar.g:126:48: ( expr )*
+						dbg.location(132,48);
+						// /home/frosqh/workspace/raimondi3u/Grammar.g:132:48: ( expr )*
 						while ( stream_expr.hasNext() ) {
-							dbg.location(126,48);
+							dbg.location(132,48);
 							adaptor.addChild(root_1, stream_expr.nextTree());
 						}
 						stream_expr.reset();
@@ -5994,25 +6212,25 @@ public class GrammarParser extends DebugParser {
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:127:3: 'print' '!' '(' expr ')'
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:133:3: 'print' '!' '(' expr ')'
 					{
-					dbg.location(127,3);
-					string_literal184=(Token)match(input,47,FOLLOW_47_in_bigExpr1079);  
-					stream_47.add(string_literal184);
-					dbg.location(127,11);
-					char_literal185=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1081);  
-					stream_UNAIRE.add(char_literal185);
-					dbg.location(127,15);
-					char_literal186=(Token)match(input,29,FOLLOW_29_in_bigExpr1083);  
-					stream_29.add(char_literal186);
-					dbg.location(127,19);
-					pushFollow(FOLLOW_expr_in_bigExpr1085);
-					expr187=expr();
+					dbg.location(133,3);
+					string_literal189=(Token)match(input,47,FOLLOW_47_in_bigExpr1111);  
+					stream_47.add(string_literal189);
+					dbg.location(133,11);
+					char_literal190=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1113);  
+					stream_UNAIRE.add(char_literal190);
+					dbg.location(133,15);
+					char_literal191=(Token)match(input,29,FOLLOW_29_in_bigExpr1115);  
+					stream_29.add(char_literal191);
+					dbg.location(133,19);
+					pushFollow(FOLLOW_expr_in_bigExpr1117);
+					expr192=expr();
 					state._fsp--;
 
-					stream_expr.add(expr187.getTree());dbg.location(127,24);
-					char_literal188=(Token)match(input,30,FOLLOW_30_in_bigExpr1087);  
-					stream_30.add(char_literal188);
+					stream_expr.add(expr192.getTree());dbg.location(133,24);
+					char_literal193=(Token)match(input,30,FOLLOW_30_in_bigExpr1119);  
+					stream_30.add(char_literal193);
 
 					// AST REWRITE
 					// elements: expr, 47
@@ -6025,15 +6243,15 @@ public class GrammarParser extends DebugParser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 127:28: -> ^( 'print' expr )
+					// 133:28: -> ^( 'print' expr )
 					{
-						dbg.location(127,31);
-						// /home/frosqh/workspace/raimondi3u/Grammar.g:127:31: ^( 'print' expr )
+						dbg.location(133,31);
+						// /home/frosqh/workspace/raimondi3u/Grammar.g:133:31: ^( 'print' expr )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
-						dbg.location(127,33);
+						dbg.location(133,33);
 						root_1 = (CommonTree)adaptor.becomeRoot(stream_47.nextNode(), root_1);
-						dbg.location(127,41);
+						dbg.location(133,41);
 						adaptor.addChild(root_1, stream_expr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
@@ -6048,34 +6266,34 @@ public class GrammarParser extends DebugParser {
 				case 3 :
 					dbg.enterAlt(3);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:128:3: block
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:134:3: block
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					dbg.location(128,3);
-					pushFollow(FOLLOW_block_in_bigExpr1098);
-					block189=block();
+					dbg.location(134,3);
+					pushFollow(FOLLOW_block_in_bigExpr1130);
+					block194=block();
 					state._fsp--;
 
-					adaptor.addChild(root_0, block189.getTree());
+					adaptor.addChild(root_0, block194.getTree());
 
 					}
 					break;
 				case 4 :
 					dbg.enterAlt(4);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:129:3: bigbinExpr1
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:135:3: bigbinExpr1
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					dbg.location(129,3);
-					pushFollow(FOLLOW_bigbinExpr1_in_bigExpr1102);
-					bigbinExpr1190=bigbinExpr1();
+					dbg.location(135,3);
+					pushFollow(FOLLOW_bigbinExpr1_in_bigExpr1134);
+					bigbinExpr1195=bigbinExpr1();
 					state._fsp--;
 
-					adaptor.addChild(root_0, bigbinExpr1190.getTree());
+					adaptor.addChild(root_0, bigbinExpr1195.getTree());
 
 					}
 					break;
@@ -6095,7 +6313,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(129, 13);
+		dbg.location(135, 13);
 
 		}
 		finally {
@@ -6117,27 +6335,27 @@ public class GrammarParser extends DebugParser {
 
 
 	// $ANTLR start "bigatom"
-	// /home/frosqh/workspace/raimondi3u/Grammar.g:131:1: bigatom : ( INT | BOOL | IDF ^ ( newStruc | callFun )? | '(' bigExpr ')' -> bigExpr );
+	// /home/frosqh/workspace/raimondi3u/Grammar.g:137:1: bigatom : ( INT | BOOL | IDF ^ ( newStruc | callFun )? | '(' bigExpr ')' -> bigExpr );
 	public final GrammarParser.bigatom_return bigatom() throws RecognitionException {
 		GrammarParser.bigatom_return retval = new GrammarParser.bigatom_return();
 		retval.start = input.LT(1);
 
 		CommonTree root_0 = null;
 
-		Token INT191=null;
-		Token BOOL192=null;
-		Token IDF193=null;
-		Token char_literal196=null;
-		Token char_literal198=null;
-		ParserRuleReturnScope newStruc194 =null;
-		ParserRuleReturnScope callFun195 =null;
-		ParserRuleReturnScope bigExpr197 =null;
+		Token INT196=null;
+		Token BOOL197=null;
+		Token IDF198=null;
+		Token char_literal201=null;
+		Token char_literal203=null;
+		ParserRuleReturnScope newStruc199 =null;
+		ParserRuleReturnScope callFun200 =null;
+		ParserRuleReturnScope bigExpr202 =null;
 
-		CommonTree INT191_tree=null;
-		CommonTree BOOL192_tree=null;
-		CommonTree IDF193_tree=null;
-		CommonTree char_literal196_tree=null;
-		CommonTree char_literal198_tree=null;
+		CommonTree INT196_tree=null;
+		CommonTree BOOL197_tree=null;
+		CommonTree IDF198_tree=null;
+		CommonTree char_literal201_tree=null;
+		CommonTree char_literal203_tree=null;
 		RewriteRuleTokenStream stream_29=new RewriteRuleTokenStream(adaptor,"token 29");
 		RewriteRuleTokenStream stream_30=new RewriteRuleTokenStream(adaptor,"token 30");
 		RewriteRuleSubtreeStream stream_bigExpr=new RewriteRuleSubtreeStream(adaptor,"rule bigExpr");
@@ -6145,151 +6363,151 @@ public class GrammarParser extends DebugParser {
 		try { dbg.enterRule(getGrammarFileName(), "bigatom");
 		if ( getRuleLevel()==0 ) {dbg.commence();}
 		incRuleLevel();
-		dbg.location(131, 0);
+		dbg.location(137, 0);
 
 		try {
-			// /home/frosqh/workspace/raimondi3u/Grammar.g:131:9: ( INT | BOOL | IDF ^ ( newStruc | callFun )? | '(' bigExpr ')' -> bigExpr )
-			int alt51=4;
-			try { dbg.enterDecision(51, decisionCanBacktrack[51]);
+			// /home/frosqh/workspace/raimondi3u/Grammar.g:137:9: ( INT | BOOL | IDF ^ ( newStruc | callFun )? | '(' bigExpr ')' -> bigExpr )
+			int alt53=4;
+			try { dbg.enterDecision(53, decisionCanBacktrack[53]);
 
 			switch ( input.LA(1) ) {
 			case INT:
 				{
-				alt51=1;
+				alt53=1;
 				}
 				break;
 			case BOOL:
 				{
-				alt51=2;
+				alt53=2;
 				}
 				break;
 			case IDF:
 				{
-				alt51=3;
+				alt53=3;
 				}
 				break;
 			case 29:
 				{
-				alt51=4;
+				alt53=4;
 				}
 				break;
 			default:
 				NoViableAltException nvae =
-					new NoViableAltException("", 51, 0, input);
+					new NoViableAltException("", 53, 0, input);
 				dbg.recognitionException(nvae);
 				throw nvae;
 			}
-			} finally {dbg.exitDecision(51);}
+			} finally {dbg.exitDecision(53);}
 
-			switch (alt51) {
+			switch (alt53) {
 				case 1 :
 					dbg.enterAlt(1);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:131:11: INT
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:137:11: INT
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					dbg.location(131,11);
-					INT191=(Token)match(input,INT,FOLLOW_INT_in_bigatom1110); 
-					INT191_tree = (CommonTree)adaptor.create(INT191);
-					adaptor.addChild(root_0, INT191_tree);
+					dbg.location(137,11);
+					INT196=(Token)match(input,INT,FOLLOW_INT_in_bigatom1142); 
+					INT196_tree = (CommonTree)adaptor.create(INT196);
+					adaptor.addChild(root_0, INT196_tree);
 
 					}
 					break;
 				case 2 :
 					dbg.enterAlt(2);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:132:3: BOOL
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:138:3: BOOL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					dbg.location(132,3);
-					BOOL192=(Token)match(input,BOOL,FOLLOW_BOOL_in_bigatom1113); 
-					BOOL192_tree = (CommonTree)adaptor.create(BOOL192);
-					adaptor.addChild(root_0, BOOL192_tree);
+					dbg.location(138,3);
+					BOOL197=(Token)match(input,BOOL,FOLLOW_BOOL_in_bigatom1145); 
+					BOOL197_tree = (CommonTree)adaptor.create(BOOL197);
+					adaptor.addChild(root_0, BOOL197_tree);
 
 					}
 					break;
 				case 3 :
 					dbg.enterAlt(3);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:133:4: IDF ^ ( newStruc | callFun )?
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:139:4: IDF ^ ( newStruc | callFun )?
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					dbg.location(133,7);
-					IDF193=(Token)match(input,IDF,FOLLOW_IDF_in_bigatom1118); 
-					IDF193_tree = (CommonTree)adaptor.create(IDF193);
-					root_0 = (CommonTree)adaptor.becomeRoot(IDF193_tree, root_0);
-					dbg.location(133,9);
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:133:9: ( newStruc | callFun )?
-					int alt50=3;
-					try { dbg.enterSubRule(50);
-					try { dbg.enterDecision(50, decisionCanBacktrack[50]);
+					dbg.location(139,7);
+					IDF198=(Token)match(input,IDF,FOLLOW_IDF_in_bigatom1150); 
+					IDF198_tree = (CommonTree)adaptor.create(IDF198);
+					root_0 = (CommonTree)adaptor.becomeRoot(IDF198_tree, root_0);
+					dbg.location(139,9);
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:139:9: ( newStruc | callFun )?
+					int alt52=3;
+					try { dbg.enterSubRule(52);
+					try { dbg.enterDecision(52, decisionCanBacktrack[52]);
 
-					int LA50_0 = input.LA(1);
-					if ( (LA50_0==52) ) {
-						alt50=1;
+					int LA52_0 = input.LA(1);
+					if ( (LA52_0==52) ) {
+						alt52=1;
 					}
-					else if ( (LA50_0==29) ) {
-						alt50=2;
+					else if ( (LA52_0==29) ) {
+						alt52=2;
 					}
-					} finally {dbg.exitDecision(50);}
+					} finally {dbg.exitDecision(52);}
 
-					switch (alt50) {
+					switch (alt52) {
 						case 1 :
 							dbg.enterAlt(1);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:133:10: newStruc
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:139:10: newStruc
 							{
-							dbg.location(133,10);
-							pushFollow(FOLLOW_newStruc_in_bigatom1122);
-							newStruc194=newStruc();
+							dbg.location(139,10);
+							pushFollow(FOLLOW_newStruc_in_bigatom1154);
+							newStruc199=newStruc();
 							state._fsp--;
 
-							adaptor.addChild(root_0, newStruc194.getTree());
+							adaptor.addChild(root_0, newStruc199.getTree());
 
 							}
 							break;
 						case 2 :
 							dbg.enterAlt(2);
 
-							// /home/frosqh/workspace/raimondi3u/Grammar.g:133:19: callFun
+							// /home/frosqh/workspace/raimondi3u/Grammar.g:139:19: callFun
 							{
-							dbg.location(133,19);
-							pushFollow(FOLLOW_callFun_in_bigatom1124);
-							callFun195=callFun();
+							dbg.location(139,19);
+							pushFollow(FOLLOW_callFun_in_bigatom1156);
+							callFun200=callFun();
 							state._fsp--;
 
-							adaptor.addChild(root_0, callFun195.getTree());
+							adaptor.addChild(root_0, callFun200.getTree());
 
 							}
 							break;
 
 					}
-					} finally {dbg.exitSubRule(50);}
+					} finally {dbg.exitSubRule(52);}
 
 					}
 					break;
 				case 4 :
 					dbg.enterAlt(4);
 
-					// /home/frosqh/workspace/raimondi3u/Grammar.g:134:3: '(' bigExpr ')'
+					// /home/frosqh/workspace/raimondi3u/Grammar.g:140:3: '(' bigExpr ')'
 					{
-					dbg.location(134,3);
-					char_literal196=(Token)match(input,29,FOLLOW_29_in_bigatom1129);  
-					stream_29.add(char_literal196);
-					dbg.location(134,6);
-					pushFollow(FOLLOW_bigExpr_in_bigatom1130);
-					bigExpr197=bigExpr();
+					dbg.location(140,3);
+					char_literal201=(Token)match(input,29,FOLLOW_29_in_bigatom1161);  
+					stream_29.add(char_literal201);
+					dbg.location(140,6);
+					pushFollow(FOLLOW_bigExpr_in_bigatom1162);
+					bigExpr202=bigExpr();
 					state._fsp--;
 
-					stream_bigExpr.add(bigExpr197.getTree());dbg.location(134,13);
-					char_literal198=(Token)match(input,30,FOLLOW_30_in_bigatom1131);  
-					stream_30.add(char_literal198);
+					stream_bigExpr.add(bigExpr202.getTree());dbg.location(140,13);
+					char_literal203=(Token)match(input,30,FOLLOW_30_in_bigatom1163);  
+					stream_30.add(char_literal203);
 
 					// AST REWRITE
 					// elements: bigExpr
@@ -6302,9 +6520,9 @@ public class GrammarParser extends DebugParser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 134:17: -> bigExpr
+					// 140:17: -> bigExpr
 					{
-						dbg.location(134,20);
+						dbg.location(140,20);
 						adaptor.addChild(root_0, stream_bigExpr.nextTree());
 					}
 
@@ -6329,7 +6547,7 @@ public class GrammarParser extends DebugParser {
 		finally {
 			// do for sure before leaving
 		}
-		dbg.location(134, 26);
+		dbg.location(140, 26);
 
 		}
 		finally {
@@ -6394,11 +6612,11 @@ public class GrammarParser extends DebugParser {
 	public static final BitSet FOLLOW_30_in_callFun344 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_52_in_newStruc357 = new BitSet(new long[]{0x0000000000004000L});
 	public static final BitSet FOLLOW_IDF_in_newStruc359 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_newStruc361 = new BitSet(new long[]{0x0014800024014100L});
+	public static final BitSet FOLLOW_34_in_newStruc361 = new BitSet(new long[]{0x0014800026815100L});
 	public static final BitSet FOLLOW_bigExpr_in_newStruc363 = new BitSet(new long[]{0x0020000080000000L});
 	public static final BitSet FOLLOW_31_in_newStruc366 = new BitSet(new long[]{0x0000000000004000L});
 	public static final BitSet FOLLOW_IDF_in_newStruc368 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_newStruc370 = new BitSet(new long[]{0x0014800024014100L});
+	public static final BitSet FOLLOW_34_in_newStruc370 = new BitSet(new long[]{0x0014800026815100L});
 	public static final BitSet FOLLOW_bigExpr_in_newStruc372 = new BitSet(new long[]{0x0020000080000000L});
 	public static final BitSet FOLLOW_53_in_newStruc376 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_expr_in_instruct400 = new BitSet(new long[]{0x0000000800000000L});
@@ -6409,7 +6627,7 @@ public class GrammarParser extends DebugParser {
 	public static final BitSet FOLLOW_dotIDF_in_instruct421 = new BitSet(new long[]{0x0000000400002000L});
 	public static final BitSet FOLLOW_34_in_instruct424 = new BitSet(new long[]{0x0004044000007000L});
 	public static final BitSet FOLLOW_type_in_instruct426 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_EQUAL_in_instruct430 = new BitSet(new long[]{0x0014800024014100L});
+	public static final BitSet FOLLOW_EQUAL_in_instruct430 = new BitSet(new long[]{0x0014800026815100L});
 	public static final BitSet FOLLOW_bigExpr_in_instruct432 = new BitSet(new long[]{0x0000000800000000L});
 	public static final BitSet FOLLOW_35_in_instruct434 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_51_in_instruct461 = new BitSet(new long[]{0x0014800026815100L});
@@ -6489,59 +6707,64 @@ public class GrammarParser extends DebugParser {
 	public static final BitSet FOLLOW_30_in_expr858 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_block_in_expr869 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_binExpr1_in_expr873 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1882 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_EQUAL_in_bigbinExpr1885 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1888 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2899 = new BitSet(new long[]{0x0000000000200002L});
-	public static final BitSet FOLLOW_ORBOOL_in_bigbinExpr2901 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2904 = new BitSet(new long[]{0x0000000000200002L});
-	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3915 = new BitSet(new long[]{0x0000000000000022L});
-	public static final BitSet FOLLOW_ANDBOOL_in_bigbinExpr3917 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3920 = new BitSet(new long[]{0x0000000000000022L});
-	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4931 = new BitSet(new long[]{0x0000000000580002L});
-	public static final BitSet FOLLOW_PREV_in_bigbinExpr4934 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_OPBOOLEQ_in_bigbinExpr4937 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_NEXT_in_bigbinExpr4940 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4944 = new BitSet(new long[]{0x0000000000580002L});
-	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5955 = new BitSet(new long[]{0x0000000002000012L});
-	public static final BitSet FOLLOW_set_in_bigbinExpr5957 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5964 = new BitSet(new long[]{0x0000000002000012L});
-	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6975 = new BitSet(new long[]{0x0000000000800802L});
-	public static final BitSet FOLLOW_STAR_in_bigbinExpr6979 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_DIV_in_bigbinExpr6982 = new BitSet(new long[]{0x0000000024014100L});
-	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6986 = new BitSet(new long[]{0x0000000000800802L});
-	public static final BitSet FOLLOW_bigatom_in_bigvectExpr997 = new BitSet(new long[]{0x0000001000000002L});
-	public static final BitSet FOLLOW_36_in_bigvectExpr1000 = new BitSet(new long[]{0x0014800024014100L});
-	public static final BitSet FOLLOW_bigExpr_in_bigvectExpr1002 = new BitSet(new long[]{0x0000002000000000L});
-	public static final BitSet FOLLOW_37_in_bigvectExpr1004 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bigvectExpr_in_bigdotExpr1014 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_33_in_bigdotExpr1017 = new BitSet(new long[]{0x0000080000004000L});
-	public static final BitSet FOLLOW_IDF_in_bigdotExpr1021 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_43_in_bigdotExpr1025 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_29_in_bigdotExpr1027 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_bigdotExpr1028 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_UNAIRE_in_bigunExpr1039 = new BitSet(new long[]{0x0000000020014100L});
-	public static final BitSet FOLLOW_bigdotExpr_in_bigunExpr1043 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_50_in_bigExpr1052 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1054 = new BitSet(new long[]{0x0000001000000000L});
-	public static final BitSet FOLLOW_36_in_bigExpr1056 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_bigExpr1058 = new BitSet(new long[]{0x0000002080000000L});
-	public static final BitSet FOLLOW_31_in_bigExpr1061 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_bigExpr1063 = new BitSet(new long[]{0x0000002080000000L});
-	public static final BitSet FOLLOW_37_in_bigExpr1066 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_47_in_bigExpr1079 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1081 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_29_in_bigExpr1083 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_bigExpr1085 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_bigExpr1087 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_block_in_bigExpr1098 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bigbinExpr1_in_bigExpr1102 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_in_bigatom1110 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BOOL_in_bigatom1113 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDF_in_bigatom1118 = new BitSet(new long[]{0x0010000020000002L});
-	public static final BitSet FOLLOW_newStruc_in_bigatom1122 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_callFun_in_bigatom1124 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_bigatom1129 = new BitSet(new long[]{0x0014800024014100L});
-	public static final BitSet FOLLOW_bigExpr_in_bigatom1130 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_bigatom1131 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1884 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_EQUAL_in_bigbinExpr1887 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1890 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2901 = new BitSet(new long[]{0x0000000000200002L});
+	public static final BitSet FOLLOW_ORBOOL_in_bigbinExpr2903 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2906 = new BitSet(new long[]{0x0000000000200002L});
+	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3917 = new BitSet(new long[]{0x0000000000000022L});
+	public static final BitSet FOLLOW_ANDBOOL_in_bigbinExpr3919 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3922 = new BitSet(new long[]{0x0000000000000022L});
+	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4933 = new BitSet(new long[]{0x0000000000580002L});
+	public static final BitSet FOLLOW_PREV_in_bigbinExpr4936 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_OPBOOLEQ_in_bigbinExpr4939 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_NEXT_in_bigbinExpr4942 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4946 = new BitSet(new long[]{0x0000000000580002L});
+	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5957 = new BitSet(new long[]{0x0000000002000012L});
+	public static final BitSet FOLLOW_set_in_bigbinExpr5959 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5966 = new BitSet(new long[]{0x0000000002000012L});
+	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6977 = new BitSet(new long[]{0x0000000000800802L});
+	public static final BitSet FOLLOW_STAR_in_bigbinExpr6981 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_DIV_in_bigbinExpr6984 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6988 = new BitSet(new long[]{0x0000000000800802L});
+	public static final BitSet FOLLOW_bigStarExpr_in_bigvectExpr999 = new BitSet(new long[]{0x0000001000000002L});
+	public static final BitSet FOLLOW_36_in_bigvectExpr1002 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_bigExpr_in_bigvectExpr1004 = new BitSet(new long[]{0x0000002000000000L});
+	public static final BitSet FOLLOW_37_in_bigvectExpr1006 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_bigStarExpr1017 = new BitSet(new long[]{0x0000000022014100L});
+	public static final BitSet FOLLOW_bigMoinsExpr_in_bigStarExpr1021 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SUB_in_bigMoinsExpr1029 = new BitSet(new long[]{0x0000000020014100L});
+	public static final BitSet FOLLOW_bigatom_in_bigMoinsExpr1033 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bigvectExpr_in_bigdotExpr1041 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_33_in_bigdotExpr1044 = new BitSet(new long[]{0x0000080000004000L});
+	public static final BitSet FOLLOW_IDF_in_bigdotExpr1048 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_43_in_bigdotExpr1052 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_29_in_bigdotExpr1054 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_bigdotExpr1055 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_UNAIRE_in_bigunExpr1067 = new BitSet(new long[]{0x0000000022814100L});
+	public static final BitSet FOLLOW_EPERLU_in_bigunExpr1070 = new BitSet(new long[]{0x0000000022814100L});
+	public static final BitSet FOLLOW_bigdotExpr_in_bigunExpr1075 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_bigExpr1084 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1086 = new BitSet(new long[]{0x0000001000000000L});
+	public static final BitSet FOLLOW_36_in_bigExpr1088 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_bigExpr1090 = new BitSet(new long[]{0x0000002080000000L});
+	public static final BitSet FOLLOW_31_in_bigExpr1093 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_bigExpr1095 = new BitSet(new long[]{0x0000002080000000L});
+	public static final BitSet FOLLOW_37_in_bigExpr1098 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_47_in_bigExpr1111 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1113 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_29_in_bigExpr1115 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_bigExpr1117 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_bigExpr1119 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_block_in_bigExpr1130 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bigbinExpr1_in_bigExpr1134 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_in_bigatom1142 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BOOL_in_bigatom1145 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDF_in_bigatom1150 = new BitSet(new long[]{0x0010000020000002L});
+	public static final BitSet FOLLOW_newStruc_in_bigatom1154 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_callFun_in_bigatom1156 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_bigatom1161 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_bigExpr_in_bigatom1162 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_bigatom1163 = new BitSet(new long[]{0x0000000000000002L});
 }

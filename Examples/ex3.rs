@@ -8,7 +8,6 @@ fn fibonacci_computation(generations : i32, previous : i32, pprevious : i32) -> 
 
     }
 
-
     return fibonacci_computation(generations - 1, previous + pprevious, previous);
 
 }
@@ -17,8 +16,6 @@ fn fibonacci_computation(generations : i32, previous : i32, pprevious : i32) -> 
 
 fn fibonacci(generations : i32) -> i32
  {
-
-    let result;
 
 
     if generations == 0 || generations == 1
@@ -31,7 +28,7 @@ fn fibonacci(generations : i32) -> i32
     else
     {
 
-        let result = {            fibonacci_computation(generations - 2, 1, 0)
+        let result = {            fibonacci_computation(generations - 2, 1, 0);
         };
 
     }

@@ -104,6 +104,8 @@ expr : 'vec' '!' '[' expr ']' -> ^('vec' expr)
 |	binExpr1;
 
 
+
+
 bigbinExpr1 : bigbinExpr2 (EQUAL^ bigbinExpr2)*; 
 
 bigbinExpr2 : bigbinExpr3(ORBOOL^ bigbinExpr3)*; 
@@ -116,11 +118,15 @@ bigbinExpr5 : bigbinExpr6((ADD|SUB)^ bigbinExpr6)*;
 
 bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*; 
 
-bigvectExpr : bigatom ('[' bigExpr ']')?;
+bigvectExpr : bigStarExpr ('[' bigExpr ']')?;	
+
+bigStarExpr : STAR^? bigMoinsExpr;
+
+bigMoinsExpr : SUB^? bigatom;
 
 bigdotExpr : bigvectExpr ('.'^ (IDF | 'len' '('')'))?;
 
-bigunExpr : UNAIRE^? bigdotExpr;
+bigunExpr : (UNAIRE^|EPERLU^)? bigdotExpr;
 
 bigExpr 
 :	'vec' '!' '[' expr (',' expr)*']' -> ^('vec' expr*)

@@ -33,7 +33,7 @@ declStruct : 'struct' IDF '{' args? '}' -> ^('struct' IDF args?) //Ok !
 args : IDF ':' type (',' IDF ':' type)* -> (^(IDF type))*//Ok ! 
 ;
 
-declFun : 'fn' (IDF '(' args? ')' ('->' type)? block -> ^('fn' IDF args ^('->' type)? block)
+declFun : 'fn' (IDF '(' args? ')' ('->' type)? block -> ^('fn' IDF args? ^('->' type)? block)
 	|	{mainFound = true;}MAIN '(' ')' block -> ^('fn' MAIN block))
 ;
 
@@ -104,8 +104,6 @@ expr : 'vec' '!' '[' expr ']' -> ^('vec' expr)
 |	binExpr1;
 
 
-
-
 bigbinExpr1 : bigbinExpr2 (EQUAL^ bigbinExpr2)*; 
 
 bigbinExpr2 : bigbinExpr3(ORBOOL^ bigbinExpr3)*; 
@@ -118,15 +116,11 @@ bigbinExpr5 : bigbinExpr6((ADD|SUB)^ bigbinExpr6)*;
 
 bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*; 
 
-bigvectExpr : bigStarExpr ('[' bigExpr ']')?;	
-
-bigStarExpr : STAR^? bigMoinsExpr;
-
-bigMoinsExpr : SUB^? bigatom;
+bigvectExpr : bigatom ('[' bigExpr ']')?;
 
 bigdotExpr : bigvectExpr ('.'^ (IDF | 'len' '('')'))?;
 
-bigunExpr : (UNAIRE^|EPERLU^)? bigdotExpr;
+bigunExpr : UNAIRE^? bigdotExpr;
 
 bigExpr 
 :	'vec' '!' '[' expr (',' expr)*']' -> ^('vec' expr*)

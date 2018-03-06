@@ -37,7 +37,9 @@ declFun : 'fn' (IDF '(' args? ')' ('->' type)? block -> ^('fn' IDF args ^('->' t
 	|	{mainFound = true;}MAIN '(' ')' block -> ^('fn' MAIN block))
 ;
 
-type : IDF
+type : | "i32"
+| "bool"
+|IDF
 	|	'vec' ('<' type '>') -> ^('vec' type) //Ok ! 
 | '&' type -> ^('&' type)
 ;
@@ -74,7 +76,7 @@ binExpr3 : binExpr4(ANDBOOL^ binExpr4)*;
 
 binExpr4 : binExpr5((PREV^|OPBOOLEQ^|NEXT^) binExpr5)*; 
 
-binExpr5 : binExpr6(ADDSUB^ binExpr6)*; 
+binExpr5 : binExpr6(ADDSUB^ binExpr6)*; rint
 
 binExpr6 : unExpr ((STAR^|DIV^) unExpr)*; 
 

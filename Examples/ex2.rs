@@ -22,6 +22,9 @@ fn factorielle(n : i32, result : &i32)
 	if n == 0
 	{
 		*result = 1;
+
+	} else {
+		*result = 1;
 		while i <= n
 		{
 			*result = *result * i;
@@ -32,8 +35,8 @@ fn factorielle(n : i32, result : &i32)
 
 fn main(){
 	print!(puissance(3,3));
+
 	let mut v : i32 = 0;
 	factorielle(5,&v);
 	print!(v);
-	print!(-9);
 }

@@ -114,13 +114,20 @@ bigbinExpr4 : bigbinExpr5((PREV^|OPBOOLEQ^|NEXT^) bigbinExpr5)*;
 
 bigbinExpr5 : bigbinExpr6((ADD|SUB)^ bigbinExpr6)*; 
 
-bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*; 
+bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*;
 
-bigvectExpr : bigatom ('[' bigExpr ']')?;
+bigvectExpr : bigstarExpr ('['^ bigExpr ']'!)?;
 
-bigdotExpr : bigvectExpr ('.'^ (IDF | 'len' '('')'))?;
+bigstarExpr 
+	:	 STAR^? bigmoinsExpr;
+	
+bigmoinsExpr 
+	:	 SUB^?bigatom;
 
-bigunExpr : UNAIRE^? bigdotExpr;
+
+bigdotExpr : bigvectExpr ('.'^ (IDF | 'len' '('!')'! ))?;
+
+bigunExpr : (UNAIRE^|EPERLU^)? bigdotExpr; 
 
 bigExpr 
 :	'vec' '!' '[' expr (',' expr)*']' -> ^('vec' expr*)

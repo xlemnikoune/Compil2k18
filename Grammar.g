@@ -2,7 +2,7 @@ grammar Grammar;
 
 options {
 	backtrack 		= false;
-	k 		= 2;
+	k 		= 1;
 	output 		= AST;
 	ASTLabelType	= CommonTree;
 }

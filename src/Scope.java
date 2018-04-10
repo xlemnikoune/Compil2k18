@@ -1,4 +1,5 @@
 import org.antlr.runtime.tree.BaseTree;
+import org.antlr.runtime.tree.Tree;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,6 +126,60 @@ public class Scope {
         }
     }
 
+    public void addVar(String s, Tree child) throws Exception {
+        String name = child.toString();
+        String type = null;
+        if (child.getChild(0).toString().equals("i32") || child.getChild(0).toString().equals("bool")){
+            type = child.getChild(0).toString();
+        }
+        if (child.getChild(0).getChildCount()>0 && child.getChild(0).getChild(0).getText() == "NEW"){
+            type=child.getChild(0).toString();
+            checkType(type);
+        }
+        if (type == null){
+            type = "i32";
+        }
+        int deplacement = 0;
+        if (type.equals("i32")){
+            deplacement = this.deplacement;
+            this.deplacement += 4;
+        } else {
+            if (type.equals("bool")){
+                deplacement = this.deplacement;
+                this.deplacement += 1;
+            }
+        }
+        ArrayList<String> param = new ArrayList<>();
+        param.add(s);
+        param.add(type);
+        param.add(String.valueOf(deplacement));
+        table.put(name,param);
+        MiniRustCompiler.tds.getListe().put(name,"param");
+
+    }
+
+    public void addFunction(String s, Tree child) throws Exception {
+        String name = child.getChild(0).toString();
+        if (!isIn(name)){
+            String returnType = null;
+            if (child.getChildCount() > 1 ){
+                if (child.getChild(1).toString().equals("->")){
+                    returnType=child.getChild(1).getChild(0).toString();
+                }
+            }
+            if (returnType == null){
+                returnType="Void";
+            }
+            ArrayList<String> param = new ArrayList<>();
+            param.add(s);
+            param.add(returnType);
+            table.put(name,param);
+            MiniRustCompiler.tds.getListe().put(name,"function");
+        } else {
+            throw new Exception("Function name already used");
+        }
+    }
+
     private void checkType(String tempType) throws Exception {
         if (isIn(tempType)){
             if (!table.get(tempType).get(0).equals("struct")){
@@ -164,5 +219,9 @@ public class Scope {
 
     public HashMap<String,ArrayList<String>> getTable() {
         return table;
+    }
+
+    public void addScopeNotInner(String s, Scope temp) {
+        secondTable.put(s, temp);
     }
 }

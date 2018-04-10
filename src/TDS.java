@@ -33,7 +33,25 @@ public class TDS {
             case "struct":
                 System.out.println("VTFF !");
                 return 2;
-            case "fn"
+            case "fn":
+                try {
+                    currentScope.addFunction("function", t);
+                    Scope temp = new Scope("function", currentScope, t.getChild(0).toString());
+                    currentScope.addScopeNotInner(t.getChild(0).toString(), temp);
+                    currentScope = temp;
+
+                    for (int i = 0; i<t.getChildCount()-2;i++) {
+                        if (!t.getChild(i + 2).toString().equals("BLOCK")) {
+                            System.out.println("String : " + t.getChild(i + 2).toString());
+                            currentScope.addVar("param", t.getChild(i + 2));
+                        }
+                    }
+                    return 1;
+                } catch (Exception e) {
+                    System.err.println("Error : \"" + e.getMessage() + "\"at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    e.printStackTrace();
+                    System.exit(-1);
+                }
         }
         return 2;
     }

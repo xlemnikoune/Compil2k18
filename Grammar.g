@@ -33,7 +33,7 @@ declStruct : 'struct' IDF '{' args? '}' -> ^('struct' IDF args?) //Ok !
 args : IDF ':' type (',' IDF ':' type)* -> (^(IDF type))*//Ok ! 
 ;
 
-declFun : 'fn' (IDF '(' args? ')' ('->' type)? block -> ^('fn' IDF args? ^('->' type)? block)
+declFun : 'fn' (IDF '(' args? ')' ('->' type)? block -> ^('fn' IDF ^('->' type)? args?  block)
 	|	{mainFound = true;}MAIN '(' ')' block -> ^('fn' MAIN block))
 ;
 

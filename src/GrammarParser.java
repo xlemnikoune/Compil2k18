@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 Grammar.g 2018-03-27 17:02:17
+// $ANTLR 3.5.2 Grammar.g 2018-04-10 14:32:22
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -301,7 +301,7 @@ public class GrammarParser extends Parser {
 					}
 					break;
 				case 2 :
-					// Grammar.g:27:4: declStruct
+					// Grammar.g:27:3: declStruct
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
@@ -599,7 +599,7 @@ public class GrammarParser extends Parser {
 
 
 	// $ANTLR start "declFun"
-	// Grammar.g:36:1: declFun : 'fn' ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( args )? ( ^( '->' type ) )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) ) ;
+	// Grammar.g:36:1: declFun : 'fn' ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( ^( '->' type ) )? ( args )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) ) ;
 	public final GrammarParser.declFun_return declFun() throws RecognitionException {
 		GrammarParser.declFun_return retval = new GrammarParser.declFun_return();
 		retval.start = input.LT(1);
@@ -638,13 +638,13 @@ public class GrammarParser extends Parser {
 		RewriteRuleSubtreeStream stream_type=new RewriteRuleSubtreeStream(adaptor,"rule type");
 
 		try {
-			// Grammar.g:36:9: ( 'fn' ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( args )? ( ^( '->' type ) )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) ) )
-			// Grammar.g:36:11: 'fn' ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( args )? ( ^( '->' type ) )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) )
+			// Grammar.g:36:9: ( 'fn' ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( ^( '->' type ) )? ( args )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) ) )
+			// Grammar.g:36:11: 'fn' ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( ^( '->' type ) )? ( args )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) )
 			{
 			string_literal18=(Token)match(input,41,FOLLOW_41_in_declFun185);  
 			stream_41.add(string_literal18);
 
-			// Grammar.g:36:16: ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( args )? ( ^( '->' type ) )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) )
+			// Grammar.g:36:16: ( IDF '(' ( args )? ')' ( '->' type )? block -> ^( 'fn' IDF ( ^( '->' type ) )? ( args )? block ) | MAIN '(' ')' block -> ^( 'fn' MAIN block ) )
 			int alt7=2;
 			int LA7_0 = input.LA(1);
 			if ( (LA7_0==IDF) ) {
@@ -722,7 +722,7 @@ public class GrammarParser extends Parser {
 
 					stream_block.add(block25.getTree());
 					// AST REWRITE
-					// elements: type, 32, block, args, 41, IDF
+					// elements: args, type, block, 32, 41, IDF
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -732,22 +732,16 @@ public class GrammarParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 36:54: -> ^( 'fn' IDF ( args )? ( ^( '->' type ) )? block )
+					// 36:54: -> ^( 'fn' IDF ( ^( '->' type ) )? ( args )? block )
 					{
-						// Grammar.g:36:57: ^( 'fn' IDF ( args )? ( ^( '->' type ) )? block )
+						// Grammar.g:36:57: ^( 'fn' IDF ( ^( '->' type ) )? ( args )? block )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot(stream_41.nextNode(), root_1);
 						adaptor.addChild(root_1, stream_IDF.nextNode());
-						// Grammar.g:36:68: ( args )?
-						if ( stream_args.hasNext() ) {
-							adaptor.addChild(root_1, stream_args.nextTree());
-						}
-						stream_args.reset();
-
-						// Grammar.g:36:74: ( ^( '->' type ) )?
+						// Grammar.g:36:68: ( ^( '->' type ) )?
 						if ( stream_type.hasNext()||stream_32.hasNext() ) {
-							// Grammar.g:36:74: ^( '->' type )
+							// Grammar.g:36:68: ^( '->' type )
 							{
 							CommonTree root_2 = (CommonTree)adaptor.nil();
 							root_2 = (CommonTree)adaptor.becomeRoot(stream_32.nextNode(), root_2);
@@ -758,6 +752,12 @@ public class GrammarParser extends Parser {
 						}
 						stream_type.reset();
 						stream_32.reset();
+
+						// Grammar.g:36:82: ( args )?
+						if ( stream_args.hasNext() ) {
+							adaptor.addChild(root_1, stream_args.nextTree());
+						}
+						stream_args.reset();
 
 						adaptor.addChild(root_1, stream_block.nextTree());
 						adaptor.addChild(root_0, root_1);
@@ -774,16 +774,16 @@ public class GrammarParser extends Parser {
 					// Grammar.g:37:4: MAIN '(' ')' block
 					{
 					mainFound = true;
-					MAIN26=(Token)match(input,MAIN,FOLLOW_MAIN_in_declFun230);  
+					MAIN26=(Token)match(input,MAIN,FOLLOW_MAIN_in_declFun231);  
 					stream_MAIN.add(MAIN26);
 
-					char_literal27=(Token)match(input,29,FOLLOW_29_in_declFun232);  
+					char_literal27=(Token)match(input,29,FOLLOW_29_in_declFun233);  
 					stream_29.add(char_literal27);
 
-					char_literal28=(Token)match(input,30,FOLLOW_30_in_declFun234);  
+					char_literal28=(Token)match(input,30,FOLLOW_30_in_declFun235);  
 					stream_30.add(char_literal28);
 
-					pushFollow(FOLLOW_block_in_declFun236);
+					pushFollow(FOLLOW_block_in_declFun237);
 					block29=block();
 					state._fsp--;
 
@@ -938,7 +938,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					string_literal30=(Token)match(input,42,FOLLOW_42_in_type258); 
+					string_literal30=(Token)match(input,42,FOLLOW_42_in_type259); 
 					string_literal30_tree = (CommonTree)adaptor.create(string_literal30);
 					adaptor.addChild(root_0, string_literal30_tree);
 
@@ -950,7 +950,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					string_literal31=(Token)match(input,38,FOLLOW_38_in_type262); 
+					string_literal31=(Token)match(input,38,FOLLOW_38_in_type263); 
 					string_literal31_tree = (CommonTree)adaptor.create(string_literal31);
 					adaptor.addChild(root_0, string_literal31_tree);
 
@@ -962,7 +962,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					IDF32=(Token)match(input,IDF,FOLLOW_IDF_in_type265); 
+					IDF32=(Token)match(input,IDF,FOLLOW_IDF_in_type266); 
 					IDF32_tree = (CommonTree)adaptor.create(IDF32);
 					adaptor.addChild(root_0, IDF32_tree);
 
@@ -971,21 +971,21 @@ public class GrammarParser extends Parser {
 				case 5 :
 					// Grammar.g:43:4: 'vec' ( '<' type '>' )
 					{
-					string_literal33=(Token)match(input,50,FOLLOW_50_in_type270);  
+					string_literal33=(Token)match(input,50,FOLLOW_50_in_type271);  
 					stream_50.add(string_literal33);
 
 					// Grammar.g:43:10: ( '<' type '>' )
 					// Grammar.g:43:11: '<' type '>'
 					{
-					char_literal34=(Token)match(input,PREV,FOLLOW_PREV_in_type273);  
+					char_literal34=(Token)match(input,PREV,FOLLOW_PREV_in_type274);  
 					stream_PREV.add(char_literal34);
 
-					pushFollow(FOLLOW_type_in_type275);
+					pushFollow(FOLLOW_type_in_type276);
 					type35=type();
 					state._fsp--;
 
 					stream_type.add(type35.getTree());
-					char_literal36=(Token)match(input,NEXT,FOLLOW_NEXT_in_type277);  
+					char_literal36=(Token)match(input,NEXT,FOLLOW_NEXT_in_type278);  
 					stream_NEXT.add(char_literal36);
 
 					}
@@ -1021,10 +1021,10 @@ public class GrammarParser extends Parser {
 				case 6 :
 					// Grammar.g:44:3: '&' type
 					{
-					char_literal37=(Token)match(input,EPERLU,FOLLOW_EPERLU_in_type291);  
+					char_literal37=(Token)match(input,EPERLU,FOLLOW_EPERLU_in_type292);  
 					stream_EPERLU.add(char_literal37);
 
-					pushFollow(FOLLOW_type_in_type293);
+					pushFollow(FOLLOW_type_in_type294);
 					type38=type();
 					state._fsp--;
 
@@ -1107,7 +1107,7 @@ public class GrammarParser extends Parser {
 			// Grammar.g:47:7: ( '{' ( instruct )* '}' -> ^( BLOCK ( instruct )* ) )
 			// Grammar.g:47:9: '{' ( instruct )* '}'
 			{
-			char_literal39=(Token)match(input,52,FOLLOW_52_in_block310);  
+			char_literal39=(Token)match(input,52,FOLLOW_52_in_block311);  
 			stream_52.add(char_literal39);
 
 			// Grammar.g:47:13: ( instruct )*
@@ -1123,7 +1123,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:47:13: instruct
 					{
-					pushFollow(FOLLOW_instruct_in_block312);
+					pushFollow(FOLLOW_instruct_in_block313);
 					instruct40=instruct();
 					state._fsp--;
 
@@ -1136,7 +1136,7 @@ public class GrammarParser extends Parser {
 				}
 			}
 
-			char_literal41=(Token)match(input,53,FOLLOW_53_in_block315);  
+			char_literal41=(Token)match(input,53,FOLLOW_53_in_block316);  
 			stream_53.add(char_literal41);
 
 			// AST REWRITE
@@ -1224,10 +1224,10 @@ public class GrammarParser extends Parser {
 			// Grammar.g:51:9: ( '(' expr ( ',' expr )* ')' -> ( expr )* )
 			// Grammar.g:51:11: '(' expr ( ',' expr )* ')'
 			{
-			char_literal42=(Token)match(input,29,FOLLOW_29_in_callFun334);  
+			char_literal42=(Token)match(input,29,FOLLOW_29_in_callFun335);  
 			stream_29.add(char_literal42);
 
-			pushFollow(FOLLOW_expr_in_callFun336);
+			pushFollow(FOLLOW_expr_in_callFun337);
 			expr43=expr();
 			state._fsp--;
 
@@ -1245,10 +1245,10 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:51:21: ',' expr
 					{
-					char_literal44=(Token)match(input,31,FOLLOW_31_in_callFun339);  
+					char_literal44=(Token)match(input,31,FOLLOW_31_in_callFun340);  
 					stream_31.add(char_literal44);
 
-					pushFollow(FOLLOW_expr_in_callFun341);
+					pushFollow(FOLLOW_expr_in_callFun342);
 					expr45=expr();
 					state._fsp--;
 
@@ -1261,7 +1261,7 @@ public class GrammarParser extends Parser {
 				}
 			}
 
-			char_literal46=(Token)match(input,30,FOLLOW_30_in_callFun345);  
+			char_literal46=(Token)match(input,30,FOLLOW_30_in_callFun346);  
 			stream_30.add(char_literal46);
 
 			// AST REWRITE
@@ -1352,16 +1352,16 @@ public class GrammarParser extends Parser {
 			// Grammar.g:53:10: ( '{' IDF ':' bigExpr ( ',' IDF ':' bigExpr )* '}' -> ^( NEW ( ^( IDF bigExpr ) )* ) )
 			// Grammar.g:53:12: '{' IDF ':' bigExpr ( ',' IDF ':' bigExpr )* '}'
 			{
-			char_literal47=(Token)match(input,52,FOLLOW_52_in_newStruc358);  
+			char_literal47=(Token)match(input,52,FOLLOW_52_in_newStruc359);  
 			stream_52.add(char_literal47);
 
-			IDF48=(Token)match(input,IDF,FOLLOW_IDF_in_newStruc360);  
+			IDF48=(Token)match(input,IDF,FOLLOW_IDF_in_newStruc361);  
 			stream_IDF.add(IDF48);
 
-			char_literal49=(Token)match(input,34,FOLLOW_34_in_newStruc362);  
+			char_literal49=(Token)match(input,34,FOLLOW_34_in_newStruc363);  
 			stream_34.add(char_literal49);
 
-			pushFollow(FOLLOW_bigExpr_in_newStruc364);
+			pushFollow(FOLLOW_bigExpr_in_newStruc365);
 			bigExpr50=bigExpr();
 			state._fsp--;
 
@@ -1379,16 +1379,16 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:53:33: ',' IDF ':' bigExpr
 					{
-					char_literal51=(Token)match(input,31,FOLLOW_31_in_newStruc367);  
+					char_literal51=(Token)match(input,31,FOLLOW_31_in_newStruc368);  
 					stream_31.add(char_literal51);
 
-					IDF52=(Token)match(input,IDF,FOLLOW_IDF_in_newStruc369);  
+					IDF52=(Token)match(input,IDF,FOLLOW_IDF_in_newStruc370);  
 					stream_IDF.add(IDF52);
 
-					char_literal53=(Token)match(input,34,FOLLOW_34_in_newStruc371);  
+					char_literal53=(Token)match(input,34,FOLLOW_34_in_newStruc372);  
 					stream_34.add(char_literal53);
 
-					pushFollow(FOLLOW_bigExpr_in_newStruc373);
+					pushFollow(FOLLOW_bigExpr_in_newStruc374);
 					bigExpr54=bigExpr();
 					state._fsp--;
 
@@ -1401,7 +1401,7 @@ public class GrammarParser extends Parser {
 				}
 			}
 
-			char_literal55=(Token)match(input,53,FOLLOW_53_in_newStruc377);  
+			char_literal55=(Token)match(input,53,FOLLOW_53_in_newStruc378);  
 			stream_53.add(char_literal55);
 
 			// AST REWRITE
@@ -1593,12 +1593,12 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:56:3: expr ';'
 					{
-					pushFollow(FOLLOW_expr_in_instruct401);
+					pushFollow(FOLLOW_expr_in_instruct402);
 					expr56=expr();
 					state._fsp--;
 
 					stream_expr.add(expr56.getTree());
-					char_literal57=(Token)match(input,35,FOLLOW_35_in_instruct403);  
+					char_literal57=(Token)match(input,35,FOLLOW_35_in_instruct404);  
 					stream_35.add(char_literal57);
 
 					// AST REWRITE
@@ -1625,7 +1625,7 @@ public class GrammarParser extends Parser {
 				case 2 :
 					// Grammar.g:57:3: ';'
 					{
-					char_literal58=(Token)match(input,35,FOLLOW_35_in_instruct411);  
+					char_literal58=(Token)match(input,35,FOLLOW_35_in_instruct412);  
 					stream_35.add(char_literal58);
 
 					// AST REWRITE
@@ -1650,12 +1650,12 @@ public class GrammarParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Grammar.g:58:4: 'let' ( 'mut' )? dotIDF ( ':' type )? '=' bigExpr ';'
+					// Grammar.g:58:3: 'let' ( 'mut' )? dotIDF ( ':' type )? '=' bigExpr ';'
 					{
-					string_literal59=(Token)match(input,44,FOLLOW_44_in_instruct417);  
+					string_literal59=(Token)match(input,44,FOLLOW_44_in_instruct418);  
 					stream_44.add(string_literal59);
 
-					// Grammar.g:58:10: ( 'mut' )?
+					// Grammar.g:58:9: ( 'mut' )?
 					int alt12=2;
 					int LA12_0 = input.LA(1);
 					if ( (LA12_0==46) ) {
@@ -1663,9 +1663,9 @@ public class GrammarParser extends Parser {
 					}
 					switch (alt12) {
 						case 1 :
-							// Grammar.g:58:10: 'mut'
+							// Grammar.g:58:9: 'mut'
 							{
-							string_literal60=(Token)match(input,46,FOLLOW_46_in_instruct419);  
+							string_literal60=(Token)match(input,46,FOLLOW_46_in_instruct420);  
 							stream_46.add(string_literal60);
 
 							}
@@ -1673,12 +1673,12 @@ public class GrammarParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_dotIDF_in_instruct422);
+					pushFollow(FOLLOW_dotIDF_in_instruct423);
 					dotIDF61=dotIDF();
 					state._fsp--;
 
 					stream_dotIDF.add(dotIDF61.getTree());
-					// Grammar.g:58:24: ( ':' type )?
+					// Grammar.g:58:23: ( ':' type )?
 					int alt13=2;
 					int LA13_0 = input.LA(1);
 					if ( (LA13_0==34) ) {
@@ -1686,12 +1686,12 @@ public class GrammarParser extends Parser {
 					}
 					switch (alt13) {
 						case 1 :
-							// Grammar.g:58:25: ':' type
+							// Grammar.g:58:24: ':' type
 							{
-							char_literal62=(Token)match(input,34,FOLLOW_34_in_instruct425);  
+							char_literal62=(Token)match(input,34,FOLLOW_34_in_instruct426);  
 							stream_34.add(char_literal62);
 
-							pushFollow(FOLLOW_type_in_instruct427);
+							pushFollow(FOLLOW_type_in_instruct428);
 							type63=type();
 							state._fsp--;
 
@@ -1701,15 +1701,15 @@ public class GrammarParser extends Parser {
 
 					}
 
-					char_literal64=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_instruct431);  
+					char_literal64=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_instruct432);  
 					stream_EQUAL.add(char_literal64);
 
-					pushFollow(FOLLOW_bigExpr_in_instruct433);
+					pushFollow(FOLLOW_bigExpr_in_instruct434);
 					bigExpr65=bigExpr();
 					state._fsp--;
 
 					stream_bigExpr.add(bigExpr65.getTree());
-					char_literal66=(Token)match(input,35,FOLLOW_35_in_instruct435);  
+					char_literal66=(Token)match(input,35,FOLLOW_35_in_instruct436);  
 					stream_35.add(char_literal66);
 
 					// AST REWRITE
@@ -1723,25 +1723,25 @@ public class GrammarParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 58:52: -> ^( 'let' ( 'mut' )? ( type )? ^( '=' dotIDF bigExpr ) )
+					// 58:51: -> ^( 'let' ( 'mut' )? ( type )? ^( '=' dotIDF bigExpr ) )
 					{
-						// Grammar.g:58:55: ^( 'let' ( 'mut' )? ( type )? ^( '=' dotIDF bigExpr ) )
+						// Grammar.g:58:54: ^( 'let' ( 'mut' )? ( type )? ^( '=' dotIDF bigExpr ) )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot(stream_44.nextNode(), root_1);
-						// Grammar.g:58:63: ( 'mut' )?
+						// Grammar.g:58:62: ( 'mut' )?
 						if ( stream_46.hasNext() ) {
 							adaptor.addChild(root_1, stream_46.nextNode());
 						}
 						stream_46.reset();
 
-						// Grammar.g:58:70: ( type )?
+						// Grammar.g:58:69: ( type )?
 						if ( stream_type.hasNext() ) {
 							adaptor.addChild(root_1, stream_type.nextTree());
 						}
 						stream_type.reset();
 
-						// Grammar.g:58:78: ^( '=' dotIDF bigExpr )
+						// Grammar.g:58:77: ^( '=' dotIDF bigExpr )
 						{
 						CommonTree root_2 = (CommonTree)adaptor.nil();
 						root_2 = (CommonTree)adaptor.becomeRoot(stream_EQUAL.nextNode(), root_2);
@@ -1763,15 +1763,15 @@ public class GrammarParser extends Parser {
 				case 4 :
 					// Grammar.g:59:3: 'while' expr block
 					{
-					string_literal67=(Token)match(input,51,FOLLOW_51_in_instruct462);  
+					string_literal67=(Token)match(input,51,FOLLOW_51_in_instruct463);  
 					stream_51.add(string_literal67);
 
-					pushFollow(FOLLOW_expr_in_instruct464);
+					pushFollow(FOLLOW_expr_in_instruct465);
 					expr68=expr();
 					state._fsp--;
 
 					stream_expr.add(expr68.getTree());
-					pushFollow(FOLLOW_block_in_instruct466);
+					pushFollow(FOLLOW_block_in_instruct467);
 					block69=block();
 					state._fsp--;
 
@@ -1808,7 +1808,7 @@ public class GrammarParser extends Parser {
 				case 5 :
 					// Grammar.g:60:3: 'return' ( expr )? ';'
 					{
-					string_literal70=(Token)match(input,48,FOLLOW_48_in_instruct480);  
+					string_literal70=(Token)match(input,48,FOLLOW_48_in_instruct481);  
 					stream_48.add(string_literal70);
 
 					// Grammar.g:60:12: ( expr )?
@@ -1821,7 +1821,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:60:12: expr
 							{
-							pushFollow(FOLLOW_expr_in_instruct482);
+							pushFollow(FOLLOW_expr_in_instruct483);
 							expr71=expr();
 							state._fsp--;
 
@@ -1831,7 +1831,7 @@ public class GrammarParser extends Parser {
 
 					}
 
-					char_literal72=(Token)match(input,35,FOLLOW_35_in_instruct485);  
+					char_literal72=(Token)match(input,35,FOLLOW_35_in_instruct486);  
 					stream_35.add(char_literal72);
 
 					// AST REWRITE
@@ -1870,10 +1870,10 @@ public class GrammarParser extends Parser {
 				case 6 :
 					// Grammar.g:61:3: 'loop' block
 					{
-					string_literal73=(Token)match(input,45,FOLLOW_45_in_instruct498);  
+					string_literal73=(Token)match(input,45,FOLLOW_45_in_instruct499);  
 					stream_45.add(string_literal73);
 
-					pushFollow(FOLLOW_block_in_instruct500);
+					pushFollow(FOLLOW_block_in_instruct501);
 					block74=block();
 					state._fsp--;
 
@@ -1909,10 +1909,10 @@ public class GrammarParser extends Parser {
 				case 7 :
 					// Grammar.g:62:3: 'break' ';'
 					{
-					string_literal75=(Token)match(input,39,FOLLOW_39_in_instruct512);  
+					string_literal75=(Token)match(input,39,FOLLOW_39_in_instruct513);  
 					stream_39.add(string_literal75);
 
-					char_literal76=(Token)match(input,35,FOLLOW_35_in_instruct514);  
+					char_literal76=(Token)match(input,35,FOLLOW_35_in_instruct515);  
 					stream_35.add(char_literal76);
 
 					// AST REWRITE
@@ -1942,7 +1942,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					pushFollow(FOLLOW_ifExpr_in_instruct522);
+					pushFollow(FOLLOW_ifExpr_in_instruct523);
 					ifExpr77=ifExpr();
 					state._fsp--;
 
@@ -2001,7 +2001,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			IDF78=(Token)match(input,IDF,FOLLOW_IDF_in_dotIDF533); 
+			IDF78=(Token)match(input,IDF,FOLLOW_IDF_in_dotIDF534); 
 			IDF78_tree = (CommonTree)adaptor.create(IDF78);
 			adaptor.addChild(root_0, IDF78_tree);
 
@@ -2015,11 +2015,11 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:67:6: '.' ^ IDF
 					{
-					char_literal79=(Token)match(input,33,FOLLOW_33_in_dotIDF536); 
+					char_literal79=(Token)match(input,33,FOLLOW_33_in_dotIDF537); 
 					char_literal79_tree = (CommonTree)adaptor.create(char_literal79);
 					root_0 = (CommonTree)adaptor.becomeRoot(char_literal79_tree, root_0);
 
-					IDF80=(Token)match(input,IDF,FOLLOW_IDF_in_dotIDF539); 
+					IDF80=(Token)match(input,IDF,FOLLOW_IDF_in_dotIDF540); 
 					IDF80_tree = (CommonTree)adaptor.create(IDF80);
 					adaptor.addChild(root_0, IDF80_tree);
 
@@ -2081,15 +2081,15 @@ public class GrammarParser extends Parser {
 			// Grammar.g:69:8: ( 'if' expr block ( 'else' block )? -> ^( 'if' expr block ( ^( 'else' block ) )? ) )
 			// Grammar.g:69:10: 'if' expr block ( 'else' block )?
 			{
-			string_literal81=(Token)match(input,IF,FOLLOW_IF_in_ifExpr549);  
+			string_literal81=(Token)match(input,IF,FOLLOW_IF_in_ifExpr550);  
 			stream_IF.add(string_literal81);
 
-			pushFollow(FOLLOW_expr_in_ifExpr551);
+			pushFollow(FOLLOW_expr_in_ifExpr552);
 			expr82=expr();
 			state._fsp--;
 
 			stream_expr.add(expr82.getTree());
-			pushFollow(FOLLOW_block_in_ifExpr553);
+			pushFollow(FOLLOW_block_in_ifExpr554);
 			block83=block();
 			state._fsp--;
 
@@ -2104,10 +2104,10 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:69:27: 'else' block
 					{
-					string_literal84=(Token)match(input,40,FOLLOW_40_in_ifExpr556);  
+					string_literal84=(Token)match(input,40,FOLLOW_40_in_ifExpr557);  
 					stream_40.add(string_literal84);
 
-					pushFollow(FOLLOW_block_in_ifExpr558);
+					pushFollow(FOLLOW_block_in_ifExpr559);
 					block85=block();
 					state._fsp--;
 
@@ -2207,7 +2207,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_binExpr2_in_binExpr1586);
+			pushFollow(FOLLOW_binExpr2_in_binExpr1587);
 			binExpr286=binExpr2();
 			state._fsp--;
 
@@ -2226,11 +2226,11 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:71:22: EQUAL ^ binExpr2
 					{
-					EQUAL87=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_binExpr1589); 
+					EQUAL87=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_binExpr1590); 
 					EQUAL87_tree = (CommonTree)adaptor.create(EQUAL87);
 					root_0 = (CommonTree)adaptor.becomeRoot(EQUAL87_tree, root_0);
 
-					pushFollow(FOLLOW_binExpr2_in_binExpr1592);
+					pushFollow(FOLLOW_binExpr2_in_binExpr1593);
 					binExpr288=binExpr2();
 					state._fsp--;
 
@@ -2293,7 +2293,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_binExpr3_in_binExpr2603);
+			pushFollow(FOLLOW_binExpr3_in_binExpr2604);
 			binExpr389=binExpr3();
 			state._fsp--;
 
@@ -2312,11 +2312,11 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:73:21: ORBOOL ^ binExpr3
 					{
-					ORBOOL90=(Token)match(input,ORBOOL,FOLLOW_ORBOOL_in_binExpr2605); 
+					ORBOOL90=(Token)match(input,ORBOOL,FOLLOW_ORBOOL_in_binExpr2606); 
 					ORBOOL90_tree = (CommonTree)adaptor.create(ORBOOL90);
 					root_0 = (CommonTree)adaptor.becomeRoot(ORBOOL90_tree, root_0);
 
-					pushFollow(FOLLOW_binExpr3_in_binExpr2608);
+					pushFollow(FOLLOW_binExpr3_in_binExpr2609);
 					binExpr391=binExpr3();
 					state._fsp--;
 
@@ -2379,7 +2379,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_binExpr4_in_binExpr3619);
+			pushFollow(FOLLOW_binExpr4_in_binExpr3620);
 			binExpr492=binExpr4();
 			state._fsp--;
 
@@ -2398,11 +2398,11 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:75:21: ANDBOOL ^ binExpr4
 					{
-					ANDBOOL93=(Token)match(input,ANDBOOL,FOLLOW_ANDBOOL_in_binExpr3621); 
+					ANDBOOL93=(Token)match(input,ANDBOOL,FOLLOW_ANDBOOL_in_binExpr3622); 
 					ANDBOOL93_tree = (CommonTree)adaptor.create(ANDBOOL93);
 					root_0 = (CommonTree)adaptor.becomeRoot(ANDBOOL93_tree, root_0);
 
-					pushFollow(FOLLOW_binExpr4_in_binExpr3624);
+					pushFollow(FOLLOW_binExpr4_in_binExpr3625);
 					binExpr494=binExpr4();
 					state._fsp--;
 
@@ -2469,7 +2469,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_binExpr5_in_binExpr4635);
+			pushFollow(FOLLOW_binExpr5_in_binExpr4636);
 			binExpr595=binExpr5();
 			state._fsp--;
 
@@ -2515,7 +2515,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:77:22: PREV ^
 							{
-							PREV96=(Token)match(input,PREV,FOLLOW_PREV_in_binExpr4638); 
+							PREV96=(Token)match(input,PREV,FOLLOW_PREV_in_binExpr4639); 
 							PREV96_tree = (CommonTree)adaptor.create(PREV96);
 							root_0 = (CommonTree)adaptor.becomeRoot(PREV96_tree, root_0);
 
@@ -2524,7 +2524,7 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:77:28: OPBOOLEQ ^
 							{
-							OPBOOLEQ97=(Token)match(input,OPBOOLEQ,FOLLOW_OPBOOLEQ_in_binExpr4641); 
+							OPBOOLEQ97=(Token)match(input,OPBOOLEQ,FOLLOW_OPBOOLEQ_in_binExpr4642); 
 							OPBOOLEQ97_tree = (CommonTree)adaptor.create(OPBOOLEQ97);
 							root_0 = (CommonTree)adaptor.becomeRoot(OPBOOLEQ97_tree, root_0);
 
@@ -2533,7 +2533,7 @@ public class GrammarParser extends Parser {
 						case 3 :
 							// Grammar.g:77:38: NEXT ^
 							{
-							NEXT98=(Token)match(input,NEXT,FOLLOW_NEXT_in_binExpr4644); 
+							NEXT98=(Token)match(input,NEXT,FOLLOW_NEXT_in_binExpr4645); 
 							NEXT98_tree = (CommonTree)adaptor.create(NEXT98);
 							root_0 = (CommonTree)adaptor.becomeRoot(NEXT98_tree, root_0);
 
@@ -2542,7 +2542,7 @@ public class GrammarParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_binExpr5_in_binExpr4648);
+					pushFollow(FOLLOW_binExpr5_in_binExpr4649);
 					binExpr599=binExpr5();
 					state._fsp--;
 
@@ -2607,7 +2607,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_binExpr6_in_binExpr5659);
+			pushFollow(FOLLOW_binExpr6_in_binExpr5660);
 			binExpr6100=binExpr6();
 			state._fsp--;
 
@@ -2646,7 +2646,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:79:22: ADD ^
 							{
-							ADD101=(Token)match(input,ADD,FOLLOW_ADD_in_binExpr5662); 
+							ADD101=(Token)match(input,ADD,FOLLOW_ADD_in_binExpr5663); 
 							ADD101_tree = (CommonTree)adaptor.create(ADD101);
 							root_0 = (CommonTree)adaptor.becomeRoot(ADD101_tree, root_0);
 
@@ -2655,7 +2655,7 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:79:27: SUB ^
 							{
-							SUB102=(Token)match(input,SUB,FOLLOW_SUB_in_binExpr5665); 
+							SUB102=(Token)match(input,SUB,FOLLOW_SUB_in_binExpr5666); 
 							SUB102_tree = (CommonTree)adaptor.create(SUB102);
 							root_0 = (CommonTree)adaptor.becomeRoot(SUB102_tree, root_0);
 
@@ -2664,7 +2664,7 @@ public class GrammarParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_binExpr6_in_binExpr5670);
+					pushFollow(FOLLOW_binExpr6_in_binExpr5671);
 					binExpr6103=binExpr6();
 					state._fsp--;
 
@@ -2729,7 +2729,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_unExpr_in_binExpr6681);
+			pushFollow(FOLLOW_unExpr_in_binExpr6682);
 			unExpr104=unExpr();
 			state._fsp--;
 
@@ -2768,7 +2768,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:81:21: STAR ^
 							{
-							STAR105=(Token)match(input,STAR,FOLLOW_STAR_in_binExpr6685); 
+							STAR105=(Token)match(input,STAR,FOLLOW_STAR_in_binExpr6686); 
 							STAR105_tree = (CommonTree)adaptor.create(STAR105);
 							root_0 = (CommonTree)adaptor.becomeRoot(STAR105_tree, root_0);
 
@@ -2777,7 +2777,7 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:81:27: DIV ^
 							{
-							DIV106=(Token)match(input,DIV,FOLLOW_DIV_in_binExpr6688); 
+							DIV106=(Token)match(input,DIV,FOLLOW_DIV_in_binExpr6689); 
 							DIV106_tree = (CommonTree)adaptor.create(DIV106);
 							root_0 = (CommonTree)adaptor.becomeRoot(DIV106_tree, root_0);
 
@@ -2786,7 +2786,7 @@ public class GrammarParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_unExpr_in_binExpr6692);
+					pushFollow(FOLLOW_unExpr_in_binExpr6693);
 					unExpr107=unExpr();
 					state._fsp--;
 
@@ -2851,7 +2851,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_starExpr_in_vectExpr703);
+			pushFollow(FOLLOW_starExpr_in_vectExpr704);
 			starExpr108=starExpr();
 			state._fsp--;
 
@@ -2867,17 +2867,17 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:83:22: '[' ^ expr ']' !
 					{
-					char_literal109=(Token)match(input,36,FOLLOW_36_in_vectExpr706); 
+					char_literal109=(Token)match(input,36,FOLLOW_36_in_vectExpr707); 
 					char_literal109_tree = (CommonTree)adaptor.create(char_literal109);
 					root_0 = (CommonTree)adaptor.becomeRoot(char_literal109_tree, root_0);
 
-					pushFollow(FOLLOW_expr_in_vectExpr709);
+					pushFollow(FOLLOW_expr_in_vectExpr710);
 					expr110=expr();
 					state._fsp--;
 
 					adaptor.addChild(root_0, expr110.getTree());
 
-					char_literal111=(Token)match(input,37,FOLLOW_37_in_vectExpr711); 
+					char_literal111=(Token)match(input,37,FOLLOW_37_in_vectExpr712); 
 					}
 					break;
 
@@ -2941,7 +2941,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:86:9: STAR ^
 					{
-					STAR112=(Token)match(input,STAR,FOLLOW_STAR_in_starExpr725); 
+					STAR112=(Token)match(input,STAR,FOLLOW_STAR_in_starExpr726); 
 					STAR112_tree = (CommonTree)adaptor.create(STAR112);
 					root_0 = (CommonTree)adaptor.becomeRoot(STAR112_tree, root_0);
 
@@ -2950,7 +2950,7 @@ public class GrammarParser extends Parser {
 
 			}
 
-			pushFollow(FOLLOW_moinsExpr_in_starExpr729);
+			pushFollow(FOLLOW_moinsExpr_in_starExpr730);
 			moinsExpr113=moinsExpr();
 			state._fsp--;
 
@@ -3014,7 +3014,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:89:8: SUB ^
 					{
-					SUB114=(Token)match(input,SUB,FOLLOW_SUB_in_moinsExpr741); 
+					SUB114=(Token)match(input,SUB,FOLLOW_SUB_in_moinsExpr742); 
 					SUB114_tree = (CommonTree)adaptor.create(SUB114);
 					root_0 = (CommonTree)adaptor.becomeRoot(SUB114_tree, root_0);
 
@@ -3023,7 +3023,7 @@ public class GrammarParser extends Parser {
 
 			}
 
-			pushFollow(FOLLOW_atom_in_moinsExpr744);
+			pushFollow(FOLLOW_atom_in_moinsExpr745);
 			atom115=atom();
 			state._fsp--;
 
@@ -3085,7 +3085,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_vectExpr_in_dotExpr753);
+			pushFollow(FOLLOW_vectExpr_in_dotExpr754);
 			vectExpr116=vectExpr();
 			state._fsp--;
 
@@ -3101,7 +3101,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:92:21: '.' ^ ( IDF | 'len' '(' ! ')' !)
 					{
-					char_literal117=(Token)match(input,33,FOLLOW_33_in_dotExpr756); 
+					char_literal117=(Token)match(input,33,FOLLOW_33_in_dotExpr757); 
 					char_literal117_tree = (CommonTree)adaptor.create(char_literal117);
 					root_0 = (CommonTree)adaptor.becomeRoot(char_literal117_tree, root_0);
 
@@ -3125,7 +3125,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:92:27: IDF
 							{
-							IDF118=(Token)match(input,IDF,FOLLOW_IDF_in_dotExpr760); 
+							IDF118=(Token)match(input,IDF,FOLLOW_IDF_in_dotExpr761); 
 							IDF118_tree = (CommonTree)adaptor.create(IDF118);
 							adaptor.addChild(root_0, IDF118_tree);
 
@@ -3134,12 +3134,12 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:92:33: 'len' '(' ! ')' !
 							{
-							string_literal119=(Token)match(input,43,FOLLOW_43_in_dotExpr764); 
+							string_literal119=(Token)match(input,43,FOLLOW_43_in_dotExpr765); 
 							string_literal119_tree = (CommonTree)adaptor.create(string_literal119);
 							adaptor.addChild(root_0, string_literal119_tree);
 
-							char_literal120=(Token)match(input,29,FOLLOW_29_in_dotExpr766); 
-							char_literal121=(Token)match(input,30,FOLLOW_30_in_dotExpr768); 
+							char_literal120=(Token)match(input,29,FOLLOW_29_in_dotExpr767); 
+							char_literal121=(Token)match(input,30,FOLLOW_30_in_dotExpr769); 
 							}
 							break;
 
@@ -3213,7 +3213,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:94:11: UNAIRE ^
 					{
-					UNAIRE122=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_unExpr782); 
+					UNAIRE122=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_unExpr783); 
 					UNAIRE122_tree = (CommonTree)adaptor.create(UNAIRE122);
 					root_0 = (CommonTree)adaptor.becomeRoot(UNAIRE122_tree, root_0);
 
@@ -3222,7 +3222,7 @@ public class GrammarParser extends Parser {
 				case 2 :
 					// Grammar.g:94:19: EPERLU ^
 					{
-					EPERLU123=(Token)match(input,EPERLU,FOLLOW_EPERLU_in_unExpr785); 
+					EPERLU123=(Token)match(input,EPERLU,FOLLOW_EPERLU_in_unExpr786); 
 					EPERLU123_tree = (CommonTree)adaptor.create(EPERLU123);
 					root_0 = (CommonTree)adaptor.becomeRoot(EPERLU123_tree, root_0);
 
@@ -3231,7 +3231,7 @@ public class GrammarParser extends Parser {
 
 			}
 
-			pushFollow(FOLLOW_dotExpr_in_unExpr790);
+			pushFollow(FOLLOW_dotExpr_in_unExpr791);
 			dotExpr124=dotExpr();
 			state._fsp--;
 
@@ -3326,19 +3326,19 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					INT125=(Token)match(input,INT,FOLLOW_INT_in_atom798); 
+					INT125=(Token)match(input,INT,FOLLOW_INT_in_atom799); 
 					INT125_tree = (CommonTree)adaptor.create(INT125);
 					adaptor.addChild(root_0, INT125_tree);
 
 					}
 					break;
 				case 2 :
-					// Grammar.g:97:4: BOOL
+					// Grammar.g:97:3: BOOL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					BOOL126=(Token)match(input,BOOL,FOLLOW_BOOL_in_atom801); 
+					BOOL126=(Token)match(input,BOOL,FOLLOW_BOOL_in_atom802); 
 					BOOL126_tree = (CommonTree)adaptor.create(BOOL126);
 					adaptor.addChild(root_0, BOOL126_tree);
 
@@ -3350,7 +3350,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					IDF127=(Token)match(input,IDF,FOLLOW_IDF_in_atom806); 
+					IDF127=(Token)match(input,IDF,FOLLOW_IDF_in_atom807); 
 					IDF127_tree = (CommonTree)adaptor.create(IDF127);
 					root_0 = (CommonTree)adaptor.becomeRoot(IDF127_tree, root_0);
 
@@ -3367,7 +3367,7 @@ public class GrammarParser extends Parser {
 							// Grammar.g:98:10: ( callFun )
 							// Grammar.g:98:11: callFun
 							{
-							pushFollow(FOLLOW_callFun_in_atom811);
+							pushFollow(FOLLOW_callFun_in_atom812);
 							callFun128=callFun();
 							state._fsp--;
 
@@ -3383,17 +3383,17 @@ public class GrammarParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Grammar.g:99:4: '(' expr ')'
+					// Grammar.g:99:3: '(' expr ')'
 					{
-					char_literal129=(Token)match(input,29,FOLLOW_29_in_atom817);  
+					char_literal129=(Token)match(input,29,FOLLOW_29_in_atom818);  
 					stream_29.add(char_literal129);
 
-					pushFollow(FOLLOW_expr_in_atom818);
+					pushFollow(FOLLOW_expr_in_atom819);
 					expr130=expr();
 					state._fsp--;
 
 					stream_expr.add(expr130.getTree());
-					char_literal131=(Token)match(input,30,FOLLOW_30_in_atom819);  
+					char_literal131=(Token)match(input,30,FOLLOW_30_in_atom820);  
 					stream_30.add(char_literal131);
 
 					// AST REWRITE
@@ -3407,7 +3407,7 @@ public class GrammarParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 99:14: -> expr
+					// 99:13: -> expr
 					{
 						adaptor.addChild(root_0, stream_expr.nextTree());
 					}
@@ -3523,21 +3523,21 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:101:8: 'vec' '!' '[' expr ']'
 					{
-					string_literal132=(Token)match(input,50,FOLLOW_50_in_expr831);  
+					string_literal132=(Token)match(input,50,FOLLOW_50_in_expr832);  
 					stream_50.add(string_literal132);
 
-					char_literal133=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_expr833);  
+					char_literal133=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_expr834);  
 					stream_UNAIRE.add(char_literal133);
 
-					char_literal134=(Token)match(input,36,FOLLOW_36_in_expr835);  
+					char_literal134=(Token)match(input,36,FOLLOW_36_in_expr836);  
 					stream_36.add(char_literal134);
 
-					pushFollow(FOLLOW_expr_in_expr837);
+					pushFollow(FOLLOW_expr_in_expr838);
 					expr135=expr();
 					state._fsp--;
 
 					stream_expr.add(expr135.getTree());
-					char_literal136=(Token)match(input,37,FOLLOW_37_in_expr839);  
+					char_literal136=(Token)match(input,37,FOLLOW_37_in_expr840);  
 					stream_37.add(char_literal136);
 
 					// AST REWRITE
@@ -3571,21 +3571,21 @@ public class GrammarParser extends Parser {
 				case 2 :
 					// Grammar.g:102:3: 'print' '!' '(' expr ')'
 					{
-					string_literal137=(Token)match(input,47,FOLLOW_47_in_expr851);  
+					string_literal137=(Token)match(input,47,FOLLOW_47_in_expr852);  
 					stream_47.add(string_literal137);
 
-					char_literal138=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_expr853);  
+					char_literal138=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_expr854);  
 					stream_UNAIRE.add(char_literal138);
 
-					char_literal139=(Token)match(input,29,FOLLOW_29_in_expr855);  
+					char_literal139=(Token)match(input,29,FOLLOW_29_in_expr856);  
 					stream_29.add(char_literal139);
 
-					pushFollow(FOLLOW_expr_in_expr857);
+					pushFollow(FOLLOW_expr_in_expr858);
 					expr140=expr();
 					state._fsp--;
 
 					stream_expr.add(expr140.getTree());
-					char_literal141=(Token)match(input,30,FOLLOW_30_in_expr859);  
+					char_literal141=(Token)match(input,30,FOLLOW_30_in_expr860);  
 					stream_30.add(char_literal141);
 
 					// AST REWRITE
@@ -3617,12 +3617,12 @@ public class GrammarParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Grammar.g:103:4: block
+					// Grammar.g:103:3: block
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					pushFollow(FOLLOW_block_in_expr870);
+					pushFollow(FOLLOW_block_in_expr871);
 					block142=block();
 					state._fsp--;
 
@@ -3636,7 +3636,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					pushFollow(FOLLOW_binExpr1_in_expr874);
+					pushFollow(FOLLOW_binExpr1_in_expr875);
 					binExpr1143=binExpr1();
 					state._fsp--;
 
@@ -3693,7 +3693,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1883);
+			pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1884);
 			bigbinExpr2144=bigbinExpr2();
 			state._fsp--;
 
@@ -3712,11 +3712,11 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:107:28: EQUAL ^ bigbinExpr2
 					{
-					EQUAL145=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_bigbinExpr1886); 
+					EQUAL145=(Token)match(input,EQUAL,FOLLOW_EQUAL_in_bigbinExpr1887); 
 					EQUAL145_tree = (CommonTree)adaptor.create(EQUAL145);
 					root_0 = (CommonTree)adaptor.becomeRoot(EQUAL145_tree, root_0);
 
-					pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1889);
+					pushFollow(FOLLOW_bigbinExpr2_in_bigbinExpr1890);
 					bigbinExpr2146=bigbinExpr2();
 					state._fsp--;
 
@@ -3779,7 +3779,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2900);
+			pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2901);
 			bigbinExpr3147=bigbinExpr3();
 			state._fsp--;
 
@@ -3798,11 +3798,11 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:109:27: ORBOOL ^ bigbinExpr3
 					{
-					ORBOOL148=(Token)match(input,ORBOOL,FOLLOW_ORBOOL_in_bigbinExpr2902); 
+					ORBOOL148=(Token)match(input,ORBOOL,FOLLOW_ORBOOL_in_bigbinExpr2903); 
 					ORBOOL148_tree = (CommonTree)adaptor.create(ORBOOL148);
 					root_0 = (CommonTree)adaptor.becomeRoot(ORBOOL148_tree, root_0);
 
-					pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2905);
+					pushFollow(FOLLOW_bigbinExpr3_in_bigbinExpr2906);
 					bigbinExpr3149=bigbinExpr3();
 					state._fsp--;
 
@@ -3865,7 +3865,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3916);
+			pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3917);
 			bigbinExpr4150=bigbinExpr4();
 			state._fsp--;
 
@@ -3884,11 +3884,11 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:111:27: ANDBOOL ^ bigbinExpr4
 					{
-					ANDBOOL151=(Token)match(input,ANDBOOL,FOLLOW_ANDBOOL_in_bigbinExpr3918); 
+					ANDBOOL151=(Token)match(input,ANDBOOL,FOLLOW_ANDBOOL_in_bigbinExpr3919); 
 					ANDBOOL151_tree = (CommonTree)adaptor.create(ANDBOOL151);
 					root_0 = (CommonTree)adaptor.becomeRoot(ANDBOOL151_tree, root_0);
 
-					pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3921);
+					pushFollow(FOLLOW_bigbinExpr4_in_bigbinExpr3922);
 					bigbinExpr4152=bigbinExpr4();
 					state._fsp--;
 
@@ -3955,7 +3955,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4932);
+			pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4933);
 			bigbinExpr5153=bigbinExpr5();
 			state._fsp--;
 
@@ -4001,7 +4001,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:113:28: PREV ^
 							{
-							PREV154=(Token)match(input,PREV,FOLLOW_PREV_in_bigbinExpr4935); 
+							PREV154=(Token)match(input,PREV,FOLLOW_PREV_in_bigbinExpr4936); 
 							PREV154_tree = (CommonTree)adaptor.create(PREV154);
 							root_0 = (CommonTree)adaptor.becomeRoot(PREV154_tree, root_0);
 
@@ -4010,7 +4010,7 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:113:34: OPBOOLEQ ^
 							{
-							OPBOOLEQ155=(Token)match(input,OPBOOLEQ,FOLLOW_OPBOOLEQ_in_bigbinExpr4938); 
+							OPBOOLEQ155=(Token)match(input,OPBOOLEQ,FOLLOW_OPBOOLEQ_in_bigbinExpr4939); 
 							OPBOOLEQ155_tree = (CommonTree)adaptor.create(OPBOOLEQ155);
 							root_0 = (CommonTree)adaptor.becomeRoot(OPBOOLEQ155_tree, root_0);
 
@@ -4019,7 +4019,7 @@ public class GrammarParser extends Parser {
 						case 3 :
 							// Grammar.g:113:44: NEXT ^
 							{
-							NEXT156=(Token)match(input,NEXT,FOLLOW_NEXT_in_bigbinExpr4941); 
+							NEXT156=(Token)match(input,NEXT,FOLLOW_NEXT_in_bigbinExpr4942); 
 							NEXT156_tree = (CommonTree)adaptor.create(NEXT156);
 							root_0 = (CommonTree)adaptor.becomeRoot(NEXT156_tree, root_0);
 
@@ -4028,7 +4028,7 @@ public class GrammarParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4945);
+					pushFollow(FOLLOW_bigbinExpr5_in_bigbinExpr4946);
 					bigbinExpr5157=bigbinExpr5();
 					state._fsp--;
 
@@ -4091,7 +4091,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5956);
+			pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5957);
 			bigbinExpr6158=bigbinExpr6();
 			state._fsp--;
 
@@ -4121,7 +4121,7 @@ public class GrammarParser extends Parser {
 						MismatchedSetException mse = new MismatchedSetException(null,input);
 						throw mse;
 					}
-					pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5965);
+					pushFollow(FOLLOW_bigbinExpr6_in_bigbinExpr5966);
 					bigbinExpr6160=bigbinExpr6();
 					state._fsp--;
 
@@ -4186,7 +4186,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6976);
+			pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6977);
 			bigunExpr161=bigunExpr();
 			state._fsp--;
 
@@ -4225,7 +4225,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:117:27: STAR ^
 							{
-							STAR162=(Token)match(input,STAR,FOLLOW_STAR_in_bigbinExpr6980); 
+							STAR162=(Token)match(input,STAR,FOLLOW_STAR_in_bigbinExpr6981); 
 							STAR162_tree = (CommonTree)adaptor.create(STAR162);
 							root_0 = (CommonTree)adaptor.becomeRoot(STAR162_tree, root_0);
 
@@ -4234,7 +4234,7 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:117:33: DIV ^
 							{
-							DIV163=(Token)match(input,DIV,FOLLOW_DIV_in_bigbinExpr6983); 
+							DIV163=(Token)match(input,DIV,FOLLOW_DIV_in_bigbinExpr6984); 
 							DIV163_tree = (CommonTree)adaptor.create(DIV163);
 							root_0 = (CommonTree)adaptor.becomeRoot(DIV163_tree, root_0);
 
@@ -4243,7 +4243,7 @@ public class GrammarParser extends Parser {
 
 					}
 
-					pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6987);
+					pushFollow(FOLLOW_bigunExpr_in_bigbinExpr6988);
 					bigunExpr164=bigunExpr();
 					state._fsp--;
 
@@ -4308,7 +4308,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigstarExpr_in_bigvectExpr997);
+			pushFollow(FOLLOW_bigstarExpr_in_bigvectExpr998);
 			bigstarExpr165=bigstarExpr();
 			state._fsp--;
 
@@ -4324,17 +4324,17 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:119:28: '[' ^ bigExpr ']' !
 					{
-					char_literal166=(Token)match(input,36,FOLLOW_36_in_bigvectExpr1000); 
+					char_literal166=(Token)match(input,36,FOLLOW_36_in_bigvectExpr1001); 
 					char_literal166_tree = (CommonTree)adaptor.create(char_literal166);
 					root_0 = (CommonTree)adaptor.becomeRoot(char_literal166_tree, root_0);
 
-					pushFollow(FOLLOW_bigExpr_in_bigvectExpr1003);
+					pushFollow(FOLLOW_bigExpr_in_bigvectExpr1004);
 					bigExpr167=bigExpr();
 					state._fsp--;
 
 					adaptor.addChild(root_0, bigExpr167.getTree());
 
-					char_literal168=(Token)match(input,37,FOLLOW_37_in_bigvectExpr1005); 
+					char_literal168=(Token)match(input,37,FOLLOW_37_in_bigvectExpr1006); 
 					}
 					break;
 
@@ -4398,7 +4398,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:122:9: STAR ^
 					{
-					STAR169=(Token)match(input,STAR,FOLLOW_STAR_in_bigstarExpr1019); 
+					STAR169=(Token)match(input,STAR,FOLLOW_STAR_in_bigstarExpr1020); 
 					STAR169_tree = (CommonTree)adaptor.create(STAR169);
 					root_0 = (CommonTree)adaptor.becomeRoot(STAR169_tree, root_0);
 
@@ -4407,7 +4407,7 @@ public class GrammarParser extends Parser {
 
 			}
 
-			pushFollow(FOLLOW_bigmoinsExpr_in_bigstarExpr1023);
+			pushFollow(FOLLOW_bigmoinsExpr_in_bigstarExpr1024);
 			bigmoinsExpr170=bigmoinsExpr();
 			state._fsp--;
 
@@ -4471,7 +4471,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:125:8: SUB ^
 					{
-					SUB171=(Token)match(input,SUB,FOLLOW_SUB_in_bigmoinsExpr1035); 
+					SUB171=(Token)match(input,SUB,FOLLOW_SUB_in_bigmoinsExpr1036); 
 					SUB171_tree = (CommonTree)adaptor.create(SUB171);
 					root_0 = (CommonTree)adaptor.becomeRoot(SUB171_tree, root_0);
 
@@ -4480,7 +4480,7 @@ public class GrammarParser extends Parser {
 
 			}
 
-			pushFollow(FOLLOW_bigatom_in_bigmoinsExpr1038);
+			pushFollow(FOLLOW_bigatom_in_bigmoinsExpr1039);
 			bigatom172=bigatom();
 			state._fsp--;
 
@@ -4542,7 +4542,7 @@ public class GrammarParser extends Parser {
 			root_0 = (CommonTree)adaptor.nil();
 
 
-			pushFollow(FOLLOW_bigvectExpr_in_bigdotExpr1047);
+			pushFollow(FOLLOW_bigvectExpr_in_bigdotExpr1048);
 			bigvectExpr173=bigvectExpr();
 			state._fsp--;
 
@@ -4558,7 +4558,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:128:27: '.' ^ ( IDF | 'len' '(' ! ')' !)
 					{
-					char_literal174=(Token)match(input,33,FOLLOW_33_in_bigdotExpr1050); 
+					char_literal174=(Token)match(input,33,FOLLOW_33_in_bigdotExpr1051); 
 					char_literal174_tree = (CommonTree)adaptor.create(char_literal174);
 					root_0 = (CommonTree)adaptor.becomeRoot(char_literal174_tree, root_0);
 
@@ -4582,7 +4582,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:128:33: IDF
 							{
-							IDF175=(Token)match(input,IDF,FOLLOW_IDF_in_bigdotExpr1054); 
+							IDF175=(Token)match(input,IDF,FOLLOW_IDF_in_bigdotExpr1055); 
 							IDF175_tree = (CommonTree)adaptor.create(IDF175);
 							adaptor.addChild(root_0, IDF175_tree);
 
@@ -4591,12 +4591,12 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:128:39: 'len' '(' ! ')' !
 							{
-							string_literal176=(Token)match(input,43,FOLLOW_43_in_bigdotExpr1058); 
+							string_literal176=(Token)match(input,43,FOLLOW_43_in_bigdotExpr1059); 
 							string_literal176_tree = (CommonTree)adaptor.create(string_literal176);
 							adaptor.addChild(root_0, string_literal176_tree);
 
-							char_literal177=(Token)match(input,29,FOLLOW_29_in_bigdotExpr1060); 
-							char_literal178=(Token)match(input,30,FOLLOW_30_in_bigdotExpr1062); 
+							char_literal177=(Token)match(input,29,FOLLOW_29_in_bigdotExpr1061); 
+							char_literal178=(Token)match(input,30,FOLLOW_30_in_bigdotExpr1063); 
 							}
 							break;
 
@@ -4670,7 +4670,7 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:130:14: UNAIRE ^
 					{
-					UNAIRE179=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigunExpr1076); 
+					UNAIRE179=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigunExpr1077); 
 					UNAIRE179_tree = (CommonTree)adaptor.create(UNAIRE179);
 					root_0 = (CommonTree)adaptor.becomeRoot(UNAIRE179_tree, root_0);
 
@@ -4679,7 +4679,7 @@ public class GrammarParser extends Parser {
 				case 2 :
 					// Grammar.g:130:22: EPERLU ^
 					{
-					EPERLU180=(Token)match(input,EPERLU,FOLLOW_EPERLU_in_bigunExpr1079); 
+					EPERLU180=(Token)match(input,EPERLU,FOLLOW_EPERLU_in_bigunExpr1080); 
 					EPERLU180_tree = (CommonTree)adaptor.create(EPERLU180);
 					root_0 = (CommonTree)adaptor.becomeRoot(EPERLU180_tree, root_0);
 
@@ -4688,7 +4688,7 @@ public class GrammarParser extends Parser {
 
 			}
 
-			pushFollow(FOLLOW_bigdotExpr_in_bigunExpr1084);
+			pushFollow(FOLLOW_bigdotExpr_in_bigunExpr1085);
 			bigdotExpr181=bigdotExpr();
 			state._fsp--;
 
@@ -4804,16 +4804,16 @@ public class GrammarParser extends Parser {
 				case 1 :
 					// Grammar.g:133:3: 'vec' '!' '[' expr ( ',' expr )* ']'
 					{
-					string_literal182=(Token)match(input,50,FOLLOW_50_in_bigExpr1094);  
+					string_literal182=(Token)match(input,50,FOLLOW_50_in_bigExpr1095);  
 					stream_50.add(string_literal182);
 
-					char_literal183=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1096);  
+					char_literal183=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1097);  
 					stream_UNAIRE.add(char_literal183);
 
-					char_literal184=(Token)match(input,36,FOLLOW_36_in_bigExpr1098);  
+					char_literal184=(Token)match(input,36,FOLLOW_36_in_bigExpr1099);  
 					stream_36.add(char_literal184);
 
-					pushFollow(FOLLOW_expr_in_bigExpr1100);
+					pushFollow(FOLLOW_expr_in_bigExpr1101);
 					expr185=expr();
 					state._fsp--;
 
@@ -4831,10 +4831,10 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:133:23: ',' expr
 							{
-							char_literal186=(Token)match(input,31,FOLLOW_31_in_bigExpr1103);  
+							char_literal186=(Token)match(input,31,FOLLOW_31_in_bigExpr1104);  
 							stream_31.add(char_literal186);
 
-							pushFollow(FOLLOW_expr_in_bigExpr1105);
+							pushFollow(FOLLOW_expr_in_bigExpr1106);
 							expr187=expr();
 							state._fsp--;
 
@@ -4847,7 +4847,7 @@ public class GrammarParser extends Parser {
 						}
 					}
 
-					char_literal188=(Token)match(input,37,FOLLOW_37_in_bigExpr1108);  
+					char_literal188=(Token)match(input,37,FOLLOW_37_in_bigExpr1109);  
 					stream_37.add(char_literal188);
 
 					// AST REWRITE
@@ -4886,21 +4886,21 @@ public class GrammarParser extends Parser {
 				case 2 :
 					// Grammar.g:134:3: 'print' '!' '(' expr ')'
 					{
-					string_literal189=(Token)match(input,47,FOLLOW_47_in_bigExpr1121);  
+					string_literal189=(Token)match(input,47,FOLLOW_47_in_bigExpr1122);  
 					stream_47.add(string_literal189);
 
-					char_literal190=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1123);  
+					char_literal190=(Token)match(input,UNAIRE,FOLLOW_UNAIRE_in_bigExpr1124);  
 					stream_UNAIRE.add(char_literal190);
 
-					char_literal191=(Token)match(input,29,FOLLOW_29_in_bigExpr1125);  
+					char_literal191=(Token)match(input,29,FOLLOW_29_in_bigExpr1126);  
 					stream_29.add(char_literal191);
 
-					pushFollow(FOLLOW_expr_in_bigExpr1127);
+					pushFollow(FOLLOW_expr_in_bigExpr1128);
 					expr192=expr();
 					state._fsp--;
 
 					stream_expr.add(expr192.getTree());
-					char_literal193=(Token)match(input,30,FOLLOW_30_in_bigExpr1129);  
+					char_literal193=(Token)match(input,30,FOLLOW_30_in_bigExpr1130);  
 					stream_30.add(char_literal193);
 
 					// AST REWRITE
@@ -4932,12 +4932,12 @@ public class GrammarParser extends Parser {
 					}
 					break;
 				case 3 :
-					// Grammar.g:135:4: block
+					// Grammar.g:135:3: block
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					pushFollow(FOLLOW_block_in_bigExpr1140);
+					pushFollow(FOLLOW_block_in_bigExpr1141);
 					block194=block();
 					state._fsp--;
 
@@ -4951,7 +4951,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					pushFollow(FOLLOW_bigbinExpr1_in_bigExpr1144);
+					pushFollow(FOLLOW_bigbinExpr1_in_bigExpr1145);
 					bigbinExpr1195=bigbinExpr1();
 					state._fsp--;
 
@@ -5049,19 +5049,19 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					INT196=(Token)match(input,INT,FOLLOW_INT_in_bigatom1152); 
+					INT196=(Token)match(input,INT,FOLLOW_INT_in_bigatom1153); 
 					INT196_tree = (CommonTree)adaptor.create(INT196);
 					adaptor.addChild(root_0, INT196_tree);
 
 					}
 					break;
 				case 2 :
-					// Grammar.g:139:4: BOOL
+					// Grammar.g:139:3: BOOL
 					{
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					BOOL197=(Token)match(input,BOOL,FOLLOW_BOOL_in_bigatom1155); 
+					BOOL197=(Token)match(input,BOOL,FOLLOW_BOOL_in_bigatom1156); 
 					BOOL197_tree = (CommonTree)adaptor.create(BOOL197);
 					adaptor.addChild(root_0, BOOL197_tree);
 
@@ -5073,7 +5073,7 @@ public class GrammarParser extends Parser {
 					root_0 = (CommonTree)adaptor.nil();
 
 
-					IDF198=(Token)match(input,IDF,FOLLOW_IDF_in_bigatom1160); 
+					IDF198=(Token)match(input,IDF,FOLLOW_IDF_in_bigatom1161); 
 					IDF198_tree = (CommonTree)adaptor.create(IDF198);
 					root_0 = (CommonTree)adaptor.becomeRoot(IDF198_tree, root_0);
 
@@ -5090,7 +5090,7 @@ public class GrammarParser extends Parser {
 						case 1 :
 							// Grammar.g:140:10: newStruc
 							{
-							pushFollow(FOLLOW_newStruc_in_bigatom1164);
+							pushFollow(FOLLOW_newStruc_in_bigatom1165);
 							newStruc199=newStruc();
 							state._fsp--;
 
@@ -5101,7 +5101,7 @@ public class GrammarParser extends Parser {
 						case 2 :
 							// Grammar.g:140:19: callFun
 							{
-							pushFollow(FOLLOW_callFun_in_bigatom1166);
+							pushFollow(FOLLOW_callFun_in_bigatom1167);
 							callFun200=callFun();
 							state._fsp--;
 
@@ -5115,17 +5115,17 @@ public class GrammarParser extends Parser {
 					}
 					break;
 				case 4 :
-					// Grammar.g:141:4: '(' bigExpr ')'
+					// Grammar.g:141:3: '(' bigExpr ')'
 					{
-					char_literal201=(Token)match(input,29,FOLLOW_29_in_bigatom1171);  
+					char_literal201=(Token)match(input,29,FOLLOW_29_in_bigatom1172);  
 					stream_29.add(char_literal201);
 
-					pushFollow(FOLLOW_bigExpr_in_bigatom1172);
+					pushFollow(FOLLOW_bigExpr_in_bigatom1173);
 					bigExpr202=bigExpr();
 					state._fsp--;
 
 					stream_bigExpr.add(bigExpr202.getTree());
-					char_literal203=(Token)match(input,30,FOLLOW_30_in_bigatom1173);  
+					char_literal203=(Token)match(input,30,FOLLOW_30_in_bigatom1174);  
 					stream_30.add(char_literal203);
 
 					// AST REWRITE
@@ -5139,7 +5139,7 @@ public class GrammarParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 141:18: -> bigExpr
+					// 141:17: -> bigExpr
 					{
 						adaptor.addChild(root_0, stream_bigExpr.nextTree());
 					}
@@ -5198,182 +5198,182 @@ public class GrammarParser extends Parser {
 	public static final BitSet FOLLOW_32_in_declFun198 = new BitSet(new long[]{0x0014044000005000L});
 	public static final BitSet FOLLOW_type_in_declFun200 = new BitSet(new long[]{0x0010000000000000L});
 	public static final BitSet FOLLOW_block_in_declFun204 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_MAIN_in_declFun230 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_29_in_declFun232 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_declFun234 = new BitSet(new long[]{0x0010000000000000L});
-	public static final BitSet FOLLOW_block_in_declFun236 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_42_in_type258 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_38_in_type262 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDF_in_type265 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_50_in_type270 = new BitSet(new long[]{0x0000000000400000L});
-	public static final BitSet FOLLOW_PREV_in_type273 = new BitSet(new long[]{0x0004044000085000L});
-	public static final BitSet FOLLOW_type_in_type275 = new BitSet(new long[]{0x0000000000080000L});
-	public static final BitSet FOLLOW_NEXT_in_type277 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_EPERLU_in_type291 = new BitSet(new long[]{0x0004044000005000L});
-	public static final BitSet FOLLOW_type_in_type293 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_52_in_block310 = new BitSet(new long[]{0x003DB0882681D100L});
-	public static final BitSet FOLLOW_instruct_in_block312 = new BitSet(new long[]{0x003DB0882681D100L});
-	public static final BitSet FOLLOW_53_in_block315 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_callFun334 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_callFun336 = new BitSet(new long[]{0x00000000C0000000L});
-	public static final BitSet FOLLOW_31_in_callFun339 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_callFun341 = new BitSet(new long[]{0x00000000C0000000L});
-	public static final BitSet FOLLOW_30_in_callFun345 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_52_in_newStruc358 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_IDF_in_newStruc360 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_newStruc362 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_bigExpr_in_newStruc364 = new BitSet(new long[]{0x0020000080000000L});
-	public static final BitSet FOLLOW_31_in_newStruc367 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_IDF_in_newStruc369 = new BitSet(new long[]{0x0000000400000000L});
-	public static final BitSet FOLLOW_34_in_newStruc371 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_bigExpr_in_newStruc373 = new BitSet(new long[]{0x0020000080000000L});
-	public static final BitSet FOLLOW_53_in_newStruc377 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_expr_in_instruct401 = new BitSet(new long[]{0x0000000800000000L});
-	public static final BitSet FOLLOW_35_in_instruct403 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_35_in_instruct411 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_44_in_instruct417 = new BitSet(new long[]{0x0000400000004000L});
-	public static final BitSet FOLLOW_46_in_instruct419 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_dotIDF_in_instruct422 = new BitSet(new long[]{0x0000000400002000L});
-	public static final BitSet FOLLOW_34_in_instruct425 = new BitSet(new long[]{0x0004044000007000L});
-	public static final BitSet FOLLOW_type_in_instruct427 = new BitSet(new long[]{0x0000000000002000L});
-	public static final BitSet FOLLOW_EQUAL_in_instruct431 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_bigExpr_in_instruct433 = new BitSet(new long[]{0x0000000800000000L});
-	public static final BitSet FOLLOW_35_in_instruct435 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_51_in_instruct462 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_instruct464 = new BitSet(new long[]{0x0010000000000000L});
-	public static final BitSet FOLLOW_block_in_instruct466 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_48_in_instruct480 = new BitSet(new long[]{0x0014800826815100L});
-	public static final BitSet FOLLOW_expr_in_instruct482 = new BitSet(new long[]{0x0000000800000000L});
-	public static final BitSet FOLLOW_35_in_instruct485 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_45_in_instruct498 = new BitSet(new long[]{0x0010000000000000L});
-	public static final BitSet FOLLOW_block_in_instruct500 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_39_in_instruct512 = new BitSet(new long[]{0x0000000800000000L});
-	public static final BitSet FOLLOW_35_in_instruct514 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_ifExpr_in_instruct522 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDF_in_dotIDF533 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_33_in_dotIDF536 = new BitSet(new long[]{0x0000000000004000L});
-	public static final BitSet FOLLOW_IDF_in_dotIDF539 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IF_in_ifExpr549 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_ifExpr551 = new BitSet(new long[]{0x0010000000000000L});
-	public static final BitSet FOLLOW_block_in_ifExpr553 = new BitSet(new long[]{0x0000010000000002L});
-	public static final BitSet FOLLOW_40_in_ifExpr556 = new BitSet(new long[]{0x0010000000000000L});
-	public static final BitSet FOLLOW_block_in_ifExpr558 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_binExpr2_in_binExpr1586 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_EQUAL_in_binExpr1589 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_binExpr2_in_binExpr1592 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_binExpr3_in_binExpr2603 = new BitSet(new long[]{0x0000000000200002L});
-	public static final BitSet FOLLOW_ORBOOL_in_binExpr2605 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_binExpr3_in_binExpr2608 = new BitSet(new long[]{0x0000000000200002L});
-	public static final BitSet FOLLOW_binExpr4_in_binExpr3619 = new BitSet(new long[]{0x0000000000000022L});
-	public static final BitSet FOLLOW_ANDBOOL_in_binExpr3621 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_binExpr4_in_binExpr3624 = new BitSet(new long[]{0x0000000000000022L});
-	public static final BitSet FOLLOW_binExpr5_in_binExpr4635 = new BitSet(new long[]{0x0000000000580002L});
-	public static final BitSet FOLLOW_PREV_in_binExpr4638 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_OPBOOLEQ_in_binExpr4641 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_NEXT_in_binExpr4644 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_binExpr5_in_binExpr4648 = new BitSet(new long[]{0x0000000000580002L});
-	public static final BitSet FOLLOW_binExpr6_in_binExpr5659 = new BitSet(new long[]{0x0000000002000012L});
-	public static final BitSet FOLLOW_ADD_in_binExpr5662 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_SUB_in_binExpr5665 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_binExpr6_in_binExpr5670 = new BitSet(new long[]{0x0000000002000012L});
-	public static final BitSet FOLLOW_unExpr_in_binExpr6681 = new BitSet(new long[]{0x0000000000800802L});
-	public static final BitSet FOLLOW_STAR_in_binExpr6685 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_DIV_in_binExpr6688 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_unExpr_in_binExpr6692 = new BitSet(new long[]{0x0000000000800802L});
-	public static final BitSet FOLLOW_starExpr_in_vectExpr703 = new BitSet(new long[]{0x0000001000000002L});
-	public static final BitSet FOLLOW_36_in_vectExpr706 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_vectExpr709 = new BitSet(new long[]{0x0000002000000000L});
-	public static final BitSet FOLLOW_37_in_vectExpr711 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_starExpr725 = new BitSet(new long[]{0x0000000022014100L});
-	public static final BitSet FOLLOW_moinsExpr_in_starExpr729 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_SUB_in_moinsExpr741 = new BitSet(new long[]{0x0000000020014100L});
-	public static final BitSet FOLLOW_atom_in_moinsExpr744 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_vectExpr_in_dotExpr753 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_33_in_dotExpr756 = new BitSet(new long[]{0x0000080000004000L});
-	public static final BitSet FOLLOW_IDF_in_dotExpr760 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_43_in_dotExpr764 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_29_in_dotExpr766 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_dotExpr768 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_UNAIRE_in_unExpr782 = new BitSet(new long[]{0x0000000022814100L});
-	public static final BitSet FOLLOW_EPERLU_in_unExpr785 = new BitSet(new long[]{0x0000000022814100L});
-	public static final BitSet FOLLOW_dotExpr_in_unExpr790 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_in_atom798 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BOOL_in_atom801 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDF_in_atom806 = new BitSet(new long[]{0x0000000020000002L});
-	public static final BitSet FOLLOW_callFun_in_atom811 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_atom817 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_atom818 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_atom819 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_50_in_expr831 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_UNAIRE_in_expr833 = new BitSet(new long[]{0x0000001000000000L});
-	public static final BitSet FOLLOW_36_in_expr835 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_expr837 = new BitSet(new long[]{0x0000002000000000L});
-	public static final BitSet FOLLOW_37_in_expr839 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_47_in_expr851 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_UNAIRE_in_expr853 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_29_in_expr855 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_expr857 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_expr859 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_block_in_expr870 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_binExpr1_in_expr874 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1883 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_EQUAL_in_bigbinExpr1886 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1889 = new BitSet(new long[]{0x0000000000002002L});
-	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2900 = new BitSet(new long[]{0x0000000000200002L});
-	public static final BitSet FOLLOW_ORBOOL_in_bigbinExpr2902 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2905 = new BitSet(new long[]{0x0000000000200002L});
-	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3916 = new BitSet(new long[]{0x0000000000000022L});
-	public static final BitSet FOLLOW_ANDBOOL_in_bigbinExpr3918 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3921 = new BitSet(new long[]{0x0000000000000022L});
-	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4932 = new BitSet(new long[]{0x0000000000580002L});
-	public static final BitSet FOLLOW_PREV_in_bigbinExpr4935 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_OPBOOLEQ_in_bigbinExpr4938 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_NEXT_in_bigbinExpr4941 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4945 = new BitSet(new long[]{0x0000000000580002L});
-	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5956 = new BitSet(new long[]{0x0000000002000012L});
-	public static final BitSet FOLLOW_set_in_bigbinExpr5958 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5965 = new BitSet(new long[]{0x0000000002000012L});
-	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6976 = new BitSet(new long[]{0x0000000000800802L});
-	public static final BitSet FOLLOW_STAR_in_bigbinExpr6980 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_DIV_in_bigbinExpr6983 = new BitSet(new long[]{0x0000000026815100L});
-	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6987 = new BitSet(new long[]{0x0000000000800802L});
-	public static final BitSet FOLLOW_bigstarExpr_in_bigvectExpr997 = new BitSet(new long[]{0x0000001000000002L});
-	public static final BitSet FOLLOW_36_in_bigvectExpr1000 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_bigExpr_in_bigvectExpr1003 = new BitSet(new long[]{0x0000002000000000L});
-	public static final BitSet FOLLOW_37_in_bigvectExpr1005 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_STAR_in_bigstarExpr1019 = new BitSet(new long[]{0x0000000022014100L});
-	public static final BitSet FOLLOW_bigmoinsExpr_in_bigstarExpr1023 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_SUB_in_bigmoinsExpr1035 = new BitSet(new long[]{0x0000000020014100L});
-	public static final BitSet FOLLOW_bigatom_in_bigmoinsExpr1038 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bigvectExpr_in_bigdotExpr1047 = new BitSet(new long[]{0x0000000200000002L});
-	public static final BitSet FOLLOW_33_in_bigdotExpr1050 = new BitSet(new long[]{0x0000080000004000L});
-	public static final BitSet FOLLOW_IDF_in_bigdotExpr1054 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_43_in_bigdotExpr1058 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_29_in_bigdotExpr1060 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_bigdotExpr1062 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_UNAIRE_in_bigunExpr1076 = new BitSet(new long[]{0x0000000022814100L});
-	public static final BitSet FOLLOW_EPERLU_in_bigunExpr1079 = new BitSet(new long[]{0x0000000022814100L});
-	public static final BitSet FOLLOW_bigdotExpr_in_bigunExpr1084 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_50_in_bigExpr1094 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1096 = new BitSet(new long[]{0x0000001000000000L});
-	public static final BitSet FOLLOW_36_in_bigExpr1098 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_bigExpr1100 = new BitSet(new long[]{0x0000002080000000L});
-	public static final BitSet FOLLOW_31_in_bigExpr1103 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_bigExpr1105 = new BitSet(new long[]{0x0000002080000000L});
-	public static final BitSet FOLLOW_37_in_bigExpr1108 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_47_in_bigExpr1121 = new BitSet(new long[]{0x0000000004000000L});
-	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1123 = new BitSet(new long[]{0x0000000020000000L});
-	public static final BitSet FOLLOW_29_in_bigExpr1125 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_expr_in_bigExpr1127 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_bigExpr1129 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_block_in_bigExpr1140 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_bigbinExpr1_in_bigExpr1144 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_INT_in_bigatom1152 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_BOOL_in_bigatom1155 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_IDF_in_bigatom1160 = new BitSet(new long[]{0x0010000020000002L});
-	public static final BitSet FOLLOW_newStruc_in_bigatom1164 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_callFun_in_bigatom1166 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_29_in_bigatom1171 = new BitSet(new long[]{0x0014800026815100L});
-	public static final BitSet FOLLOW_bigExpr_in_bigatom1172 = new BitSet(new long[]{0x0000000040000000L});
-	public static final BitSet FOLLOW_30_in_bigatom1173 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_MAIN_in_declFun231 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_29_in_declFun233 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_declFun235 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_block_in_declFun237 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_42_in_type259 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_38_in_type263 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDF_in_type266 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_type271 = new BitSet(new long[]{0x0000000000400000L});
+	public static final BitSet FOLLOW_PREV_in_type274 = new BitSet(new long[]{0x0004044000085000L});
+	public static final BitSet FOLLOW_type_in_type276 = new BitSet(new long[]{0x0000000000080000L});
+	public static final BitSet FOLLOW_NEXT_in_type278 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_EPERLU_in_type292 = new BitSet(new long[]{0x0004044000005000L});
+	public static final BitSet FOLLOW_type_in_type294 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_52_in_block311 = new BitSet(new long[]{0x003DB0882681D100L});
+	public static final BitSet FOLLOW_instruct_in_block313 = new BitSet(new long[]{0x003DB0882681D100L});
+	public static final BitSet FOLLOW_53_in_block316 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_callFun335 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_callFun337 = new BitSet(new long[]{0x00000000C0000000L});
+	public static final BitSet FOLLOW_31_in_callFun340 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_callFun342 = new BitSet(new long[]{0x00000000C0000000L});
+	public static final BitSet FOLLOW_30_in_callFun346 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_52_in_newStruc359 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_IDF_in_newStruc361 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_newStruc363 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_bigExpr_in_newStruc365 = new BitSet(new long[]{0x0020000080000000L});
+	public static final BitSet FOLLOW_31_in_newStruc368 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_IDF_in_newStruc370 = new BitSet(new long[]{0x0000000400000000L});
+	public static final BitSet FOLLOW_34_in_newStruc372 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_bigExpr_in_newStruc374 = new BitSet(new long[]{0x0020000080000000L});
+	public static final BitSet FOLLOW_53_in_newStruc378 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_expr_in_instruct402 = new BitSet(new long[]{0x0000000800000000L});
+	public static final BitSet FOLLOW_35_in_instruct404 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_35_in_instruct412 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_44_in_instruct418 = new BitSet(new long[]{0x0000400000004000L});
+	public static final BitSet FOLLOW_46_in_instruct420 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_dotIDF_in_instruct423 = new BitSet(new long[]{0x0000000400002000L});
+	public static final BitSet FOLLOW_34_in_instruct426 = new BitSet(new long[]{0x0004044000007000L});
+	public static final BitSet FOLLOW_type_in_instruct428 = new BitSet(new long[]{0x0000000000002000L});
+	public static final BitSet FOLLOW_EQUAL_in_instruct432 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_bigExpr_in_instruct434 = new BitSet(new long[]{0x0000000800000000L});
+	public static final BitSet FOLLOW_35_in_instruct436 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_51_in_instruct463 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_instruct465 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_block_in_instruct467 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_48_in_instruct481 = new BitSet(new long[]{0x0014800826815100L});
+	public static final BitSet FOLLOW_expr_in_instruct483 = new BitSet(new long[]{0x0000000800000000L});
+	public static final BitSet FOLLOW_35_in_instruct486 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_45_in_instruct499 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_block_in_instruct501 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_39_in_instruct513 = new BitSet(new long[]{0x0000000800000000L});
+	public static final BitSet FOLLOW_35_in_instruct515 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_ifExpr_in_instruct523 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDF_in_dotIDF534 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_33_in_dotIDF537 = new BitSet(new long[]{0x0000000000004000L});
+	public static final BitSet FOLLOW_IDF_in_dotIDF540 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IF_in_ifExpr550 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_ifExpr552 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_block_in_ifExpr554 = new BitSet(new long[]{0x0000010000000002L});
+	public static final BitSet FOLLOW_40_in_ifExpr557 = new BitSet(new long[]{0x0010000000000000L});
+	public static final BitSet FOLLOW_block_in_ifExpr559 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_binExpr2_in_binExpr1587 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_EQUAL_in_binExpr1590 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_binExpr2_in_binExpr1593 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_binExpr3_in_binExpr2604 = new BitSet(new long[]{0x0000000000200002L});
+	public static final BitSet FOLLOW_ORBOOL_in_binExpr2606 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_binExpr3_in_binExpr2609 = new BitSet(new long[]{0x0000000000200002L});
+	public static final BitSet FOLLOW_binExpr4_in_binExpr3620 = new BitSet(new long[]{0x0000000000000022L});
+	public static final BitSet FOLLOW_ANDBOOL_in_binExpr3622 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_binExpr4_in_binExpr3625 = new BitSet(new long[]{0x0000000000000022L});
+	public static final BitSet FOLLOW_binExpr5_in_binExpr4636 = new BitSet(new long[]{0x0000000000580002L});
+	public static final BitSet FOLLOW_PREV_in_binExpr4639 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_OPBOOLEQ_in_binExpr4642 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_NEXT_in_binExpr4645 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_binExpr5_in_binExpr4649 = new BitSet(new long[]{0x0000000000580002L});
+	public static final BitSet FOLLOW_binExpr6_in_binExpr5660 = new BitSet(new long[]{0x0000000002000012L});
+	public static final BitSet FOLLOW_ADD_in_binExpr5663 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_SUB_in_binExpr5666 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_binExpr6_in_binExpr5671 = new BitSet(new long[]{0x0000000002000012L});
+	public static final BitSet FOLLOW_unExpr_in_binExpr6682 = new BitSet(new long[]{0x0000000000800802L});
+	public static final BitSet FOLLOW_STAR_in_binExpr6686 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_DIV_in_binExpr6689 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_unExpr_in_binExpr6693 = new BitSet(new long[]{0x0000000000800802L});
+	public static final BitSet FOLLOW_starExpr_in_vectExpr704 = new BitSet(new long[]{0x0000001000000002L});
+	public static final BitSet FOLLOW_36_in_vectExpr707 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_vectExpr710 = new BitSet(new long[]{0x0000002000000000L});
+	public static final BitSet FOLLOW_37_in_vectExpr712 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_starExpr726 = new BitSet(new long[]{0x0000000022014100L});
+	public static final BitSet FOLLOW_moinsExpr_in_starExpr730 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SUB_in_moinsExpr742 = new BitSet(new long[]{0x0000000020014100L});
+	public static final BitSet FOLLOW_atom_in_moinsExpr745 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_vectExpr_in_dotExpr754 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_33_in_dotExpr757 = new BitSet(new long[]{0x0000080000004000L});
+	public static final BitSet FOLLOW_IDF_in_dotExpr761 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_43_in_dotExpr765 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_29_in_dotExpr767 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_dotExpr769 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_UNAIRE_in_unExpr783 = new BitSet(new long[]{0x0000000022814100L});
+	public static final BitSet FOLLOW_EPERLU_in_unExpr786 = new BitSet(new long[]{0x0000000022814100L});
+	public static final BitSet FOLLOW_dotExpr_in_unExpr791 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_in_atom799 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BOOL_in_atom802 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDF_in_atom807 = new BitSet(new long[]{0x0000000020000002L});
+	public static final BitSet FOLLOW_callFun_in_atom812 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_atom818 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_atom819 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_atom820 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_expr832 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_UNAIRE_in_expr834 = new BitSet(new long[]{0x0000001000000000L});
+	public static final BitSet FOLLOW_36_in_expr836 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_expr838 = new BitSet(new long[]{0x0000002000000000L});
+	public static final BitSet FOLLOW_37_in_expr840 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_47_in_expr852 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_UNAIRE_in_expr854 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_29_in_expr856 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_expr858 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_expr860 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_block_in_expr871 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_binExpr1_in_expr875 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1884 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_EQUAL_in_bigbinExpr1887 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr2_in_bigbinExpr1890 = new BitSet(new long[]{0x0000000000002002L});
+	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2901 = new BitSet(new long[]{0x0000000000200002L});
+	public static final BitSet FOLLOW_ORBOOL_in_bigbinExpr2903 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr3_in_bigbinExpr2906 = new BitSet(new long[]{0x0000000000200002L});
+	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3917 = new BitSet(new long[]{0x0000000000000022L});
+	public static final BitSet FOLLOW_ANDBOOL_in_bigbinExpr3919 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr4_in_bigbinExpr3922 = new BitSet(new long[]{0x0000000000000022L});
+	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4933 = new BitSet(new long[]{0x0000000000580002L});
+	public static final BitSet FOLLOW_PREV_in_bigbinExpr4936 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_OPBOOLEQ_in_bigbinExpr4939 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_NEXT_in_bigbinExpr4942 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr5_in_bigbinExpr4946 = new BitSet(new long[]{0x0000000000580002L});
+	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5957 = new BitSet(new long[]{0x0000000002000012L});
+	public static final BitSet FOLLOW_set_in_bigbinExpr5959 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigbinExpr6_in_bigbinExpr5966 = new BitSet(new long[]{0x0000000002000012L});
+	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6977 = new BitSet(new long[]{0x0000000000800802L});
+	public static final BitSet FOLLOW_STAR_in_bigbinExpr6981 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_DIV_in_bigbinExpr6984 = new BitSet(new long[]{0x0000000026815100L});
+	public static final BitSet FOLLOW_bigunExpr_in_bigbinExpr6988 = new BitSet(new long[]{0x0000000000800802L});
+	public static final BitSet FOLLOW_bigstarExpr_in_bigvectExpr998 = new BitSet(new long[]{0x0000001000000002L});
+	public static final BitSet FOLLOW_36_in_bigvectExpr1001 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_bigExpr_in_bigvectExpr1004 = new BitSet(new long[]{0x0000002000000000L});
+	public static final BitSet FOLLOW_37_in_bigvectExpr1006 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_STAR_in_bigstarExpr1020 = new BitSet(new long[]{0x0000000022014100L});
+	public static final BitSet FOLLOW_bigmoinsExpr_in_bigstarExpr1024 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SUB_in_bigmoinsExpr1036 = new BitSet(new long[]{0x0000000020014100L});
+	public static final BitSet FOLLOW_bigatom_in_bigmoinsExpr1039 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bigvectExpr_in_bigdotExpr1048 = new BitSet(new long[]{0x0000000200000002L});
+	public static final BitSet FOLLOW_33_in_bigdotExpr1051 = new BitSet(new long[]{0x0000080000004000L});
+	public static final BitSet FOLLOW_IDF_in_bigdotExpr1055 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_43_in_bigdotExpr1059 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_29_in_bigdotExpr1061 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_bigdotExpr1063 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_UNAIRE_in_bigunExpr1077 = new BitSet(new long[]{0x0000000022814100L});
+	public static final BitSet FOLLOW_EPERLU_in_bigunExpr1080 = new BitSet(new long[]{0x0000000022814100L});
+	public static final BitSet FOLLOW_bigdotExpr_in_bigunExpr1085 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_50_in_bigExpr1095 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1097 = new BitSet(new long[]{0x0000001000000000L});
+	public static final BitSet FOLLOW_36_in_bigExpr1099 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_bigExpr1101 = new BitSet(new long[]{0x0000002080000000L});
+	public static final BitSet FOLLOW_31_in_bigExpr1104 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_bigExpr1106 = new BitSet(new long[]{0x0000002080000000L});
+	public static final BitSet FOLLOW_37_in_bigExpr1109 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_47_in_bigExpr1122 = new BitSet(new long[]{0x0000000004000000L});
+	public static final BitSet FOLLOW_UNAIRE_in_bigExpr1124 = new BitSet(new long[]{0x0000000020000000L});
+	public static final BitSet FOLLOW_29_in_bigExpr1126 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_expr_in_bigExpr1128 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_bigExpr1130 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_block_in_bigExpr1141 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_bigbinExpr1_in_bigExpr1145 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_INT_in_bigatom1153 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_BOOL_in_bigatom1156 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_IDF_in_bigatom1161 = new BitSet(new long[]{0x0010000020000002L});
+	public static final BitSet FOLLOW_newStruc_in_bigatom1165 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_callFun_in_bigatom1167 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_29_in_bigatom1172 = new BitSet(new long[]{0x0014800026815100L});
+	public static final BitSet FOLLOW_bigExpr_in_bigatom1173 = new BitSet(new long[]{0x0000000040000000L});
+	public static final BitSet FOLLOW_30_in_bigatom1174 = new BitSet(new long[]{0x0000000000000002L});
 }

@@ -24,7 +24,7 @@ fichier : decl* //Ok !
 ;
 
 decl : declFun //Ok ! 
-|Â declStruct
+| declStruct
 ;
 
 declStruct : 'struct' IDF '{' args? '}' -> ^('struct' IDF args?) //Ok ! 
@@ -55,7 +55,7 @@ newStruc : '{' IDF ':' bigExpr (',' IDF ':' bigExpr)* '}' -> ^(NEW ^(IDF bigExpr
 instruct : 
 		expr ';' -> expr
 | ';' -> 
-|Â 'let' 'mut'? dotIDF (':' type)? '=' bigExpr ';' -> ^('let' 'mut'? (type)? ^('=' dotIDF bigExpr)) 
+| 'let' 'mut'? dotIDF (':' type)? '=' bigExpr ';' -> ^('let' 'mut'? (type)? ^('=' dotIDF bigExpr)) 
 | 'while' expr block -> ^('while' expr block)
 | 'return' expr? ';' -> ^('return' expr?)
 | 'loop' block -> ^('loop' block)
@@ -94,13 +94,13 @@ dotExpr : vectExpr ('.'^ (IDF | 'len' '('!')'! ))?;
 unExpr : (UNAIRE^|EPERLU^)? dotExpr;
 
 atom : INT
-|Â BOOL
+| BOOL
 |	 IDF^ ((callFun))?
-|Â '('expr')'-> expr; 
+| '('expr')'-> expr; 
 
 expr : 'vec' '!' '[' expr ']' -> ^('vec' expr)
 | 'print' '!' '(' expr ')' -> ^('print' expr)
-|Â block
+| block
 |	binExpr1;
 
 
@@ -132,13 +132,13 @@ bigunExpr : (UNAIRE^|EPERLU^)? bigdotExpr;
 bigExpr 
 :	'vec' '!' '[' expr (',' expr)*']' -> ^('vec' expr*)
 | 'print' '!' '(' expr ')' -> ^('print' expr)
-|Â block
+| block
 |	bigbinExpr1;
 
 bigatom : INT
-|Â BOOL
+| BOOL
 |	 IDF^ (newStruc|callFun)?
-|Â '('bigExpr')' -> bigExpr;
+| '('bigExpr')' -> bigExpr;
 
 
 EQUAL : '=';
@@ -170,7 +170,7 @@ SUB 	:	 '-';
 MAIN 	:	'main'
 	;
 
-BOOL 	:	'true' |Â 'false'
+BOOL 	:	'true' | 'false'
 ;
 
 IDF 			: ('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*

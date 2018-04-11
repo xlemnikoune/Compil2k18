@@ -1,4 +1,4 @@
-// $ANTLR null D:\\workspace\\raimondi3u\\Grammar.g 2018-04-10 14:11:41
+// $ANTLR 3.5.2 Grammar.g 2018-04-10 14:32:22
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -72,15 +72,15 @@ public class GrammarLexer extends Lexer {
 	public GrammarLexer(CharStream input, RecognizerSharedState state) {
 		super(input,state);
 	}
-	@Override public String getGrammarFileName() { return "D:\\workspace\\raimondi3u\\Grammar.g"; }
+	@Override public String getGrammarFileName() { return "Grammar.g"; }
 
 	// $ANTLR start "T__29"
 	public final void mT__29() throws RecognitionException {
 		try {
 			int _type = T__29;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:2:7: ( '(' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:2:9: '('
+			// Grammar.g:2:7: ( '(' )
+			// Grammar.g:2:9: '('
 			{
 			match('('); 
 			}
@@ -99,8 +99,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__30;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:3:7: ( ')' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:3:9: ')'
+			// Grammar.g:3:7: ( ')' )
+			// Grammar.g:3:9: ')'
 			{
 			match(')'); 
 			}
@@ -119,8 +119,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__31;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:4:7: ( ',' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:4:9: ','
+			// Grammar.g:4:7: ( ',' )
+			// Grammar.g:4:9: ','
 			{
 			match(','); 
 			}
@@ -139,8 +139,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__32;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:5:7: ( '->' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:5:9: '->'
+			// Grammar.g:5:7: ( '->' )
+			// Grammar.g:5:9: '->'
 			{
 			match("->"); 
 
@@ -160,8 +160,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__33;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:6:7: ( '.' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:6:9: '.'
+			// Grammar.g:6:7: ( '.' )
+			// Grammar.g:6:9: '.'
 			{
 			match('.'); 
 			}
@@ -180,8 +180,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__34;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:7:7: ( ':' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:7:9: ':'
+			// Grammar.g:7:7: ( ':' )
+			// Grammar.g:7:9: ':'
 			{
 			match(':'); 
 			}
@@ -200,8 +200,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__35;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:8:7: ( ';' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:8:9: ';'
+			// Grammar.g:8:7: ( ';' )
+			// Grammar.g:8:9: ';'
 			{
 			match(';'); 
 			}
@@ -220,8 +220,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__36;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:9:7: ( '[' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:9:9: '['
+			// Grammar.g:9:7: ( '[' )
+			// Grammar.g:9:9: '['
 			{
 			match('['); 
 			}
@@ -240,8 +240,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__37;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:10:7: ( ']' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:10:9: ']'
+			// Grammar.g:10:7: ( ']' )
+			// Grammar.g:10:9: ']'
 			{
 			match(']'); 
 			}
@@ -260,8 +260,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__38;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:11:7: ( 'bool' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:11:9: 'bool'
+			// Grammar.g:11:7: ( 'bool' )
+			// Grammar.g:11:9: 'bool'
 			{
 			match("bool"); 
 
@@ -281,8 +281,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__39;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:12:7: ( 'break' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:12:9: 'break'
+			// Grammar.g:12:7: ( 'break' )
+			// Grammar.g:12:9: 'break'
 			{
 			match("break"); 
 
@@ -302,8 +302,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__40;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:13:7: ( 'else' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:13:9: 'else'
+			// Grammar.g:13:7: ( 'else' )
+			// Grammar.g:13:9: 'else'
 			{
 			match("else"); 
 
@@ -323,8 +323,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__41;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:14:7: ( 'fn' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:14:9: 'fn'
+			// Grammar.g:14:7: ( 'fn' )
+			// Grammar.g:14:9: 'fn'
 			{
 			match("fn"); 
 
@@ -344,8 +344,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__42;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:15:7: ( 'i32' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:15:9: 'i32'
+			// Grammar.g:15:7: ( 'i32' )
+			// Grammar.g:15:9: 'i32'
 			{
 			match("i32"); 
 
@@ -365,8 +365,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__43;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:16:7: ( 'len' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:16:9: 'len'
+			// Grammar.g:16:7: ( 'len' )
+			// Grammar.g:16:9: 'len'
 			{
 			match("len"); 
 
@@ -386,8 +386,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__44;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:17:7: ( 'let' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:17:9: 'let'
+			// Grammar.g:17:7: ( 'let' )
+			// Grammar.g:17:9: 'let'
 			{
 			match("let"); 
 
@@ -407,8 +407,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__45;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:18:7: ( 'loop' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:18:9: 'loop'
+			// Grammar.g:18:7: ( 'loop' )
+			// Grammar.g:18:9: 'loop'
 			{
 			match("loop"); 
 
@@ -428,8 +428,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__46;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:19:7: ( 'mut' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:19:9: 'mut'
+			// Grammar.g:19:7: ( 'mut' )
+			// Grammar.g:19:9: 'mut'
 			{
 			match("mut"); 
 
@@ -449,8 +449,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__47;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:20:7: ( 'print' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:20:9: 'print'
+			// Grammar.g:20:7: ( 'print' )
+			// Grammar.g:20:9: 'print'
 			{
 			match("print"); 
 
@@ -470,8 +470,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__48;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:21:7: ( 'return' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:21:9: 'return'
+			// Grammar.g:21:7: ( 'return' )
+			// Grammar.g:21:9: 'return'
 			{
 			match("return"); 
 
@@ -491,8 +491,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__49;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:22:7: ( 'struct' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:22:9: 'struct'
+			// Grammar.g:22:7: ( 'struct' )
+			// Grammar.g:22:9: 'struct'
 			{
 			match("struct"); 
 
@@ -512,8 +512,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__50;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:23:7: ( 'vec' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:23:9: 'vec'
+			// Grammar.g:23:7: ( 'vec' )
+			// Grammar.g:23:9: 'vec'
 			{
 			match("vec"); 
 
@@ -533,8 +533,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__51;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:24:7: ( 'while' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:24:9: 'while'
+			// Grammar.g:24:7: ( 'while' )
+			// Grammar.g:24:9: 'while'
 			{
 			match("while"); 
 
@@ -554,8 +554,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__52;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:25:7: ( '{' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:25:9: '{'
+			// Grammar.g:25:7: ( '{' )
+			// Grammar.g:25:9: '{'
 			{
 			match('{'); 
 			}
@@ -574,8 +574,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__53;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:26:7: ( '}' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:26:9: '}'
+			// Grammar.g:26:7: ( '}' )
+			// Grammar.g:26:9: '}'
 			{
 			match('}'); 
 			}
@@ -594,8 +594,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = EQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:144:7: ( '=' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:144:9: '='
+			// Grammar.g:144:7: ( '=' )
+			// Grammar.g:144:9: '='
 			{
 			match('='); 
 			}
@@ -614,8 +614,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ORBOOL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:146:8: ( '||' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:146:10: '||'
+			// Grammar.g:146:8: ( '||' )
+			// Grammar.g:146:10: '||'
 			{
 			match("||"); 
 
@@ -635,8 +635,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ANDBOOL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:148:9: ( '&&' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:148:11: '&&'
+			// Grammar.g:148:9: ( '&&' )
+			// Grammar.g:148:11: '&&'
 			{
 			match("&&"); 
 
@@ -656,8 +656,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = PREV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:150:7: ( '<' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:150:10: '<'
+			// Grammar.g:150:7: ( '<' )
+			// Grammar.g:150:10: '<'
 			{
 			match('<'); 
 			}
@@ -676,8 +676,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = NEXT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:151:7: ( '>' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:151:10: '>'
+			// Grammar.g:151:7: ( '>' )
+			// Grammar.g:151:10: '>'
 			{
 			match('>'); 
 			}
@@ -696,7 +696,7 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = OPBOOLEQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:153:10: ( '==' | '!=' | '<=' | '>=' )
+			// Grammar.g:153:10: ( '==' | '!=' | '<=' | '>=' )
 			int alt1=4;
 			switch ( input.LA(1) ) {
 			case '=':
@@ -726,28 +726,28 @@ public class GrammarLexer extends Lexer {
 			}
 			switch (alt1) {
 				case 1 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:153:12: '=='
+					// Grammar.g:153:12: '=='
 					{
 					match("=="); 
 
 					}
 					break;
 				case 2 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:153:17: '!='
+					// Grammar.g:153:17: '!='
 					{
 					match("!="); 
 
 					}
 					break;
 				case 3 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:153:22: '<='
+					// Grammar.g:153:22: '<='
 					{
 					match("<="); 
 
 					}
 					break;
 				case 4 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:153:27: '>='
+					// Grammar.g:153:27: '>='
 					{
 					match(">="); 
 
@@ -769,8 +769,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ADD;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:155:5: ( '+' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:155:7: '+'
+			// Grammar.g:155:5: ( '+' )
+			// Grammar.g:155:7: '+'
 			{
 			match('+'); 
 			}
@@ -789,8 +789,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = STAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:157:7: ( '*' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:157:10: '*'
+			// Grammar.g:157:7: ( '*' )
+			// Grammar.g:157:10: '*'
 			{
 			match('*'); 
 			}
@@ -809,8 +809,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = DIV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:159:5: ( '/' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:159:7: '/'
+			// Grammar.g:159:5: ( '/' )
+			// Grammar.g:159:7: '/'
 			{
 			match('/'); 
 			}
@@ -829,8 +829,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = UNAIRE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:161:8: ( '!' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:161:11: '!'
+			// Grammar.g:161:8: ( '!' )
+			// Grammar.g:161:11: '!'
 			{
 			match('!'); 
 			}
@@ -849,8 +849,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = EPERLU;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:163:9: ( '&' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:163:12: '&'
+			// Grammar.g:163:9: ( '&' )
+			// Grammar.g:163:12: '&'
 			{
 			match('&'); 
 			}
@@ -869,8 +869,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:165:5: ( 'if' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:165:8: 'if'
+			// Grammar.g:165:5: ( 'if' )
+			// Grammar.g:165:8: 'if'
 			{
 			match("if"); 
 
@@ -890,8 +890,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = SUB;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:168:6: ( '-' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:168:9: '-'
+			// Grammar.g:168:6: ( '-' )
+			// Grammar.g:168:9: '-'
 			{
 			match('-'); 
 			}
@@ -910,8 +910,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = MAIN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:170:7: ( 'main' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:170:9: 'main'
+			// Grammar.g:170:7: ( 'main' )
+			// Grammar.g:170:9: 'main'
 			{
 			match("main"); 
 
@@ -931,7 +931,7 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = BOOL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:173:7: ( 'true' | 'false' )
+			// Grammar.g:173:7: ( 'true' | 'false' )
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( (LA2_0=='t') ) {
@@ -949,14 +949,14 @@ public class GrammarLexer extends Lexer {
 
 			switch (alt2) {
 				case 1 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:173:9: 'true'
+					// Grammar.g:173:9: 'true'
 					{
 					match("true"); 
 
 					}
 					break;
 				case 2 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:173:17: 'false'
+					// Grammar.g:173:17: 'false'
 					{
 					match("false"); 
 
@@ -978,8 +978,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = IDF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:176:8: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-			// D:\\workspace\\raimondi3u\\Grammar.g:176:10: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// Grammar.g:176:8: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+			// Grammar.g:176:10: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			{
 			if ( (input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -989,7 +989,7 @@ public class GrammarLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// D:\\workspace\\raimondi3u\\Grammar.g:176:21: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// Grammar.g:176:21: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			loop3:
 			while (true) {
 				int alt3=2;
@@ -1000,7 +1000,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt3) {
 				case 1 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:
+					// Grammar.g:
 					{
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||input.LA(1)=='_'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 						input.consume();
@@ -1034,10 +1034,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:180:8: ( ( '0' .. '9' )+ )
-			// D:\\workspace\\raimondi3u\\Grammar.g:180:10: ( '0' .. '9' )+
+			// Grammar.g:180:8: ( ( '0' .. '9' )+ )
+			// Grammar.g:180:10: ( '0' .. '9' )+
 			{
-			// D:\\workspace\\raimondi3u\\Grammar.g:180:10: ( '0' .. '9' )+
+			// Grammar.g:180:10: ( '0' .. '9' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
@@ -1049,7 +1049,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt4) {
 				case 1 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:
+					// Grammar.g:
 					{
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
 						input.consume();
@@ -1086,11 +1086,11 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:186:3: ( '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:186:3: '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"'
+			// Grammar.g:186:3: ( '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"' )
+			// Grammar.g:186:3: '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"'
 			{
 			match('\"'); 
-			// D:\\workspace\\raimondi3u\\Grammar.g:186:7: (~ ( '\\r' | '\\n' | '\"' ) )*
+			// Grammar.g:186:7: (~ ( '\\r' | '\\n' | '\"' ) )*
 			loop5:
 			while (true) {
 				int alt5=2;
@@ -1101,7 +1101,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt5) {
 				case 1 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:
+					// Grammar.g:
 					{
 					if ( (input.LA(1) >= '\u0000' && input.LA(1) <= '\t')||(input.LA(1) >= '\u000B' && input.LA(1) <= '\f')||(input.LA(1) >= '\u000E' && input.LA(1) <= '!')||(input.LA(1) >= '#' && input.LA(1) <= '\uFFFF') ) {
 						input.consume();
@@ -1136,12 +1136,12 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = COMMENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:189:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
-			// D:\\workspace\\raimondi3u\\Grammar.g:189:13: '/*' ( options {greedy=false; } : . )* '*/'
+			// Grammar.g:189:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
+			// Grammar.g:189:13: '/*' ( options {greedy=false; } : . )* '*/'
 			{
 			match("/*"); 
 
-			// D:\\workspace\\raimondi3u\\Grammar.g:189:18: ( options {greedy=false; } : . )*
+			// Grammar.g:189:18: ( options {greedy=false; } : . )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1162,7 +1162,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt6) {
 				case 1 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:189:46: .
+					// Grammar.g:189:46: .
 					{
 					matchAny(); 
 					}
@@ -1192,11 +1192,11 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ATTRIBUTE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:191:11: ( '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' ) )
-			// D:\\workspace\\raimondi3u\\Grammar.g:191:13: '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' )
+			// Grammar.g:191:11: ( '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' ) )
+			// Grammar.g:191:13: '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' )
 			{
 			match('#'); 
-			// D:\\workspace\\raimondi3u\\Grammar.g:191:17: ( options {greedy=false; } : . )*
+			// Grammar.g:191:17: ( options {greedy=false; } : . )*
 			loop7:
 			while (true) {
 				int alt7=2;
@@ -1210,7 +1210,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt7) {
 				case 1 :
-					// D:\\workspace\\raimondi3u\\Grammar.g:191:45: .
+					// Grammar.g:191:45: .
 					{
 					matchAny(); 
 					}
@@ -1246,8 +1246,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// D:\\workspace\\raimondi3u\\Grammar.g:193:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// D:\\workspace\\raimondi3u\\Grammar.g:193:10: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// Grammar.g:193:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// Grammar.g:193:10: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -1271,327 +1271,327 @@ public class GrammarLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// D:\\workspace\\raimondi3u\\Grammar.g:1:8: ( T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS )
+		// Grammar.g:1:8: ( T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS )
 		int alt8=46;
 		alt8 = dfa8.predict(input);
 		switch (alt8) {
 			case 1 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:10: T__29
+				// Grammar.g:1:10: T__29
 				{
 				mT__29(); 
 
 				}
 				break;
 			case 2 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:16: T__30
+				// Grammar.g:1:16: T__30
 				{
 				mT__30(); 
 
 				}
 				break;
 			case 3 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:22: T__31
+				// Grammar.g:1:22: T__31
 				{
 				mT__31(); 
 
 				}
 				break;
 			case 4 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:28: T__32
+				// Grammar.g:1:28: T__32
 				{
 				mT__32(); 
 
 				}
 				break;
 			case 5 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:34: T__33
+				// Grammar.g:1:34: T__33
 				{
 				mT__33(); 
 
 				}
 				break;
 			case 6 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:40: T__34
+				// Grammar.g:1:40: T__34
 				{
 				mT__34(); 
 
 				}
 				break;
 			case 7 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:46: T__35
+				// Grammar.g:1:46: T__35
 				{
 				mT__35(); 
 
 				}
 				break;
 			case 8 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:52: T__36
+				// Grammar.g:1:52: T__36
 				{
 				mT__36(); 
 
 				}
 				break;
 			case 9 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:58: T__37
+				// Grammar.g:1:58: T__37
 				{
 				mT__37(); 
 
 				}
 				break;
 			case 10 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:64: T__38
+				// Grammar.g:1:64: T__38
 				{
 				mT__38(); 
 
 				}
 				break;
 			case 11 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:70: T__39
+				// Grammar.g:1:70: T__39
 				{
 				mT__39(); 
 
 				}
 				break;
 			case 12 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:76: T__40
+				// Grammar.g:1:76: T__40
 				{
 				mT__40(); 
 
 				}
 				break;
 			case 13 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:82: T__41
+				// Grammar.g:1:82: T__41
 				{
 				mT__41(); 
 
 				}
 				break;
 			case 14 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:88: T__42
+				// Grammar.g:1:88: T__42
 				{
 				mT__42(); 
 
 				}
 				break;
 			case 15 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:94: T__43
+				// Grammar.g:1:94: T__43
 				{
 				mT__43(); 
 
 				}
 				break;
 			case 16 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:100: T__44
+				// Grammar.g:1:100: T__44
 				{
 				mT__44(); 
 
 				}
 				break;
 			case 17 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:106: T__45
+				// Grammar.g:1:106: T__45
 				{
 				mT__45(); 
 
 				}
 				break;
 			case 18 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:112: T__46
+				// Grammar.g:1:112: T__46
 				{
 				mT__46(); 
 
 				}
 				break;
 			case 19 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:118: T__47
+				// Grammar.g:1:118: T__47
 				{
 				mT__47(); 
 
 				}
 				break;
 			case 20 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:124: T__48
+				// Grammar.g:1:124: T__48
 				{
 				mT__48(); 
 
 				}
 				break;
 			case 21 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:130: T__49
+				// Grammar.g:1:130: T__49
 				{
 				mT__49(); 
 
 				}
 				break;
 			case 22 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:136: T__50
+				// Grammar.g:1:136: T__50
 				{
 				mT__50(); 
 
 				}
 				break;
 			case 23 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:142: T__51
+				// Grammar.g:1:142: T__51
 				{
 				mT__51(); 
 
 				}
 				break;
 			case 24 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:148: T__52
+				// Grammar.g:1:148: T__52
 				{
 				mT__52(); 
 
 				}
 				break;
 			case 25 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:154: T__53
+				// Grammar.g:1:154: T__53
 				{
 				mT__53(); 
 
 				}
 				break;
 			case 26 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:160: EQUAL
+				// Grammar.g:1:160: EQUAL
 				{
 				mEQUAL(); 
 
 				}
 				break;
 			case 27 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:166: ORBOOL
+				// Grammar.g:1:166: ORBOOL
 				{
 				mORBOOL(); 
 
 				}
 				break;
 			case 28 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:173: ANDBOOL
+				// Grammar.g:1:173: ANDBOOL
 				{
 				mANDBOOL(); 
 
 				}
 				break;
 			case 29 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:181: PREV
+				// Grammar.g:1:181: PREV
 				{
 				mPREV(); 
 
 				}
 				break;
 			case 30 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:186: NEXT
+				// Grammar.g:1:186: NEXT
 				{
 				mNEXT(); 
 
 				}
 				break;
 			case 31 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:191: OPBOOLEQ
+				// Grammar.g:1:191: OPBOOLEQ
 				{
 				mOPBOOLEQ(); 
 
 				}
 				break;
 			case 32 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:200: ADD
+				// Grammar.g:1:200: ADD
 				{
 				mADD(); 
 
 				}
 				break;
 			case 33 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:204: STAR
+				// Grammar.g:1:204: STAR
 				{
 				mSTAR(); 
 
 				}
 				break;
 			case 34 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:209: DIV
+				// Grammar.g:1:209: DIV
 				{
 				mDIV(); 
 
 				}
 				break;
 			case 35 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:213: UNAIRE
+				// Grammar.g:1:213: UNAIRE
 				{
 				mUNAIRE(); 
 
 				}
 				break;
 			case 36 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:220: EPERLU
+				// Grammar.g:1:220: EPERLU
 				{
 				mEPERLU(); 
 
 				}
 				break;
 			case 37 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:227: IF
+				// Grammar.g:1:227: IF
 				{
 				mIF(); 
 
 				}
 				break;
 			case 38 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:230: SUB
+				// Grammar.g:1:230: SUB
 				{
 				mSUB(); 
 
 				}
 				break;
 			case 39 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:234: MAIN
+				// Grammar.g:1:234: MAIN
 				{
 				mMAIN(); 
 
 				}
 				break;
 			case 40 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:239: BOOL
+				// Grammar.g:1:239: BOOL
 				{
 				mBOOL(); 
 
 				}
 				break;
 			case 41 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:244: IDF
+				// Grammar.g:1:244: IDF
 				{
 				mIDF(); 
 
 				}
 				break;
 			case 42 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:248: INT
+				// Grammar.g:1:248: INT
 				{
 				mINT(); 
 
 				}
 				break;
 			case 43 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:252: STRING
+				// Grammar.g:1:252: STRING
 				{
 				mSTRING(); 
 
 				}
 				break;
 			case 44 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:259: COMMENT
+				// Grammar.g:1:259: COMMENT
 				{
 				mCOMMENT(); 
 
 				}
 				break;
 			case 45 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:267: ATTRIBUTE
+				// Grammar.g:1:267: ATTRIBUTE
 				{
 				mATTRIBUTE(); 
 
 				}
 				break;
 			case 46 :
-				// D:\\workspace\\raimondi3u\\Grammar.g:1:277: WS
+				// Grammar.g:1:277: WS
 				{
 				mWS(); 
 

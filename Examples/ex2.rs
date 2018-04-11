@@ -23,8 +23,8 @@ fn factorielle(n : i32, result : &i32)
 	{
 		*result = 1;
 
-	} else {
-		*result = 1;
+	} else{
+        *result = 1;
 		while i <= n
 		{
 			*result = *result * i;

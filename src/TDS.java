@@ -31,6 +31,7 @@ public class TDS {
                 }
                 return 2;
             case "struct":
+                //TODO Gérer les structures :!
                 System.out.println("VTFF !");
                 return 2;
             case "fn":
@@ -42,7 +43,6 @@ public class TDS {
 
                     for (int i = 0; i<t.getChildCount()-2;i++) {
                         if (!t.getChild(i + 2).toString().equals("BLOCK")) {
-                            System.out.println("String : " + t.getChild(i + 2).toString());
                             currentScope.addVar("param", t.getChild(i + 2));
                         }
                     }

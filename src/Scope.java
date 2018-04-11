@@ -136,6 +136,9 @@ public class Scope {
             type=child.getChild(0).toString();
             checkType(type);
         }
+        if (child.getChild(0).getChildCount()>0 && child.getChild(0).getText().equals("&")){
+            type="&"+child.getChild(0).getChild(0).toString();
+        }
         if (type == null){
             type = "i32";
         }
@@ -208,8 +211,8 @@ public class Scope {
         }
     }
 
-    private boolean isInAncestor(String tempType) {
-        return false;
+    private boolean isInAncestor(String name) {
+        return ancestor != null && (ancestor.isIn(name) || ancestor.isInAncestor(name));
     }
 
     private boolean isIn(String tempType) {

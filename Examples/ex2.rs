@@ -37,6 +37,8 @@ fn main(){
 	print!(puissance(3,3));
 
 	let mut v : i32 = 0;
+	let v : bool = 9;
+	let v : i32 = 45;
 	factorielle(5,&v);
 	print!(v);
 }

@@ -213,7 +213,7 @@ public class Scope {
     }
 
     private boolean isIn(String tempType) {
-        return false;
+        return table.containsKey(tempType);
     }
 
 

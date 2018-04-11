@@ -12,6 +12,8 @@ tokens {
 	NEW;
 	VEC;
 	CALLFUN;
+	UNISUB;
+	UNISTAR;
 }
 @members{
 boolean mainFound = false;
@@ -83,10 +85,12 @@ binExpr6 : unExpr ((STAR^|DIV^) unExpr)*;
 vectExpr : starExpr ('['^ expr ']'!)?;
 
 starExpr 
-	:	 STAR^? moinsExpr;
+	:	 STAR moinsExpr -> ^(UNISTAR moinsExpr)
+	| moinsExpr;
 	
 moinsExpr 
-	:	 SUB^?atom;
+	:	 SUB atom -> ^(UNISUB atom)
+	| atom;
 
 
 dotExpr : vectExpr ('.'^ (IDF | 'len' '('!')'! ))?;
@@ -119,10 +123,12 @@ bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*;
 bigvectExpr : bigstarExpr ('['^ bigExpr ']'!)?;
 
 bigstarExpr 
-	:	 STAR^? bigmoinsExpr;
+	:	 STAR bigmoinsExpr -> ^(UNISTAR bigmoinsExpr)
+	| bigmoinsExpr;
 	
 bigmoinsExpr 
-	:	 SUB^?bigatom;
+	:	 SUB bigatom -> ^(UNISUB bigatom)
+	| bigatom;
 
 
 bigdotExpr : bigvectExpr ('.'^ (IDF | 'len' '('!')'! ))?;

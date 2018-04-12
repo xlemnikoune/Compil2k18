@@ -39,7 +39,7 @@ public class Type {
             return true;
         } else {
             if (name.startsWith("vec ")){
-                return (new Type(name.split(" ")[1]).isRaw());
+                return (new Type(name.split(" ",2)[1]).isRaw());
             }
         }
         return false;

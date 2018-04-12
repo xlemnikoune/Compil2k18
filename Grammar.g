@@ -15,19 +15,20 @@ tokens {
 	UNISUB;
 	UNISTAR;
 	ANOBLOCK;
+	RES;
 }
 @members{
 boolean mainFound = false;
 }
 
-axiom	: fichier EOF {if (!mainFound){System.err.println("main not found");System.exit(1);}} -> fichier //Ok ! 
+axiom	: fichier EOF {if (!mainFound){System.err.println("main not found");}} -> fichier //Ok ! 
 ;
 
 fichier : decl* //Ok ! 
 ;
 
 decl : declFun //Ok ! 
-| declStruct
+| declStruct
 ;
 
 declStruct : 'struct' IDF '{' args? '}' -> ^('struct' IDF args?) //Ok ! 
@@ -47,7 +48,7 @@ type : | 'i32'
 | '&' type -> ^('&' type)
 ;
 
-block : '{' instruct* '}'-> ^(BLOCK instruct*) //Voir pour le dernier return (si expr)
+block : '{' instruct'}'-> ^(BLOCK  instruct) //Voir pour le dernier return (si expr)
 ;
 
 
@@ -55,15 +56,19 @@ callFun : '(' expr (',' expr)* ')' -> expr*;
 
 newStruc : '{' IDF ':' bigExpr (',' IDF ':' bigExpr)* '}' -> ^(NEW ^(IDF bigExpr)*);
 
+instrBoucle 
+	:	';' instruct? -> instruct?
+	| -> RES;
+
 instruct : 
-		expr ';' -> expr
-| ';' -> 
-| 'let' 'mut'? dotIDF (':' type)? '=' bigExpr ';' -> ^('let' 'mut'? (type)? ^('=' dotIDF bigExpr)) 
-| 'while' expr block -> ^('while' expr block)
-| 'return' expr? ';' -> ^('return' expr?)
-| 'loop' block -> ^('loop' block)
-| 'break' ';' -> 'break'
-| ifExpr
+		expr instrBoucle
+| ';' instruct?-> instruct?
+| 'let' 'mut'? dotIDF (':' type)? '=' bigExpr ';' instruct?-> ^('let' 'mut'? (type)? ^('=' dotIDF bigExpr))  instruct?
+| 'while' expr block instruct?-> ^('while' expr block) instruct?
+| 'return' expr? ';' instruct?-> ^('return' expr?) instruct?
+| 'loop' block instruct?-> ^('loop' block) instruct?
+| 'break' ';' instruct?-> 'break' instruct?
+| ifExpr instruct?
 ;
 
 dotIDF 	: 
@@ -83,7 +88,7 @@ binExpr5 : binExpr6((ADD^|SUB^)  binExpr6)*;
 
 binExpr6 : unExpr ((STAR^|DIV^) unExpr)*; 
 
-vectExpr : starExpr ('['^ expr ']'!)?;
+vectExpr : starExpr ('['^ expr ']'!)*;
 
 starExpr 
 	:	 STAR moinsExpr -> ^(UNISTAR moinsExpr)
@@ -99,19 +104,19 @@ dotExpr : vectExpr ('.'^ (IDF | 'len' '('!')'! ))?;
 unExpr : (UNAIRE^|EPERLU^)? dotExpr;
 
 atom : INT
-| BOOL
+| BOOL
 |	 IDF^ ((callFun))?
-| '('expr')'-> expr; 
+| block -> ^(ANOBLOCK block)
+| '('expr')'-> expr; 
 
-expr : 'vec' '!' '[' expr ']' -> ^('vec' expr)
+expr : 'vec' '!' '[' expr(',' expr)* ']' -> ^('vec' expr*)
 | 'print' '!' '(' expr ')' -> ^('print' expr)
-| block -> ^(ANOBLOCK block)
 |	binExpr1;
 
 
 bigbinExpr1 : bigbinExpr2 (EQUAL^ bigbinExpr2)*; 
 
-bigbinExpr2 : bigbinExpr3(ORBOOL^ bigbinExpr3)*; 
+bigbinExpr2 : bigbinExpr3(ORBOOL^ bigbinExpr3)*;
 
 bigbinExpr3 : bigbinExpr4(ANDBOOL^ bigbinExpr4)*; 
 
@@ -121,7 +126,7 @@ bigbinExpr5 : bigbinExpr6((ADD|SUB)^ bigbinExpr6)*;
 
 bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*;
 
-bigvectExpr : bigstarExpr ('['^ bigExpr ']'!)?;
+bigvectExpr : bigstarExpr ('['^ bigExpr ']'!)*;
 
 bigstarExpr 
 	:	 STAR bigmoinsExpr -> ^(UNISTAR bigmoinsExpr)
@@ -139,13 +144,13 @@ bigunExpr : (UNAIRE^|EPERLU^)? bigdotExpr;
 bigExpr 
 :	'vec' '!' '[' expr (',' expr)*']' -> ^('vec' expr*)
 | 'print' '!' '(' expr ')' -> ^('print' expr)
-| block
 |	bigbinExpr1;
 
 bigatom : INT
-| BOOL
+| BOOL
 |	 IDF^ (newStruc|callFun)?
-| '('bigExpr')' -> bigExpr;
+| block -> ^(ANOBLOCK block)
+|'('bigExpr')' -> bigExpr;
 
 
 EQUAL : '=';
@@ -177,7 +182,7 @@ SUB 	:	 '-';
 MAIN 	:	'main'
 	;
 
-BOOL 	:	'true' | 'false'
+BOOL 	:	'true' |'false'
 ;
 
 IDF 			: ('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*

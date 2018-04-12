@@ -1,9 +1,8 @@
 import org.antlr.runtime.tree.BaseTree;
+import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * <b>Correspond to a Scope in code (Function, block, loop ...).</b> <br>
@@ -55,13 +54,13 @@ public class Scope {
      * Scope's table. Extends for each variable or parameter encountered.
      * @see Scope#getTable()
      */
-    private HashMap<String, ArrayList<String>> table;
+    private LinkedHashMap<String, ArrayList<String>> table;
 
     /**
      * Scope's second table. Extends for each non-anonymous block encountered.
      * @see Scope#addScopeNotInner(String, Scope)
      */
-    private HashMap<String, Scope> secondTable;
+    private LinkedHashMap<String, Scope> secondTable;
 
     /*******************************************************************************************************************/
 
@@ -75,8 +74,8 @@ public class Scope {
         if (anc != null){
             deplacement = anc.getDeplacement(); //Getting ancestor's offset to continue in stack <- Not sure about this one (for function)
         }
-        table = new HashMap<>();
-        secondTable = new HashMap<>();
+        table = new LinkedHashMap<>();
+        secondTable = new LinkedHashMap<>();
         origin = id;
         ancestor = anc;
         name = string;
@@ -86,7 +85,7 @@ public class Scope {
      * @return Scope's offset
      * @see Scope#deplacement
      */
-    public int getDeplacement() {
+    private int getDeplacement() {
         return deplacement;
     }
 
@@ -117,8 +116,8 @@ public class Scope {
      * Scope General <br>
      *  &emsp; functionName : [function, functionReturnType] <br>
      *  &emsp; Scope functionName: <br>
-     *  &emsp; param1 : [param, param1type, offset] <br>
-     *  &emsp; var1 : [var, var1type, offset, mutable?] <br>
+     *  &emsp; &emsp; param1 : [param, param1type, offset, mutable?] <br>
+     *  &emsp; &emps; var1 : [var, var1type, offset, mutable?, size* (if vec)] <br>
      * @param tab Scope's offset (in tabulation)
      * @return The string representing the Scope
      */
@@ -144,7 +143,7 @@ public class Scope {
         }
         if(innerScopeList != null){
             for (Scope sc : innerScopeList){
-                String temp =sc.toString(tab+1);
+                String temp = sc.toString(tab+1);
                 if (temp != null){
                     s.append(temp).append("\n");
                 }
@@ -162,7 +161,7 @@ public class Scope {
      */
     public void addVar(String string, List<BaseTree> children) throws SemanticException {
         boolean isMut = false;
-        int vecChildCount = 0;
+        int vecChildCount;
         Type type = null;
         int index = 0; //Will track advancement of children's parsing
         if (children.get(index).getText().equals("mut")){ //If mutable is indicated
@@ -178,99 +177,72 @@ public class Scope {
         if (children.get(index).getText().equals("=")){ //Entering interesting part (val name at right and value at left)
             List<BaseTree> childrens = (List<BaseTree>) children.get(index).getChildren();
             String name = childrens.get(0).getText();
-            if (!isIn(name)){
-                if (isInAncestor(name)) {
-                	String a=getFromAncestor(name).get(0);
-                	
-                	if (a.equals("function")){
-                		throw new SemanticException("Function name" + name + "already used" );
-                		}
+            if (isInAncestor(name)) {
+                String a=getFromAncestor(name).get(0);
+                if (a.equals("function")){
+                    throw new SemanticException("Function name " + name + " already used", childrens.get(0).getLine(), childrens.get(0).getCharPositionInLine() );
+                }else{
+                    System.out.println("Warning : \"Var name surcharged : " + name + "\" at " + children.get(0).getLine() + ":" + children.get(0).getCharPositionInLine());
                 }
-                Type tempType = getType(childrens.get(1));
-                if (type != null) {
-                    if (type.getName().startsWith("vec ")){
-                        tempType=new Type("vec "+tempType.getName());
-                    }
-                    if (!type.equals(tempType)) {
-                        throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType,children.get(1).getLine(),children.get(1).getCharPositionInLine());
-                    } else {
-                        type = tempType;
-                    }
-                } else {
-                    type=tempType;
-                }
-
-                ////////// Counting children for vec declaration
-
-                if (childrens.get(1).getText() == "vec"){
-                    vecChildCount = childrens.get(1).getChildCount();
-
-                }
-
-                /////////
-
-                int deplacement = 0;
-                if (type.is("i32")){
-                    deplacement = this.deplacement;
-                    this.deplacement += 4;
-                } else {
-                    if (type.is("bool")){
-                        deplacement = this.deplacement;
-                        this.deplacement += 1;
-                    } else {
-                        deplacement = this.deplacement;
-                        this.deplacement += 12;
-                        //TODO Struct type and vec type -> offset
-                    }
-                }
-                ArrayList<String> param = new ArrayList<>();
-                param.add(string);
-                param.add(type.getName());
-                param.add(String.valueOf(deplacement));
-                param.add(String.valueOf(isMut));
-                /// adding vecChildCount to TDS
-                if(type.getName().startsWith("vec ")) {
-                    param.add(String.valueOf(vecChildCount));
-                }
-
-                table.put(name,param);
-                MiniRustCompiler.tds.getList().put(name,"var");
-            } else {
-                Type tempType = getType(childrens.get(1));
-                if (type != null) {
-                    if (!type.equals(tempType)) {
-                        throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType,children.get(1).getLine(),children.get(1).getCharPositionInLine());
-                    } else {
-                        type = tempType;
-                    }
-                } else {
-                    type=tempType;
-                }
-
-                int deplacement = 0;
-                if (type.is("i32")){
-                    deplacement = this.deplacement;
-                    this.deplacement += 4;
-                } else {
-                    if (type.is("bool")){
-                        deplacement = this.deplacement;
-                        this.deplacement += 1;
-                    } else {
-                        deplacement = this.deplacement;
-                        this.deplacement += 12;
-                        //TODO Struct type and vec type -> offset
-                    }
-                }
-
-                ArrayList<String> param = new ArrayList<>();
-                param.add(string);
-                param.add(type.getName());
-                param.add(String.valueOf(deplacement));
-                param.add(String.valueOf(isMut));
-                System.out.println("Warning : \"Var shadowed: " + name + " from type "+table.get(name).get(1)+" to type "+tempType+"\" at " + childrens.get(1).getLine() + ":" + childrens.get(1).getCharPositionInLine());
-                table.replace(name,param);
-                MiniRustCompiler.tds.getList().put(name,"var");
             }
+
+            Type tempType = getType(childrens.get(1));
+            if (type != null) {
+                if (type.getName().startsWith("vec ")){
+                    tempType=new Type("vec "+tempType.getName());
+                }
+                if (!type.equals(tempType)) {
+                    throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType,children.get(1).getLine(),children.get(1).getCharPositionInLine());
+                } else {
+                    type = tempType;
+                }
+            } else {
+                type=tempType;
+            }
+            if (isIn(name)) {
+                System.out.println("Warning : \"Var shadowed: " + name + " from type "+table.get(name).get(1)+" to type "+tempType+"\" at " + childrens.get(1).getLine() + ":" + childrens.get(1).getCharPositionInLine());
+            }
+            ////////// Counting children for vec declaration
+            ArrayList<Integer> veCount = new ArrayList<>();
+            BaseTree child = childrens.get(1);
+            while (child.getText().equals("vec")){
+                vecChildCount = child.getChildCount();
+                veCount.add(vecChildCount);
+                if (vecChildCount > 0){
+                    int v = -1;
+                    for (int i = 0; i< vecChildCount;i++){
+                        if (v==-1){
+                            v = child.getChild(i).getChildCount();
+                        } else {
+                            if (v!=child.getChild(i).getChildCount()){
+                                throw new SemanticException("Every sub-array size should be the same", child.getLine(), child.getCharPositionInLine());
+                            }
+                        }
+                    }
+                    child = (BaseTree) child.getChild(1);
+                }
+            }
+
+            /////////
+
+            int deplacement = this.deplacement;
+            this.deplacement += getDeplacement(type.getName(), (ArrayList<Integer>) veCount.clone());
+
+
+            ArrayList<String> param = new ArrayList<>();
+            param.add(string);
+            param.add(type.getName());
+            param.add(String.valueOf(deplacement));
+            param.add(String.valueOf(isMut));
+            /// adding vecChildCount to TDS
+            if(type.getName().startsWith("vec ")) {
+                for (int i : veCount){
+                    param.add(String.valueOf(i-1));
+                }
+            }
+
+            table.put(name,param);
+            MiniRustCompiler.tds.getList().put(name,"var");
         } else {
             System.err.println("LEL, should not happen");
         }
@@ -317,8 +289,21 @@ public class Scope {
         String name = child.getText();
         if (name.equals("BLOCK")){
             child = child.getChild(0);
-            name=child.getText();
+            return getType(child);
         }
+
+        if (name.equals("ANOBLOCK")){
+            CommonTree tr = new CommonTree();
+            tr.addChild(child);
+            MiniRustCompiler.parseTree(tr, MiniRustCompiler.tds, false,true);
+            Tree ch = child.getChild(0);
+            if (ch.getChild(ch.getChildCount()-1).getText().equals("RES")){
+                child = ch.getChild(ch.getChildCount()-2);
+                Type t = innerScopeList.get(MiniRustCompiler.tds.innerCount-2).getType(child);
+                return t;
+            }
+        }
+
         if (name.equals("true") || name.equals("false")){ //Si l'on a affaire à un booléen
             return new Type("bool");
         }
@@ -328,16 +313,34 @@ public class Scope {
         }
 
         if (name.equals("[")){
-            String var  = child.getChild(0).getText();
+            Tree ch = child;
+            int i =0;
+            while(ch.getText().equals("[")){
+                ch = ch.getChild(0);
+                i++;
+            }
+            BaseTree chi;
+            chi = (BaseTree) ch.getAncestors().get(ch.getAncestors().size() - 1);
+            Type varType = getType(chi.getChild(0));
+            String var  = chi.getChild(0).getText();
             Type valType = getType(child.getChild(1));
-            Type varType = getType(child.getChild(0));
-
             if (varType.getName().startsWith("vec ")){
                 if (valType.getName().equals("i32")){
-                    if (Integer.parseInt(child.getChild(1).getText()) > Integer.parseInt(getFromAncestor(var).get(4))){
-                        throw new SemanticException("Index out of bounds at " + valType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
+                    int val = Integer.parseInt(child.getChild(1).getText());
+                    if (isIn(var)){
+                        if (val > Integer.parseInt(table.get(var).get(3+i))){
+                            throw new SemanticException("Index out of bounds ("+val+" > "+Integer.parseInt(table.get(var).get(3+i))+")" ,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
+                        }
+                    } else {
+                        if (isInAncestor(var)){
+                            if (val > Integer.parseInt(getFromAncestor(var).get(3+i))){
+                                throw new SemanticException("Index out of bounds ("+val+" > "+Integer.parseInt(getFromAncestor(var).get(3+i))+")" ,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
+                            }
+                        } else {
+                            throw new SemanticException("Cannot find value `"+var+"` in this scope",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
+                        }
                     }
-                    return new Type(varType.getName().split(" ",2)[1]);
+                    return new Type(varType.getName().split(" ",i+1)[i]);
                 }
                 throw new SemanticException("Mismatched types : expected i32, found " + valType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
             }
@@ -347,6 +350,37 @@ public class Scope {
         if (child.getChildCount() > 0 && child.getChild(0).getText().equals("NEW")){
             Type tempType = new Type(name);
             checkType(tempType, child.getLine(), child.getCharPositionInLine());
+            LinkedHashMap<String, ArrayList<String>> val = TDS.getFirstScope().getScope(name).getTable();
+            HashMap<String, Boolean> valValid = new HashMap<>();
+            for (String i : val.keySet()){
+                valValid.put(i,false);
+            }
+            for (int i = 0; i < child.getChild(0).getChildCount();i++){
+                Tree c = child.getChild(0).getChild(i);
+                String attName = c.getText();
+                if (val.containsKey(attName)){
+                    Tree v = c.getChild(0);
+                    Type type = getType(v);
+                    Type theoricalType = new Type(val.get(attName).get(1));
+                    if (type.equals(theoricalType)){
+                        valValid.replace(attName,true);
+                    } else {
+                        throw new SemanticException("Mismatched types : expected "+theoricalType+", found " + type+" for attribute "+attName,child.getChild(0).getLine(),child.getChild(0).getCharPositionInLine());
+                    }
+                } else {
+                    throw new SemanticException("Attribute "+attName+" does not exist for structure "+name,child.getChild(0).getLine(),child.getChild(0).getCharPositionInLine());
+
+                }
+            }
+            if (valValid.containsValue(false)){
+                List<String> l = new ArrayList<>();
+                for (String i : valValid.keySet()){
+                    if (!valValid.get(i)){
+                        l.add(i);
+                    }
+                }
+                throw new SemanticException("Missing attributes for structure "+name+" : "+l,child.getChild(0).getLine(),child.getChild(0).getCharPositionInLine());
+            }
             return tempType;
         }
 
@@ -357,11 +391,10 @@ public class Scope {
                     throw new SemanticException("Mismatched types : expected " + tempType + ", found " + getType(child.getChild(i)),child.getChild(0).getLine(),child.getChild(0).getCharPositionInLine());
                 }
             }
-            return tempType;
+            return new Type("vec "+tempType);
         }
 
         if (child.getChildCount() > 0){
-            //TODO Opération ou trucs plus compliqués du moins !
             if (TDS.op.contains(name)){
                 if (name.equals("=")){
                     String var = child.getChild(0).getText();
@@ -370,7 +403,9 @@ public class Scope {
                         var=child.getChild(0).getChild(0).getText();
                         haveToChange = true;
                     }
+
                     if (var.equals("[")){
+                        //System.out.println(TDS.getFirstScope().toString(1));
                         Type leftType =  getType(child.getChild(0));
                         Type secondType = getType(child.getChild(1));
                         if (leftType.equals(secondType)){
@@ -408,7 +443,6 @@ public class Scope {
                     if (child.getChild(0).getChildCount() > 0){
                         throw new SemanticException("Unary operation `"+name+"` cannot be applied to expression",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                     }
-                    String var = child.getChild(0).getText();
                     Type tempType = getType(child.getChild(0));
                     return new Type("&"+tempType.getName());
 
@@ -500,40 +534,34 @@ public class Scope {
         }
         if (isIn(name)){
             ArrayList<String> values = table.get(name);
-            if (this.getOrigin() == "function") {
-            	Scope tempscope = TDS.firstscope.getScope(name);
-            	Set<String> param = tempscope.getTable().keySet();
-            	
-            	if (child.getChildCount() > 0) {
-            		for (int j=0;j<child.getChildCount();j++) {
-            			if (!getType(child.getChild(j)).equals(((ArrayList<String>) param).get(j))) {
-            				throw new SemanticException("Error : \" Type missmatch for the Parameter "+ ((ArrayList<String>) param).get(j)+ " at " + child.getChild(j).getLine() + ":" + child.getChild(j).getCharPositionInLine());
-            			}
-            		}
-            	}
-            	
-            }
             String type = values.get(1);
             Type typeT = new Type(type);
             if (!typeT.isRaw())
                 checkType(typeT,child.getLine(), child.getCharPositionInLine());
             return typeT;
         }
-       if (isInAncestor(name)){
+        if (isInAncestor(name)){
             ArrayList<String> values = getFromAncestor(name);
-            if (this.getOrigin() == "function") {
-            	Scope tempscope = TDS.firstscope.getScope(name);
-            	Set<String> param = tempscope.getTable().keySet();
-            	
-            	if (child.getChildCount() > 0) {
-            		for (int j=0;j<child.getChildCount();j++) {
-            			if (!getType(child.getChild(j)).equals(((ArrayList<String>) param).get(j))) {
-            				throw new SemanticException("Error : \" Type missmatch for the Parameter "+ ((ArrayList<String>) param).get(j)+ " at " + child.getChild(j).getLine() + ":" + child.getChild(j).getCharPositionInLine());
-            			}
-            		}
-            	}
-            	
+            if (child.getChildCount() > 0) {
+                Scope tempscope = TDS.getFirstScope().getScope(name);
+                Set<String> param = tempscope.getTable().keySet();
+                LinkedList<String> ll = new LinkedList<>(param);
+                for (int j=0;j<child.getChildCount();j++) {
+                    String t = getType((child.getChild(j))).getName();
+                    ArrayList<String> val = tempscope.getTable().get(ll.get(j));
+                    if (!val.get(0).equals("param")){
+                        throw new SemanticException("Too many parameters for function "+name, child.getChild(j).getLine(),child.getChild(j).getCharPositionInLine());
+                    }
+                    if (!t.equals(val.get(1))) {
+                        throw new SemanticException("Type mismatch for the Parameter '"+ (ll.get(j))+"' : expected "+val.get(1)+", found "+t,child.getChild(j).getLine(),child.getChild(j).getCharPositionInLine());
+                    }
+                }
+                String l = tempscope.getTable().get(ll.get(child.getChildCount())).get(0);
+                if (l!= null && l.equals("param")){
+                    throw new SemanticException("Not enough parameters for function "+name, child.getChild(child.getChildCount()-1).getLine(),child.getChild(child.getChildCount()-1).getCharPositionInLine());
+                }
             }
+
             String type = values.get(1);
             Type typeT = new Type(type);
             if (!typeT.isRaw())
@@ -553,23 +581,16 @@ public class Scope {
     public void addParam(String s, Tree child) throws SemanticException {
         String name = child.toString();
         Type type = getRawType((BaseTree) child.getChild(0));
-        int deplacement = 0;
-        if (type.is("i32")){
-            deplacement = this.deplacement;
-            this.deplacement += 4;
-        } else {
-            if (type.is("bool")){
-                deplacement = this.deplacement;
-                this.deplacement += 1;
-            } else{
-                deplacement = this.deplacement;
-                this.deplacement += 1;
-            }
+        if (type.getName().startsWith("vec")){
+            throw new SemanticException("Cannot pass vec as parameter, please use pointer",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
         }
+        int deplacement = this.deplacement;
+        this.deplacement += getDeplacement(type.getName(), new ArrayList<>());
         ArrayList<String> param = new ArrayList<>();
         param.add(s);
         param.add(type.getName());
         param.add(String.valueOf(deplacement));
+        param.add("false");
         table.put(name,param);
         MiniRustCompiler.tds.getList().put(name,"param");
 
@@ -590,7 +611,7 @@ public class Scope {
                     returnType=child.getChild(1).getChild(0).toString();
                     Type tempType = new Type(returnType);
                     if (!tempType.isRaw())
-                    	checkType(new Type(returnType),child.getChild(1).getChild(0).getLine(),child.getChild(1).getChild(0).getCharPositionInLine());
+                        checkType(new Type(returnType),child.getChild(1).getChild(0).getLine(),child.getChild(1).getChild(0).getCharPositionInLine());
                 }
             }
             if (returnType == null){
@@ -637,7 +658,7 @@ public class Scope {
      */
     ArrayList<String> getFromAncestor(String name) throws SemanticException {
         if (!isInAncestor(name)) {
-            throw new SemanticException(name + "is not in ancestor");
+            throw new SemanticException(name + " is not in ancestor");
         } else {
             if (getAncestor().isIn(name)){
                 return getAncestor().getTable().get(name);
@@ -670,7 +691,7 @@ public class Scope {
     /**
      * @return Scope's table
      */
-    public HashMap<String,ArrayList<String>> getTable() {
+    public LinkedHashMap<String,ArrayList<String>> getTable() {
         return table;
     }
 
@@ -714,15 +735,82 @@ public class Scope {
             throw new SemanticException("Mismatched types : expected bool, found "+type,child.getLine(), child.getCharPositionInLine());
         }
     }
-    public boolean IsMutable(String string, List<BaseTree> children) throws SemanticException {
-        boolean isMut = false;
-        Type type = null;
-        int index = 0; //Will track advancement of children's parsing
-        if (children.get(index).getText().equals("mut")){ //If mutable is indicated
-            isMut = true;
-            index++;
-        }
-        return isMut;
+
+    /**
+     * @param name Name of scope to get in secondTable
+     * @return Corresponding scope
+     */
+    protected Scope getScope(String name){
+        return secondTable.get(name);
     }
 
+    private int getDeplacement(String type,ArrayList<Integer> vecCoun){
+        if (type.equals("i32")){
+            return 4;
+        } else {
+            if (type.equals("bool")){
+                return 1;
+            } else {
+                if (type.startsWith("vec ")){
+                    int a =vecCoun.get(0);
+                    vecCoun.remove(vecCoun.get(0));
+                    return a*getDeplacement(type.split(" ",2)[1], vecCoun);
+                } else {
+                    return 2;
+                }
+            }
+        }
+
+    }
+
+    /**
+     * @param temp Inner Scope to add
+     */
+    public void addInnerScope(Scope temp) {
+        innerScopeList.add(temp);
+    }
+
+    public Scope isInIf() {
+        Scope t = this;
+        while (t.getAncestor() != null){
+            if (t.getOrigin().equals("if")){
+                return t;
+            }
+            t = t.getAncestor();
+        }
+        return null;
+    }
+
+    public Scope isInElse() {
+        Scope t = this;
+        while (t.getAncestor() != null){
+            if (t.getOrigin().equals("else")){
+                return t;
+            }
+            t = t.getAncestor();
+        }
+        return null;
+    }
+
+    public Scope isInWhile() {
+        Scope t = this;
+        while (t.getAncestor() != null){
+            if (t.getOrigin().equals("while")){
+                return t;
+            }
+            t = t.getAncestor();
+        }
+        return null;
+    }
+
+    public Scope isInAno() {
+        Scope t = this;
+        while (t.getAncestor() != null){
+            if (t.getOrigin().equals("inner")){
+                return t;
+            }
+            t = t.getAncestor();
+        }
+        return null;
+    }
 }

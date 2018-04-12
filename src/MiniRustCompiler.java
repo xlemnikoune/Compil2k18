@@ -46,12 +46,12 @@ public class MiniRustCompiler {
         if (baos.toString().length() > 0){
             System.setErr(old);
             System.err.println(baos.toString());
-            System.exit(5); // -> Error on compilation
+            System.exit(5); // -> Error on parsing
         }
-        System.setErr(old);
-
+        //System.setErr(old);
         tds = new TDS();
-        parseTree(t,tds,false);
+        parseTree(t,tds,false,false);
+        tds.validate();
         if (baos.toString().length() > 0){
             System.setErr(old);
             System.err.println(baos.toString());
@@ -65,16 +65,16 @@ public class MiniRustCompiler {
      * @param t Tree to parse
      * @param tds Current state of Symbol Table
      * @param b Is it a new scope ?
-     * @see TDS#add(BaseTree)
+     * @see TDS#add(BaseTree, boolean)
      */
-    private static void parseTree(CommonTree t, TDS tds, boolean b){
+    protected static void parseTree(CommonTree t, TDS tds, boolean b, boolean fromScope){
         int hasChanged;
         List<BaseTree> l = (List<BaseTree>) t.getChildren();
         if (l != null){
             for (BaseTree AST : l){
-                hasChanged = tds.add(AST);
+                hasChanged = tds.add(AST,fromScope);
                 tds.check(AST,t);
-                parseTree((CommonTree) AST,tds,(hasChanged == 1));
+                parseTree((CommonTree) AST,tds,(hasChanged == 1),fromScope);
             }
         }
         if (b){

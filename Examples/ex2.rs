@@ -1,5 +1,6 @@
 struct data {
-	x : i32
+	x : i32,
+	y : bool
 }
 
 fn puissance(a : i32, b: i32) -> i32
@@ -11,7 +12,6 @@ fn puissance(a : i32, b: i32) -> i32
 
 	let mut i = 1;
 	let mut result = a;
-	return;
 	while i < b
 	{
 		result = result * a;
@@ -23,6 +23,14 @@ fn puissance(a : i32, b: i32) -> i32
 fn factorielle(n : i32, result : &i32)
 {
 	let mut i = 1;
+	let mut j = true;
+	let mut a = false;
+	let mut c = vec ! [1,3];
+	a = {
+		let d = 85;
+		i=i+1;
+		i+d
+	};
 	if n==0
 	{
 		*result = 1;
@@ -38,9 +46,10 @@ fn factorielle(n : i32, result : &i32)
 }
 
 fn main(){
-	let mut v : vec<i32> = vec ![1,2,3];
-	let mut a:i32 = 5;
-	v[5] = a;
-	factorielle(5,&v);
+	let mut v = vec![vec![1,2],vec![1,4],vec![4,5],vec![6,7]];
+	let mut a = vec![1,2];
+	let mut b = 0;
+	v[1][1] = puissance(1,2);
+	factorielle(5,true);
 	print!(v);
 }

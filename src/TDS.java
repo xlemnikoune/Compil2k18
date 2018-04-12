@@ -37,7 +37,7 @@ public class TDS {
     /**
      * Count of anonymous blocks (for naming purpose).
      */
-    private int innerCount=1;
+    protected int innerCount=1;
 
     /**
      * Count of if blocks (for naming purpose)
@@ -54,6 +54,19 @@ public class TDS {
      */
     private int whileCount=1;
 
+    /**
+     * Save the original Scope ("General")
+     */
+    private static Scope firstScope;
+
+    /**
+     *
+     */
+    private static HashMap<String, Boolean> functionReturned = new HashMap<>();
+
+    private static HashMap<String, ArrayList<Integer>> functionPartiallyReturned = new HashMap<>();
+
+
     /*******************************************************************************************************************/
 
     /**
@@ -61,6 +74,7 @@ public class TDS {
      */
     public TDS() {
         currentScope = new Scope("General", null, "General");
+        firstScope=currentScope;
         op.add("+"); //->bin
         op.add("-"); //->bin
         op.add("*"); //->bin
@@ -79,6 +93,10 @@ public class TDS {
 
     }
 
+    public static Scope getFirstScope() {
+        return firstScope;
+    }
+
     /**
      * Go back in current scope's ancestor (e.g after treatment of a function)
      * @see TDS#currentScope
@@ -92,20 +110,19 @@ public class TDS {
      * @param t Tree corresponding to data to addVar
      * @return 2 if everything went well and 1 if it is needed to go back (e.g treatment of a function, a block ...)
      */
-    public int add(BaseTree t) {
+    public int add(BaseTree t,boolean fromScope) {
         Scope temp = null;
-        String name = null;
+        String name;
         switch (t.toString()) {
             case "let":
                 try {
                     currentScope.addVar("var", (List<BaseTree>) t.getChildren());
                 } catch (SemanticException e) {
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
                 return 2;
             case "struct":
-                //TODO Gérer les structures :!
                 try {
                     currentScope.addStruct("struct", t);
                     temp = new Scope("struct", currentScope, t.getChild(0).toString());
@@ -117,6 +134,7 @@ public class TDS {
                     }
                 } catch (SemanticException e) {
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                    //e.printStackTrace();
                 }
                 if (currentScope==temp)
                     return 1;
@@ -124,6 +142,8 @@ public class TDS {
             case "fn":
                 try {
                     currentScope.addFunction("function", t);
+                    functionReturned.put(t.getChild(0).getText(),false);
+                    functionPartiallyReturned.put(t.getChild(0).getText(), new ArrayList<>());
                     temp = new Scope("function", currentScope, t.getChild(0).toString());
                     currentScope.addScopeNotInner(t.getChild(0).toString(), temp);
                     currentScope = temp;
@@ -177,12 +197,9 @@ public class TDS {
             //cas return
             case "return":
 
-                //Type returnType = currentScope.getType();
                 Scope tempScope = currentScope;
-                while (tempScope.getOrigin() != "function"){
-                        tempScope = tempScope.getAncestor();
-
-
+                while (!tempScope.getOrigin().equals("function")){
+                    tempScope = tempScope.getAncestor();
                 }
                 name = tempScope.getName();
                 Type type = new Type(tempScope.getAncestor().getTable().get(name).get(1));
@@ -200,20 +217,36 @@ public class TDS {
 
                 }catch (SemanticException e){
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                }
+                Scope ifBlock;
+                if ((ifBlock = currentScope.isInIf())!=null){
+                    functionPartiallyReturned.get(name).add(Integer.parseInt(ifBlock.getName().replace("if","")));
+                } else {
+                    Scope elseBlock;
+                    if ((elseBlock = currentScope.isInElse())!=null){
+                        if (functionPartiallyReturned.get(name).contains(Integer.parseInt(elseBlock.getName().replace("if","")))){
+                            functionReturned.replace(name, true);
+                        }
+                    } else {
+                        if (currentScope.isInWhile() == null && currentScope.isInAno()==null){
+                            functionReturned.replace(name,true);
+                        }
                     }
+                }
+
                 return 2;
 
-
-             //attention
-
-
             case "ANOBLOCK":
-                temp = new Scope("anonymous", currentScope, "inner"+innerCount);
-                currentScope.addScopeNotInner("inner"+innerCount,temp);
-                innerCount++;
-                currentScope=temp;
-                return 1;
+                if (fromScope) {
+                    temp = new Scope("anonymous", currentScope, "inner" + innerCount);
+                    currentScope.addInnerScope(temp);
+                    innerCount++;
+                    currentScope = temp;
+                    return 1;
+                }
+                return 2;
             case "=":
+
                 boolean toDo = true;
                 for (Tree j : t.getAncestors()){
                     if (j.getText() != null && j.getText().equals("let")){
@@ -221,40 +254,51 @@ public class TDS {
                     }
                 }
                 if (toDo) {
-                	boolean ismut = false;
-                	name = t.getChild(0).getText();
-                	if (name.substring(0,1)=="*") {
-                		name = name.substring(1,name.length());
-                	}
-                	if (name.contains(".")) {
-                		name=name.split(".")[0];
-                	}
-                	if (name.contains("[")) {
-                		name=name.split("[")[0];
-                	}
-                	if (currentScope.isIn(name)) {
-                		if( currentScope.getTable().get(name).get(3).equals("true") ){
-                			ismut=true;
-                		}
-                	} else if (currentScope.isInAncestor(name)) {
-                		try {
-							if ( currentScope.getFromAncestor(name).get(3).equals("true")){
-								ismut=true;
-							}
-						} catch (SemanticException e) {
-							
-							e.printStackTrace();
-						}
-                	}
-                	if (ismut) {
-                		try {
-                		
-                			currentScope.getType(t);
-                     
-                    	} catch (SemanticException e) {
-                    		System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
-                    	}
-                	}
+                    boolean ismut = false;
+                    name = t.getChild(0).getText();
+                    if (name.equals("UNISTAR")) {
+                        name = t.getChild(0).getChild(0).getText();
+                        ismut = true;
+                    }
+                    if (name.equals(".")) {
+                        name = t.getChild(0).getChild(0).getText();
+                    }
+                    if (name.equals("[")) {
+                        Tree ch = t.getChild(0);
+                        while (ch.getText().equals("[")){
+                            ch = ch.getChild(0);
+                        }
+                        name = ch.getText();
+                    }
+                    if (currentScope.isIn(name)) {
+                        if( currentScope.getTable().get(name).get(3).equals("true") ){
+                            ismut=true;
+                        }
+                    } else if (currentScope.isInAncestor(name)) {
+                        try {
+                            if ( currentScope.getFromAncestor(name).get(3).equals("true")){
+                                ismut=true;
+                            }
+                        } catch (SemanticException e) {
+                            System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                            //e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("Error : \"Var `"+name+"`\" doesn't exist at " + t.getLine() + ":" + t.getCharPositionInLine());
+                        return 2;
+                    }
+                    if (ismut) {
+                        try {
+
+                            currentScope.getType(t);
+
+                        } catch (SemanticException e) {
+                            System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                            //e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("Error : \"cannot assign twice to immutable variable `"+name+"`\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    }
                 }
                 return 2;
         }
@@ -285,5 +329,18 @@ public class TDS {
     @Override
     public String toString(){
         return currentScope.toString(1);
+    }
+
+    public void validate() {
+        if (functionReturned.containsValue(false)){
+            ArrayList<String> notReturned = new ArrayList<>();
+            for (String i : functionReturned.keySet()){
+                if (! functionReturned.get(i) && !currentScope.getTable().get(i).get(1).equals("Void")){
+                    notReturned.add(i);
+                }
+            }
+            if (notReturned.size()>1)
+                System.out.println("WARNING ! These functions does not have a proper return : "+notReturned);
+        }
     }
 }

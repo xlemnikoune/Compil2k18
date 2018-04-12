@@ -10,7 +10,7 @@ import java.util.List;
  * <ul>
  *     <li>An ancestor</li>
  *     <li>An origin</li>
- *      <li>A name</li>
+ *     <li>A name</li>
  *     <li>An offset, corresponding to current offset</li>
  *     <li>An "innerScopeList", corresponding to a list of scope of anonymous block inside this scope</li>
  *     <li>A table, containing every variables, parameters</li>
@@ -182,8 +182,11 @@ public class Scope {
                 }
                 Type tempType = getType(childrens.get(1));
                 if (type != null) {
+                    if (type.getName().startsWith("vec ")){
+                        tempType=new Type("vec "+tempType.getName());
+                    }
                     if (!type.equals(tempType)) {
-                        throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType);
+                        throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType,children.get(1).getLine(),children.get(1).getCharPositionInLine());
                     } else {
                         type = tempType;
                     }
@@ -214,10 +217,43 @@ public class Scope {
                 table.put(name,param);
                 MiniRustCompiler.tds.getList().put(name,"var");
             } else {
-                throw new SemanticException("Var name already used : " + name);
+                Type tempType = getType(childrens.get(1));
+                if (type != null) {
+                    if (!type.equals(tempType)) {
+                        throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType,children.get(1).getLine(),children.get(1).getCharPositionInLine());
+                    } else {
+                        type = tempType;
+                    }
+                } else {
+                    type=tempType;
+                }
+
+                int deplacement = 0;
+                if (type.is("i32")){
+                    deplacement = this.deplacement;
+                    this.deplacement += 4;
+                } else {
+                    if (type.is("bool")){
+                        deplacement = this.deplacement;
+                        this.deplacement += 1;
+                    } else {
+                        deplacement = this.deplacement;
+                        this.deplacement += 12;
+                        //TODO Struct type and vec type -> offset
+                    }
+                }
+
+                ArrayList<String> param = new ArrayList<>();
+                param.add(string);
+                param.add(type.getName());
+                param.add(String.valueOf(deplacement));
+                param.add(String.valueOf(isMut));
+                System.out.println("Warning : \"Var shadowed: " + name + " from type "+table.get(name).get(1)+" to type "+tempType+"\" at " + childrens.get(1).getLine() + ":" + childrens.get(1).getCharPositionInLine());
+                table.replace(name,param);
+                MiniRustCompiler.tds.getList().put(name,"var");
             }
         } else {
-            System.err.println("Should not happen");
+            System.err.println("LEL, should not happen");
         }
     }
 
@@ -238,19 +274,17 @@ public class Scope {
             Type tempType = getRawType((BaseTree) baseTree.getChild(0));
             type= new Type("&"+tempType.getName());
         }
-
         if (text.equals("vec")){
             Type tempType = getRawType((BaseTree) baseTree.getChild(0));
             if (!tempType.isRaw())
-                checkType(tempType);
+                checkType(tempType,baseTree.getChild(0).getLine(), baseTree.getChild(0).getCharPositionInLine());
             type = new Type("vec "+tempType.getName());
         }
 
         if (text.matches("[a-zA-Z][a-zA-Z0-9]+") && type==null){ //First should always be true
             type=new Type(text);
-            checkType(type);
+            checkType(type,baseTree.getChild(0).getLine(), baseTree.getChild(0).getCharPositionInLine());
         }
-
         return type;
     }
 
@@ -274,9 +308,22 @@ public class Scope {
             return new Type("i32");
         }
 
+        if (name.equals("[")){
+            String var  = child.getChild(0).getText();
+            Type valType = getType(child.getChild(1));
+            Type varType = getType(child.getChild(0));
+            if (varType.getName().startsWith("vec ")){
+                if (valType.getName().equals("i32")){
+                    return new Type(varType.getName().split(" ",2)[1]);
+                }
+                throw new SemanticException("Mismatched types : expected i32, found " + valType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
+            }
+            throw new SemanticException("Mismatched types : expected vec<>, found " + varType,child.getChild(0).getLine(),child.getChild(0).getCharPositionInLine());
+        }
+
         if (child.getChildCount() > 0 && child.getChild(0).getText().equals("NEW")){
             Type tempType = new Type(name);
-            checkType(tempType);
+            checkType(tempType, child.getLine(), child.getCharPositionInLine());
             return tempType;
         }
 
@@ -284,7 +331,7 @@ public class Scope {
             Type tempType = getType(child.getChild(0));
             for (int i =0;i<child.getChildCount();i++){
                 if (!getType(child.getChild(i)).equals(tempType)){
-                    throw new SemanticException("Mismatched types : expected " + tempType + ", found " + getType(child.getChild(i)));
+                    throw new SemanticException("Mismatched types : expected " + tempType + ", found " + getType(child.getChild(i)),child.getChild(0).getLine(),child.getChild(0).getCharPositionInLine());
                 }
             }
             return tempType;
@@ -300,6 +347,14 @@ public class Scope {
                         var=child.getChild(0).getChild(0).getText();
                         haveToChange = true;
                     }
+                    if (var.equals("[")){
+                        Type leftType =  getType(child.getChild(0));
+                        Type secondType = getType(child.getChild(1));
+                        if (leftType.equals(secondType)){
+                            return secondType;
+                        }
+                        throw new SemanticException("Mismatched types : expected " + leftType + ", found " + secondType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
+                    }
                     if (isIn(var)){
                         Type tempType = new Type(table.get(var).get(1));
                         if (haveToChange) {
@@ -309,7 +364,7 @@ public class Scope {
                         if (tempType.equals(type)){
                             return type;
                         } else {
-                            throw new SemanticException("Mismatched types : expected " + tempType + ", found " + type);
+                            throw new SemanticException("Mismatched types : expected " + tempType + ", found " + type,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
                         }
                     }
                     if (isInAncestor(var)){
@@ -321,14 +376,14 @@ public class Scope {
                         if (tempType.equals(type)){
                             return type;
                         } else {
-                            throw new SemanticException("Mismatched types : expected " + tempType + ", found " + type);
+                            throw new SemanticException("Mismatched types : expected " + tempType + ", found " + type,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
                         }
                     }
-                    throw new SemanticException("Cannot find value `"+var+"` in this scope");
+                    throw new SemanticException("Cannot find value `"+var+"` in this scope",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                 }
                 if (name.equals("&")){
                     if (child.getChild(0).getChildCount() > 0){
-                        throw new SemanticException("Unary operation `"+name+"` cannot be applied to expression");
+                        throw new SemanticException("Unary operation `"+name+"` cannot be applied to expression",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                     }
                     String var = child.getChild(0).getText();
                     Type tempType = getType(child.getChild(0));
@@ -341,10 +396,10 @@ public class Scope {
                     if (tempType2.getName().equals("i32")) {
                         return new Type("i32");
                     } else {
-                        throw new SemanticException("Mismatched types : expected i32, found " + tempType2);
+                        throw new SemanticException("Mismatched types : expected i32, found " + tempType2,child.getChild(1).getLine(), child.getChild(1).getCharPositionInLine());
                     }
                 }
-                throw new SemanticException("Binary operation `"+name+"` cannot be applied to type `"+tempType+"`");
+                throw new SemanticException("Binary operation `"+name+"` cannot be applied to type `"+tempType+"`",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
 
 
             }
@@ -354,7 +409,7 @@ public class Scope {
                     if (tempType.getName().equals("bool")){
                         return new Type("bool");
                     } else {
-                        throw new SemanticException("Mismatched types : expected bool, found " + tempType);
+                        throw new SemanticException("Mismatched types : expected bool, found " + tempType,child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                     }
                 }
                 if (name.equals("&&") || name.equals("||")){
@@ -364,10 +419,10 @@ public class Scope {
                         if (tempType2.getName().equals("bool")){
                             return new Type("bool");
                         } else {
-                            throw new SemanticException("Mismatched types : expected bool, found " + tempType2);
+                            throw new SemanticException("Mismatched types : expected bool, found " + tempType2,child.getChild(1).getLine(), child.getChild(1).getCharPositionInLine());
                         }
                     } else {
-                        throw new SemanticException("Mismatched types : expected bool, found " + tempType);
+                        throw new SemanticException("Mismatched types : expected bool, found " + tempType,child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                     }
                 }
                 if (name.equals("==") || name.equals("!=")){
@@ -377,17 +432,17 @@ public class Scope {
                         if (tempType2.getName().equals("i32")) {
                             return new Type("bool");
                         } else {
-                            throw new SemanticException("Mismatched types : expected i32, found " + tempType2);
+                            throw new SemanticException("Mismatched types : expected i32, found " + tempType2,child.getChild(1).getLine(), child.getChild(1).getCharPositionInLine());
                         }
                     }
                     if (tempType.getName().equals("bool")){
                         if (tempType2.getName().equals("bool")) {
                             return new Type("bool");
                         } else {
-                            throw new SemanticException("Mismatched types : expected bool, found " + tempType2);
+                            throw new SemanticException("Mismatched types : expected bool, found " + tempType2,child.getChild(1).getLine(), child.getChild(1).getCharPositionInLine());
                         }
                     }
-                    throw new SemanticException("Binary operation `"+name+"` cannot be applied to type `"+tempType+"`");
+                    throw new SemanticException("Binary operation `"+name+"` cannot be applied to type `"+tempType+"`",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                 }
                 Type tempType = getType(child.getChild(0));
                 Type tempType2 = getType(child.getChild(1));
@@ -395,10 +450,10 @@ public class Scope {
                     if (tempType2.getName().equals("i32")){
                         return new Type("bool");
                     } else {
-                        throw new SemanticException("Mismatched types : expected i32, found " + tempType2);
+                        throw new SemanticException("Mismatched types : expected i32, found " + tempType2,child.getChild(1).getLine(), child.getChild(1).getCharPositionInLine());
                     }
                 } else {
-                    throw new SemanticException("Mismatched types : expected i32, found " + tempType);
+                    throw new SemanticException("Mismatched types : expected i32, found " + tempType,child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                 }
             }
             if (name.equals("UNISTAR")){
@@ -406,7 +461,7 @@ public class Scope {
                 if (tempType.getName().startsWith("&")){
                     return new Type(tempType.getName().substring(1));
                 }
-                throw new SemanticException("Unary operation `*` cannot be applied to type `"+tempType+"`");
+                throw new SemanticException("Unary operation `*` cannot be applied to type `"+tempType+"`",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
 
             }
             if (name.equals("UNISUB")){
@@ -414,7 +469,7 @@ public class Scope {
                 if (tempType.getName().equals("i32")){
                     return new Type("i32");
                 }
-                throw new SemanticException("Unary operation `-` cannot be applied to type `"+tempType+"`");
+                throw new SemanticException("Unary operation `-` cannot be applied to type `"+tempType+"`",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
 
             }
 
@@ -425,7 +480,7 @@ public class Scope {
             String type = values.get(1);
             Type typeT = new Type(type);
             if (!typeT.isRaw())
-                checkType(typeT);
+                checkType(typeT,child.getLine(), child.getCharPositionInLine());
             return typeT;
         }
         if (isInAncestor(name)){
@@ -433,11 +488,11 @@ public class Scope {
             String type = values.get(1);
             Type typeT = new Type(type);
             if (!typeT.isRaw())
-                checkType(typeT);
+                checkType(typeT,child.getLine(), child.getCharPositionInLine());
             return typeT;
         }
 
-        throw new SemanticException("Cannot find value `"+name+"` in this scope");
+        throw new SemanticException("Cannot find value `"+name+"` in this scope",child.getLine(), child.getCharPositionInLine());
     }
 
     /**
@@ -495,7 +550,7 @@ public class Scope {
             table.put(name,param);
             MiniRustCompiler.tds.getList().put(name,"function");
         } else {
-            throw new SemanticException("Function name already used");
+            throw new SemanticException("Function name already used",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
         }
     }
 
@@ -504,18 +559,18 @@ public class Scope {
      * @param tempType The type to be checked
      * @throws SemanticException If the semantic controls failed (here a non-existing structure)
      */
-    private void checkType(Type tempType) throws SemanticException {
+    private void checkType(Type tempType, int line, int column) throws SemanticException {
         if (isIn(tempType.getName())){
             if (!table.get(tempType.getName()).get(0).equals("struct")){
-                throw new SemanticException(tempType + " is not a struct");
+                throw new SemanticException(tempType + " is not a struct", line, column);
             }
         } else {
             if (isInAncestor(tempType.getName())){
                 if (!getFromAncestor(tempType.getName()).get(0).equals("struct")){
-                    throw new SemanticException(tempType + " is not a struct");
+                    throw new SemanticException(tempType + " is not a struct", line, column);
                 }
             } else {
-                throw new SemanticException(tempType + " is not a struct");
+                throw new SemanticException(tempType + " is not a struct", line, column);
             }
         }
     }
@@ -569,8 +624,8 @@ public class Scope {
 
     /**
      * Add a scope corresponding to a non-anonymous block to this scope.
-     * @param s Name of scope to addVar
-     * @param temp Scope to addVar
+     * @param s Name of scope to add
+     * @param temp Scope to add
      * @see Scope#secondTable
      */
     public void addScopeNotInner(String s, Scope temp) {
@@ -591,7 +646,7 @@ public class Scope {
             table.put(name,param);
             MiniRustCompiler.tds.getList().put(name,"struct");
         } else {
-            throw new SemanticException("Structure name already used");
+            throw new SemanticException("Structure name already used", t.getLine(), t.getCharPositionInLine());
         }
 
     }
@@ -604,7 +659,7 @@ public class Scope {
     public void checkCondition(Tree child) throws SemanticException {
         Type type=getType(child);
         if (!type.getName().equals("bool")){
-            throw new SemanticException("Mismatched types : expected bool, found "+type);
+            throw new SemanticException("Mismatched types : expected bool, found "+type,child.getLine(), child.getCharPositionInLine());
         }
     }
 }

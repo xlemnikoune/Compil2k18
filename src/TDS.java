@@ -99,8 +99,8 @@ public class TDS {
                 try {
                     currentScope.addVar("var", (List<BaseTree>) t.getChildren());
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
-                    //e.printStackTrace();
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                    e.printStackTrace();
                 }
                 return 2;
             case "struct":
@@ -115,7 +115,7 @@ public class TDS {
                         currentScope.addParam("attribute", t.getChild(i+1));
                     }
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                 }
                 if (currentScope==temp)
                     return 1;
@@ -135,8 +135,8 @@ public class TDS {
                         }
                     }
                     return 1;
-                } catch (Exception e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                } catch (SemanticException e) {
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                     //e.printStackTrace();
                 }
                 if (currentScope==temp)
@@ -151,7 +151,7 @@ public class TDS {
                     currentScope=temp;
                     return 1;
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                 }
                 return 2;
             case "else":
@@ -169,7 +169,7 @@ public class TDS {
                     currentScope=temp;
                     return 1;
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                 }
                 return 2;
 
@@ -214,7 +214,8 @@ public class TDS {
                     try {
                         currentScope.getType(t);
                     } catch (SemanticException e) {
-                        System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                        System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                        //e.printStackTrace();
                     }
                 }
                 return 2;

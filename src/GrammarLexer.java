@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 Grammar.g 2018-04-10 14:32:22
+// $ANTLR 3.5.2 Grammar.g 2018-04-12 03:57:35
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -8,9 +8,6 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class GrammarLexer extends Lexer {
 	public static final int EOF=-1;
-	public static final int T__29=29;
-	public static final int T__30=30;
-	public static final int T__31=31;
 	public static final int T__32=32;
 	public static final int T__33=33;
 	public static final int T__34=34;
@@ -33,31 +30,37 @@ public class GrammarLexer extends Lexer {
 	public static final int T__51=51;
 	public static final int T__52=52;
 	public static final int T__53=53;
+	public static final int T__54=54;
+	public static final int T__55=55;
+	public static final int T__56=56;
 	public static final int ADD=4;
 	public static final int ANDBOOL=5;
-	public static final int ATTRIBUTE=6;
-	public static final int BLOCK=7;
-	public static final int BOOL=8;
-	public static final int CALLFUN=9;
-	public static final int COMMENT=10;
-	public static final int DIV=11;
-	public static final int EPERLU=12;
-	public static final int EQUAL=13;
-	public static final int IDF=14;
-	public static final int IF=15;
-	public static final int INT=16;
-	public static final int MAIN=17;
-	public static final int NEW=18;
-	public static final int NEXT=19;
-	public static final int OPBOOLEQ=20;
-	public static final int ORBOOL=21;
-	public static final int PREV=22;
-	public static final int STAR=23;
-	public static final int STRING=24;
-	public static final int SUB=25;
-	public static final int UNAIRE=26;
-	public static final int VEC=27;
-	public static final int WS=28;
+	public static final int ANOBLOCK=6;
+	public static final int ATTRIBUTE=7;
+	public static final int BLOCK=8;
+	public static final int BOOL=9;
+	public static final int CALLFUN=10;
+	public static final int COMMENT=11;
+	public static final int DIV=12;
+	public static final int EPERLU=13;
+	public static final int EQUAL=14;
+	public static final int IDF=15;
+	public static final int IF=16;
+	public static final int INT=17;
+	public static final int MAIN=18;
+	public static final int NEW=19;
+	public static final int NEXT=20;
+	public static final int OPBOOLEQ=21;
+	public static final int ORBOOL=22;
+	public static final int PREV=23;
+	public static final int STAR=24;
+	public static final int STRING=25;
+	public static final int SUB=26;
+	public static final int UNAIRE=27;
+	public static final int UNISTAR=28;
+	public static final int UNISUB=29;
+	public static final int VEC=30;
+	public static final int WS=31;
 
 	// delegates
 	// delegators
@@ -74,76 +77,15 @@ public class GrammarLexer extends Lexer {
 	}
 	@Override public String getGrammarFileName() { return "Grammar.g"; }
 
-	// $ANTLR start "T__29"
-	public final void mT__29() throws RecognitionException {
-		try {
-			int _type = T__29;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:2:7: ( '(' )
-			// Grammar.g:2:9: '('
-			{
-			match('('); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__29"
-
-	// $ANTLR start "T__30"
-	public final void mT__30() throws RecognitionException {
-		try {
-			int _type = T__30;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:3:7: ( ')' )
-			// Grammar.g:3:9: ')'
-			{
-			match(')'); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__30"
-
-	// $ANTLR start "T__31"
-	public final void mT__31() throws RecognitionException {
-		try {
-			int _type = T__31;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:4:7: ( ',' )
-			// Grammar.g:4:9: ','
-			{
-			match(','); 
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "T__31"
-
 	// $ANTLR start "T__32"
 	public final void mT__32() throws RecognitionException {
 		try {
 			int _type = T__32;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:5:7: ( '->' )
-			// Grammar.g:5:9: '->'
+			// Grammar.g:2:7: ( '(' )
+			// Grammar.g:2:9: '('
 			{
-			match("->"); 
-
+			match('('); 
 			}
 
 			state.type = _type;
@@ -160,10 +102,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__33;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:6:7: ( '.' )
-			// Grammar.g:6:9: '.'
+			// Grammar.g:3:7: ( ')' )
+			// Grammar.g:3:9: ')'
 			{
-			match('.'); 
+			match(')'); 
 			}
 
 			state.type = _type;
@@ -180,10 +122,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__34;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:7:7: ( ':' )
-			// Grammar.g:7:9: ':'
+			// Grammar.g:4:7: ( ',' )
+			// Grammar.g:4:9: ','
 			{
-			match(':'); 
+			match(','); 
 			}
 
 			state.type = _type;
@@ -200,10 +142,11 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__35;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:8:7: ( ';' )
-			// Grammar.g:8:9: ';'
+			// Grammar.g:5:7: ( '->' )
+			// Grammar.g:5:9: '->'
 			{
-			match(';'); 
+			match("->"); 
+
 			}
 
 			state.type = _type;
@@ -220,10 +163,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__36;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:9:7: ( '[' )
-			// Grammar.g:9:9: '['
+			// Grammar.g:6:7: ( '.' )
+			// Grammar.g:6:9: '.'
 			{
-			match('['); 
+			match('.'); 
 			}
 
 			state.type = _type;
@@ -240,10 +183,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__37;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:10:7: ( ']' )
-			// Grammar.g:10:9: ']'
+			// Grammar.g:7:7: ( ':' )
+			// Grammar.g:7:9: ':'
 			{
-			match(']'); 
+			match(':'); 
 			}
 
 			state.type = _type;
@@ -260,11 +203,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__38;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:11:7: ( 'bool' )
-			// Grammar.g:11:9: 'bool'
+			// Grammar.g:8:7: ( ';' )
+			// Grammar.g:8:9: ';'
 			{
-			match("bool"); 
-
+			match(';'); 
 			}
 
 			state.type = _type;
@@ -281,11 +223,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__39;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:12:7: ( 'break' )
-			// Grammar.g:12:9: 'break'
+			// Grammar.g:9:7: ( '[' )
+			// Grammar.g:9:9: '['
 			{
-			match("break"); 
-
+			match('['); 
 			}
 
 			state.type = _type;
@@ -302,11 +243,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__40;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:13:7: ( 'else' )
-			// Grammar.g:13:9: 'else'
+			// Grammar.g:10:7: ( ']' )
+			// Grammar.g:10:9: ']'
 			{
-			match("else"); 
-
+			match(']'); 
 			}
 
 			state.type = _type;
@@ -323,10 +263,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__41;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:14:7: ( 'fn' )
-			// Grammar.g:14:9: 'fn'
+			// Grammar.g:11:7: ( 'bool' )
+			// Grammar.g:11:9: 'bool'
 			{
-			match("fn"); 
+			match("bool"); 
 
 			}
 
@@ -344,10 +284,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__42;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:15:7: ( 'i32' )
-			// Grammar.g:15:9: 'i32'
+			// Grammar.g:12:7: ( 'break' )
+			// Grammar.g:12:9: 'break'
 			{
-			match("i32"); 
+			match("break"); 
 
 			}
 
@@ -365,10 +305,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__43;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:16:7: ( 'len' )
-			// Grammar.g:16:9: 'len'
+			// Grammar.g:13:7: ( 'else' )
+			// Grammar.g:13:9: 'else'
 			{
-			match("len"); 
+			match("else"); 
 
 			}
 
@@ -386,10 +326,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__44;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:17:7: ( 'let' )
-			// Grammar.g:17:9: 'let'
+			// Grammar.g:14:7: ( 'fn' )
+			// Grammar.g:14:9: 'fn'
 			{
-			match("let"); 
+			match("fn"); 
 
 			}
 
@@ -407,10 +347,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__45;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:18:7: ( 'loop' )
-			// Grammar.g:18:9: 'loop'
+			// Grammar.g:15:7: ( 'i32' )
+			// Grammar.g:15:9: 'i32'
 			{
-			match("loop"); 
+			match("i32"); 
 
 			}
 
@@ -428,10 +368,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__46;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:19:7: ( 'mut' )
-			// Grammar.g:19:9: 'mut'
+			// Grammar.g:16:7: ( 'len' )
+			// Grammar.g:16:9: 'len'
 			{
-			match("mut"); 
+			match("len"); 
 
 			}
 
@@ -449,10 +389,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__47;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:20:7: ( 'print' )
-			// Grammar.g:20:9: 'print'
+			// Grammar.g:17:7: ( 'let' )
+			// Grammar.g:17:9: 'let'
 			{
-			match("print"); 
+			match("let"); 
 
 			}
 
@@ -470,10 +410,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__48;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:21:7: ( 'return' )
-			// Grammar.g:21:9: 'return'
+			// Grammar.g:18:7: ( 'loop' )
+			// Grammar.g:18:9: 'loop'
 			{
-			match("return"); 
+			match("loop"); 
 
 			}
 
@@ -491,10 +431,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__49;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:22:7: ( 'struct' )
-			// Grammar.g:22:9: 'struct'
+			// Grammar.g:19:7: ( 'mut' )
+			// Grammar.g:19:9: 'mut'
 			{
-			match("struct"); 
+			match("mut"); 
 
 			}
 
@@ -512,10 +452,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__50;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:23:7: ( 'vec' )
-			// Grammar.g:23:9: 'vec'
+			// Grammar.g:20:7: ( 'print' )
+			// Grammar.g:20:9: 'print'
 			{
-			match("vec"); 
+			match("print"); 
 
 			}
 
@@ -533,10 +473,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__51;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:24:7: ( 'while' )
-			// Grammar.g:24:9: 'while'
+			// Grammar.g:21:7: ( 'return' )
+			// Grammar.g:21:9: 'return'
 			{
-			match("while"); 
+			match("return"); 
 
 			}
 
@@ -554,10 +494,11 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__52;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:25:7: ( '{' )
-			// Grammar.g:25:9: '{'
+			// Grammar.g:22:7: ( 'struct' )
+			// Grammar.g:22:9: 'struct'
 			{
-			match('{'); 
+			match("struct"); 
+
 			}
 
 			state.type = _type;
@@ -574,6 +515,68 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = T__53;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// Grammar.g:23:7: ( 'vec' )
+			// Grammar.g:23:9: 'vec'
+			{
+			match("vec"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__53"
+
+	// $ANTLR start "T__54"
+	public final void mT__54() throws RecognitionException {
+		try {
+			int _type = T__54;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// Grammar.g:24:7: ( 'while' )
+			// Grammar.g:24:9: 'while'
+			{
+			match("while"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__54"
+
+	// $ANTLR start "T__55"
+	public final void mT__55() throws RecognitionException {
+		try {
+			int _type = T__55;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// Grammar.g:25:7: ( '{' )
+			// Grammar.g:25:9: '{'
+			{
+			match('{'); 
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "T__55"
+
+	// $ANTLR start "T__56"
+	public final void mT__56() throws RecognitionException {
+		try {
+			int _type = T__56;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
 			// Grammar.g:26:7: ( '}' )
 			// Grammar.g:26:9: '}'
 			{
@@ -587,15 +590,15 @@ public class GrammarLexer extends Lexer {
 			// do for sure before leaving
 		}
 	}
-	// $ANTLR end "T__53"
+	// $ANTLR end "T__56"
 
 	// $ANTLR start "EQUAL"
 	public final void mEQUAL() throws RecognitionException {
 		try {
 			int _type = EQUAL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:144:7: ( '=' )
-			// Grammar.g:144:9: '='
+			// Grammar.g:151:7: ( '=' )
+			// Grammar.g:151:9: '='
 			{
 			match('='); 
 			}
@@ -614,8 +617,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ORBOOL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:146:8: ( '||' )
-			// Grammar.g:146:10: '||'
+			// Grammar.g:153:8: ( '||' )
+			// Grammar.g:153:10: '||'
 			{
 			match("||"); 
 
@@ -635,8 +638,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ANDBOOL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:148:9: ( '&&' )
-			// Grammar.g:148:11: '&&'
+			// Grammar.g:155:9: ( '&&' )
+			// Grammar.g:155:11: '&&'
 			{
 			match("&&"); 
 
@@ -656,8 +659,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = PREV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:150:7: ( '<' )
-			// Grammar.g:150:10: '<'
+			// Grammar.g:157:7: ( '<' )
+			// Grammar.g:157:10: '<'
 			{
 			match('<'); 
 			}
@@ -676,8 +679,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = NEXT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:151:7: ( '>' )
-			// Grammar.g:151:10: '>'
+			// Grammar.g:158:7: ( '>' )
+			// Grammar.g:158:10: '>'
 			{
 			match('>'); 
 			}
@@ -696,7 +699,7 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = OPBOOLEQ;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:153:10: ( '==' | '!=' | '<=' | '>=' )
+			// Grammar.g:160:10: ( '==' | '!=' | '<=' | '>=' )
 			int alt1=4;
 			switch ( input.LA(1) ) {
 			case '=':
@@ -726,28 +729,28 @@ public class GrammarLexer extends Lexer {
 			}
 			switch (alt1) {
 				case 1 :
-					// Grammar.g:153:12: '=='
+					// Grammar.g:160:12: '=='
 					{
 					match("=="); 
 
 					}
 					break;
 				case 2 :
-					// Grammar.g:153:17: '!='
+					// Grammar.g:160:17: '!='
 					{
 					match("!="); 
 
 					}
 					break;
 				case 3 :
-					// Grammar.g:153:22: '<='
+					// Grammar.g:160:22: '<='
 					{
 					match("<="); 
 
 					}
 					break;
 				case 4 :
-					// Grammar.g:153:27: '>='
+					// Grammar.g:160:27: '>='
 					{
 					match(">="); 
 
@@ -769,8 +772,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ADD;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:155:5: ( '+' )
-			// Grammar.g:155:7: '+'
+			// Grammar.g:162:5: ( '+' )
+			// Grammar.g:162:7: '+'
 			{
 			match('+'); 
 			}
@@ -789,8 +792,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = STAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:157:7: ( '*' )
-			// Grammar.g:157:10: '*'
+			// Grammar.g:164:7: ( '*' )
+			// Grammar.g:164:10: '*'
 			{
 			match('*'); 
 			}
@@ -809,8 +812,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = DIV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:159:5: ( '/' )
-			// Grammar.g:159:7: '/'
+			// Grammar.g:166:5: ( '/' )
+			// Grammar.g:166:7: '/'
 			{
 			match('/'); 
 			}
@@ -829,8 +832,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = UNAIRE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:161:8: ( '!' )
-			// Grammar.g:161:11: '!'
+			// Grammar.g:168:8: ( '!' )
+			// Grammar.g:168:11: '!'
 			{
 			match('!'); 
 			}
@@ -849,8 +852,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = EPERLU;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:163:9: ( '&' )
-			// Grammar.g:163:12: '&'
+			// Grammar.g:170:9: ( '&' )
+			// Grammar.g:170:12: '&'
 			{
 			match('&'); 
 			}
@@ -869,8 +872,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:165:5: ( 'if' )
-			// Grammar.g:165:8: 'if'
+			// Grammar.g:172:5: ( 'if' )
+			// Grammar.g:172:8: 'if'
 			{
 			match("if"); 
 
@@ -890,8 +893,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = SUB;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:168:6: ( '-' )
-			// Grammar.g:168:9: '-'
+			// Grammar.g:175:6: ( '-' )
+			// Grammar.g:175:9: '-'
 			{
 			match('-'); 
 			}
@@ -910,8 +913,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = MAIN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:170:7: ( 'main' )
-			// Grammar.g:170:9: 'main'
+			// Grammar.g:177:7: ( 'main' )
+			// Grammar.g:177:9: 'main'
 			{
 			match("main"); 
 
@@ -931,7 +934,7 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = BOOL;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:173:7: ( 'true' | 'false' )
+			// Grammar.g:180:7: ( 'true' | 'false' )
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( (LA2_0=='t') ) {
@@ -949,14 +952,14 @@ public class GrammarLexer extends Lexer {
 
 			switch (alt2) {
 				case 1 :
-					// Grammar.g:173:9: 'true'
+					// Grammar.g:180:9: 'true'
 					{
 					match("true"); 
 
 					}
 					break;
 				case 2 :
-					// Grammar.g:173:17: 'false'
+					// Grammar.g:180:17: 'false'
 					{
 					match("false"); 
 
@@ -978,8 +981,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = IDF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:176:8: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
-			// Grammar.g:176:10: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// Grammar.g:183:8: ( ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )* )
+			// Grammar.g:183:10: ( 'a' .. 'z' ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			{
 			if ( (input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -989,7 +992,7 @@ public class GrammarLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// Grammar.g:176:21: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
+			// Grammar.g:183:21: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_' )*
 			loop3:
 			while (true) {
 				int alt3=2;
@@ -1034,10 +1037,10 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = INT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:180:8: ( ( '0' .. '9' )+ )
-			// Grammar.g:180:10: ( '0' .. '9' )+
+			// Grammar.g:187:8: ( ( '0' .. '9' )+ )
+			// Grammar.g:187:10: ( '0' .. '9' )+
 			{
-			// Grammar.g:180:10: ( '0' .. '9' )+
+			// Grammar.g:187:10: ( '0' .. '9' )+
 			int cnt4=0;
 			loop4:
 			while (true) {
@@ -1086,11 +1089,11 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:186:3: ( '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"' )
-			// Grammar.g:186:3: '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"'
+			// Grammar.g:193:3: ( '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"' )
+			// Grammar.g:193:3: '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"'
 			{
 			match('\"'); 
-			// Grammar.g:186:7: (~ ( '\\r' | '\\n' | '\"' ) )*
+			// Grammar.g:193:7: (~ ( '\\r' | '\\n' | '\"' ) )*
 			loop5:
 			while (true) {
 				int alt5=2;
@@ -1136,12 +1139,12 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = COMMENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:189:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
-			// Grammar.g:189:13: '/*' ( options {greedy=false; } : . )* '*/'
+			// Grammar.g:196:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
+			// Grammar.g:196:13: '/*' ( options {greedy=false; } : . )* '*/'
 			{
 			match("/*"); 
 
-			// Grammar.g:189:18: ( options {greedy=false; } : . )*
+			// Grammar.g:196:18: ( options {greedy=false; } : . )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1162,7 +1165,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt6) {
 				case 1 :
-					// Grammar.g:189:46: .
+					// Grammar.g:196:46: .
 					{
 					matchAny(); 
 					}
@@ -1192,11 +1195,11 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ATTRIBUTE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:191:11: ( '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' ) )
-			// Grammar.g:191:13: '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' )
+			// Grammar.g:198:11: ( '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' ) )
+			// Grammar.g:198:13: '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' )
 			{
 			match('#'); 
-			// Grammar.g:191:17: ( options {greedy=false; } : . )*
+			// Grammar.g:198:17: ( options {greedy=false; } : . )*
 			loop7:
 			while (true) {
 				int alt7=2;
@@ -1210,7 +1213,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt7) {
 				case 1 :
-					// Grammar.g:191:45: .
+					// Grammar.g:198:45: .
 					{
 					matchAny(); 
 					}
@@ -1246,8 +1249,8 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:193:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// Grammar.g:193:10: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// Grammar.g:200:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// Grammar.g:200:10: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -1271,182 +1274,182 @@ public class GrammarLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// Grammar.g:1:8: ( T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS )
+		// Grammar.g:1:8: ( T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS )
 		int alt8=46;
 		alt8 = dfa8.predict(input);
 		switch (alt8) {
 			case 1 :
-				// Grammar.g:1:10: T__29
-				{
-				mT__29(); 
-
-				}
-				break;
-			case 2 :
-				// Grammar.g:1:16: T__30
-				{
-				mT__30(); 
-
-				}
-				break;
-			case 3 :
-				// Grammar.g:1:22: T__31
-				{
-				mT__31(); 
-
-				}
-				break;
-			case 4 :
-				// Grammar.g:1:28: T__32
+				// Grammar.g:1:10: T__32
 				{
 				mT__32(); 
 
 				}
 				break;
-			case 5 :
-				// Grammar.g:1:34: T__33
+			case 2 :
+				// Grammar.g:1:16: T__33
 				{
 				mT__33(); 
 
 				}
 				break;
-			case 6 :
-				// Grammar.g:1:40: T__34
+			case 3 :
+				// Grammar.g:1:22: T__34
 				{
 				mT__34(); 
 
 				}
 				break;
-			case 7 :
-				// Grammar.g:1:46: T__35
+			case 4 :
+				// Grammar.g:1:28: T__35
 				{
 				mT__35(); 
 
 				}
 				break;
-			case 8 :
-				// Grammar.g:1:52: T__36
+			case 5 :
+				// Grammar.g:1:34: T__36
 				{
 				mT__36(); 
 
 				}
 				break;
-			case 9 :
-				// Grammar.g:1:58: T__37
+			case 6 :
+				// Grammar.g:1:40: T__37
 				{
 				mT__37(); 
 
 				}
 				break;
-			case 10 :
-				// Grammar.g:1:64: T__38
+			case 7 :
+				// Grammar.g:1:46: T__38
 				{
 				mT__38(); 
 
 				}
 				break;
-			case 11 :
-				// Grammar.g:1:70: T__39
+			case 8 :
+				// Grammar.g:1:52: T__39
 				{
 				mT__39(); 
 
 				}
 				break;
-			case 12 :
-				// Grammar.g:1:76: T__40
+			case 9 :
+				// Grammar.g:1:58: T__40
 				{
 				mT__40(); 
 
 				}
 				break;
-			case 13 :
-				// Grammar.g:1:82: T__41
+			case 10 :
+				// Grammar.g:1:64: T__41
 				{
 				mT__41(); 
 
 				}
 				break;
-			case 14 :
-				// Grammar.g:1:88: T__42
+			case 11 :
+				// Grammar.g:1:70: T__42
 				{
 				mT__42(); 
 
 				}
 				break;
-			case 15 :
-				// Grammar.g:1:94: T__43
+			case 12 :
+				// Grammar.g:1:76: T__43
 				{
 				mT__43(); 
 
 				}
 				break;
-			case 16 :
-				// Grammar.g:1:100: T__44
+			case 13 :
+				// Grammar.g:1:82: T__44
 				{
 				mT__44(); 
 
 				}
 				break;
-			case 17 :
-				// Grammar.g:1:106: T__45
+			case 14 :
+				// Grammar.g:1:88: T__45
 				{
 				mT__45(); 
 
 				}
 				break;
-			case 18 :
-				// Grammar.g:1:112: T__46
+			case 15 :
+				// Grammar.g:1:94: T__46
 				{
 				mT__46(); 
 
 				}
 				break;
-			case 19 :
-				// Grammar.g:1:118: T__47
+			case 16 :
+				// Grammar.g:1:100: T__47
 				{
 				mT__47(); 
 
 				}
 				break;
-			case 20 :
-				// Grammar.g:1:124: T__48
+			case 17 :
+				// Grammar.g:1:106: T__48
 				{
 				mT__48(); 
 
 				}
 				break;
-			case 21 :
-				// Grammar.g:1:130: T__49
+			case 18 :
+				// Grammar.g:1:112: T__49
 				{
 				mT__49(); 
 
 				}
 				break;
-			case 22 :
-				// Grammar.g:1:136: T__50
+			case 19 :
+				// Grammar.g:1:118: T__50
 				{
 				mT__50(); 
 
 				}
 				break;
-			case 23 :
-				// Grammar.g:1:142: T__51
+			case 20 :
+				// Grammar.g:1:124: T__51
 				{
 				mT__51(); 
 
 				}
 				break;
-			case 24 :
-				// Grammar.g:1:148: T__52
+			case 21 :
+				// Grammar.g:1:130: T__52
 				{
 				mT__52(); 
 
 				}
 				break;
-			case 25 :
-				// Grammar.g:1:154: T__53
+			case 22 :
+				// Grammar.g:1:136: T__53
 				{
 				mT__53(); 
+
+				}
+				break;
+			case 23 :
+				// Grammar.g:1:142: T__54
+				{
+				mT__54(); 
+
+				}
+				break;
+			case 24 :
+				// Grammar.g:1:148: T__55
+				{
+				mT__55(); 
+
+				}
+				break;
+			case 25 :
+				// Grammar.g:1:154: T__56
+				{
+				mT__56(); 
 
 				}
 				break;
@@ -1795,7 +1798,7 @@ public class GrammarLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS );";
+			return "1:1: Tokens : ( T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS );";
 		}
 	}
 

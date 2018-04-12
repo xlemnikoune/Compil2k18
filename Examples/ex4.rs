@@ -10,9 +10,10 @@
  	to_add : bool
  }
 
- fn addition_vecteurs (l : vec < data >) -> vecteur
+ fn addition_vecteurs (l : vec<data>) -> vecteur
  {
  	let mut i = 0;
+    let c : vec<data> = vec ![d1,d2];
  	let mut result = vecteur { x : 0 , y : 0};
 
  	while i <= l . len ()

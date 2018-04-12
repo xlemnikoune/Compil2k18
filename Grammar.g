@@ -12,6 +12,9 @@ tokens {
 	NEW;
 	VEC;
 	CALLFUN;
+	UNISUB;
+	UNISTAR;
+	ANOBLOCK;
 }
 @members{
 boolean mainFound = false;
@@ -66,7 +69,7 @@ instruct :
 dotIDF 	: 
 IDF ('.'^ IDF)?;
 
-ifExpr : 'if' expr block ('else' block )? -> ^('if' expr block ^('else' block)?);
+ifExpr : 'if' expr block ('else' block )? -> ^('if' expr block) ^('else' block)?;
 
 binExpr1 : binExpr2 (EQUAL^ binExpr2)*; 
 
@@ -83,10 +86,12 @@ binExpr6 : unExpr ((STAR^|DIV^) unExpr)*;
 vectExpr : starExpr ('['^ expr ']'!)?;
 
 starExpr 
-	:	 STAR^? moinsExpr;
+	:	 STAR moinsExpr -> ^(UNISTAR moinsExpr)
+	| moinsExpr;
 	
 moinsExpr 
-	:	 SUB^?atom;
+	:	 SUB atom -> ^(UNISUB atom)
+	| atom;
 
 
 dotExpr : vectExpr ('.'^ (IDF | 'len' '('!')'! ))?;
@@ -100,7 +105,7 @@ atom : INT
 
 expr : 'vec' '!' '[' expr ']' -> ^('vec' expr)
 | 'print' '!' '(' expr ')' -> ^('print' expr)
-| block
+| block -> ^(ANOBLOCK block)
 |	binExpr1;
 
 
@@ -119,10 +124,12 @@ bigbinExpr6 : bigunExpr ((STAR^|DIV^) bigunExpr)*;
 bigvectExpr : bigstarExpr ('['^ bigExpr ']'!)?;
 
 bigstarExpr 
-	:	 STAR^? bigmoinsExpr;
+	:	 STAR bigmoinsExpr -> ^(UNISTAR bigmoinsExpr)
+	| bigmoinsExpr;
 	
 bigmoinsExpr 
-	:	 SUB^?bigatom;
+	:	 SUB bigatom -> ^(UNISUB bigatom)
+	| bigatom;
 
 
 bigdotExpr : bigvectExpr ('.'^ (IDF | 'len' '('!')'! ))?;

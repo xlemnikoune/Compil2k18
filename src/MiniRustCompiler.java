@@ -18,7 +18,9 @@ public class MiniRustCompiler {
     /*******************************************************************************************************************/
 
     /**
-     *
+     * Compile the file passed in argument. <br>
+     * Exit Code : 5 -&gt; Error while parsing <br>
+     * Exit Code : 6 -&gt; Error on semantic controls
      * @param args args[0] : file path
      * @throws IOException If error on opening FileStream
      * @throws RecognitionException If error on parsing the file
@@ -46,7 +48,6 @@ public class MiniRustCompiler {
             System.err.println(baos.toString());
             System.exit(5); // -> Error on compilation
         }
-        System.err.flush();
         tds = new TDS();
         parseTree(t,tds,false);
         if (baos.toString().length() > 0){
@@ -55,7 +56,6 @@ public class MiniRustCompiler {
             System.exit(6); // -> Error on semantic controls
         }
         System.out.println(tds);
-
     }
 
     /**

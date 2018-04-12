@@ -10,7 +10,7 @@ import java.util.List;
  * <ul>
  *     <li>An ancestor</li>
  *     <li>An origin</li>
-*      <li>A name</li>
+ *      <li>A name</li>
  *     <li>An offset, corresponding to current offset</li>
  *     <li>An "innerScopeList", corresponding to a list of scope of anonymous block inside this scope</li>
  *     <li>A table, containing every variables, parameters</li>
@@ -174,10 +174,17 @@ public class Scope {
                 if (isInAncestor(name)) {
                     System.out.println("Warning : \"Var name surcharged : " + name + "\" at " + children.get(0).getLine() + ":" + children.get(0).getCharPositionInLine());
                 }
-                if (type == null) {
-                    type = getType(childrens.get(1));
-
+                Type tempType = getType(childrens.get(1));
+                if (type != null) {
+                    if (!type.equals(tempType)) {
+                        throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType);
+                    } else {
+                        type = tempType;
+                    }
+                } else {
+                    type=tempType;
                 }
+
                 int deplacement = 0;
                 if (type.is("i32")){
                     deplacement = this.deplacement;
@@ -247,7 +254,7 @@ public class Scope {
      * @return Found type ('unknown' if none were found)
      * @exception SemanticException If semantic controls fail
      */
-    private Type getType(Tree child) throws SemanticException {
+    protected Type getType(Tree child) throws SemanticException {
         String name = child.getText();
         if (name.equals("BLOCK")){
             child = child.getChild(0);
@@ -271,7 +278,7 @@ public class Scope {
             Type tempType = getType(child.getChild(0));
             for (int i =0;i<child.getChildCount();i++){
                 if (!getType(child.getChild(i)).equals(tempType)){
-                    throw new SemanticException("Mismatched types");
+                    throw new SemanticException("Mismatched types : expected " + tempType + ", found " + getType(child.getChild(i)));
                 }
             }
             return tempType;
@@ -279,6 +286,133 @@ public class Scope {
 
         if (child.getChildCount() > 0){
             //TODO Opération ou trucs plus compliqués du moins !
+            if (TDS.op.contains(name)){
+                if (name.equals("=")){
+                    String var = child.getChild(0).getText();
+                    boolean haveToChange = false;
+                    if (var.equals("UNISTAR")){
+                        var=child.getChild(0).getChild(0).getText();
+                        haveToChange = true;
+                    }
+                    if (isIn(var)){
+                        Type tempType = new Type(table.get(var).get(1));
+                        if (haveToChange) {
+                            tempType = new Type(tempType.getName().substring(1));
+                        }
+                        Type type = getType(child.getChild(1));
+                        if (tempType.equals(type)){
+                            return type;
+                        } else {
+                            throw new SemanticException("Mismatched types : expected " + tempType + ", found " + type);
+                        }
+                    }
+                    if (isInAncestor(var)){
+                        Type tempType = new Type(getFromAncestor(var).get(1));
+                        if (haveToChange) {
+                            tempType = new Type(tempType.getName().substring(1));
+                        }
+                        Type type = getType(child.getChild(1));
+                        if (tempType.equals(type)){
+                            return type;
+                        } else {
+                            throw new SemanticException("Mismatched types : expected " + tempType + ", found " + type);
+                        }
+                    }
+                    throw new SemanticException("Cannot find value `"+var+"` in this scope");
+                }
+                if (name.equals("&")){
+                    if (child.getChild(0).getChildCount() > 0){
+                        throw new SemanticException("Unary operation `"+name+"` cannot be applied to expression");
+                    }
+                    String var = child.getChild(0).getText();
+                    Type tempType = getType(child.getChild(0));
+                    return new Type("&"+tempType.getName());
+
+                }
+                Type tempType = getType(child.getChild(0));
+                Type tempType2 = getType(child.getChild(1));
+                if (tempType.getName().equals("i32")){
+                    if (tempType2.getName().equals("i32")) {
+                        return new Type("i32");
+                    } else {
+                        throw new SemanticException("Mismatched types : expected i32, found " + tempType2);
+                    }
+                }
+                throw new SemanticException("Binary operation `"+name+"` cannot be applied to type `"+tempType+"`");
+
+
+            }
+            if (TDS.opBool.contains(name)){
+                if (name.equals("!")){
+                    Type tempType = getType(child.getChild(0));
+                    if (tempType.getName().equals("bool")){
+                        return new Type("bool");
+                    } else {
+                        throw new SemanticException("Mismatched types : expected bool, found " + tempType);
+                    }
+                }
+                if (name.equals("&&") || name.equals("||")){
+                    Type tempType = getType(child.getChild(0));
+                    Type tempType2 = getType(child.getChild(1));
+                    if (tempType.getName().equals("bool")){
+                        if (tempType2.getName().equals("bool")){
+                            return new Type("bool");
+                        } else {
+                            throw new SemanticException("Mismatched types : expected bool, found " + tempType2);
+                        }
+                    } else {
+                        throw new SemanticException("Mismatched types : expected bool, found " + tempType);
+                    }
+                }
+                if (name.equals("==") || name.equals("!=")){
+                    Type tempType = getType(child.getChild(0));
+                    Type tempType2 = getType(child.getChild(1));
+                    if (tempType.getName().equals("i32")){
+                        if (tempType2.getName().equals("i32")) {
+                            return new Type("bool");
+                        } else {
+                            throw new SemanticException("Mismatched types : expected i32, found " + tempType2);
+                        }
+                    }
+                    if (tempType.getName().equals("bool")){
+                        if (tempType2.getName().equals("bool")) {
+                            return new Type("bool");
+                        } else {
+                            throw new SemanticException("Mismatched types : expected bool, found " + tempType2);
+                        }
+                    }
+                    throw new SemanticException("Binary operation `"+name+"` cannot be applied to type `"+tempType+"`");
+                }
+                Type tempType = getType(child.getChild(0));
+                Type tempType2 = getType(child.getChild(1));
+                if (tempType.getName().equals("i32")){
+                    if (tempType2.getName().equals("i32")){
+                        return new Type("bool");
+                    } else {
+                        throw new SemanticException("Mismatched types : expected i32, found " + tempType2);
+                    }
+                } else {
+                    throw new SemanticException("Mismatched types : expected i32, found " + tempType);
+                }
+            }
+            if (name.equals("UNISTAR")){
+                Type tempType = getType(child.getChild(0));
+                if (tempType.getName().startsWith("&")){
+                    return new Type(tempType.getName().substring(1));
+                }
+                throw new SemanticException("Unary operation `*` cannot be applied to type `"+tempType+"`");
+
+            }
+            if (name.equals("UNISUB")){
+                Type tempType = getType(child.getChild(0));
+                if (tempType.getName().equals("i32")){
+                    return new Type("i32");
+                }
+                throw new SemanticException("Unary operation `-` cannot be applied to type `"+tempType+"`");
+
+            }
+
+
         }
         if (isIn(name)){
             ArrayList<String> values = table.get(name);
@@ -454,5 +588,17 @@ public class Scope {
             throw new SemanticException("Structure name already used");
         }
 
+    }
+
+    /**
+     * Chech the tree represent a boolean
+     * @param child Tree to check
+     * @exception SemanticException If tree is not a boolean
+     */
+    public void checkCondition(Tree child) throws SemanticException {
+        Type type=getType(child);
+        if (!type.getName().equals("bool")){
+            throw new SemanticException("Mismatched types : expected bool, found "+type);
+        }
     }
 }

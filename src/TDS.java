@@ -1,6 +1,8 @@
 import org.antlr.runtime.tree.BaseTree;
 import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +27,12 @@ public class TDS {
     /**
      * List of usable operations.
      */
-    private final String[] op = {"+","-","*","/","!","&","<","<=",">=","!=","==","&&","||","="};
+    protected final static ArrayList<String> op = new ArrayList<>();
+
+    /**
+     * List of usable operations for booleans.
+     */
+    protected final static  ArrayList<String> opBool = new ArrayList<>();
 
     /**
      * Count of anonymous blocks (for naming purpose).
@@ -54,6 +61,22 @@ public class TDS {
      */
     public TDS() {
         currentScope = new Scope("General", null, "General");
+        op.add("+"); //->bin
+        op.add("-"); //->bin
+        op.add("*"); //->bin
+        op.add("/"); //->bin
+        opBool.add("!");
+        op.add("&"); //->unaire
+        opBool.add("<");
+        opBool.add(">");
+        opBool.add("<=");
+        opBool.add(">=");
+        opBool.add("!=");
+        opBool.add("==");
+        opBool.add("&&");
+        opBool.add("||");
+        op.add("="); //->done
+
     }
 
     /**
@@ -122,9 +145,15 @@ public class TDS {
             case "if":
                 temp = new Scope("if", currentScope, "if"+ifCount);
                 currentScope.addScopeNotInner("if"+ifCount,temp);
-                ifCount++;
-                currentScope=temp;
-                return 1;
+                try {
+                    currentScope.checkCondition(t.getChild(0));
+                    ifCount++;
+                    currentScope=temp;
+                    return 1;
+                } catch (SemanticException e) {
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                }
+                return 2;
             case "else":
                 temp = new Scope("else", currentScope, "else"+elseCount);
                 currentScope.addScopeNotInner("else"+elseCount,temp);
@@ -134,15 +163,36 @@ public class TDS {
             case "while":
                 temp = new Scope("while", currentScope, "while"+whileCount);
                 currentScope.addScopeNotInner("while"+whileCount,temp);
-                whileCount++;
-                currentScope=temp;
-                return 1;
+                try {
+                    currentScope.checkCondition(t.getChild(0));
+                    whileCount++;
+                    currentScope=temp;
+                    return 1;
+                } catch (SemanticException e) {
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                }
+                return 2;
             case "ANOBLOCK":
                 temp = new Scope("anonymous", currentScope, "inner"+innerCount);
                 currentScope.addScopeNotInner("inner"+innerCount,temp);
                 innerCount++;
                 currentScope=temp;
                 return 1;
+            case "=":
+                Boolean toDo = true;
+                for (Tree j : t.getAncestors()){
+                    if (j.getText() != null && j.getText().equals("let")){
+                        toDo = false;
+                    }
+                }
+                if (toDo) {
+                    try {
+                        currentScope.getType(t);
+                    } catch (SemanticException e) {
+                        System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    }
+                }
+                return 2;
         }
         return 2;
     }

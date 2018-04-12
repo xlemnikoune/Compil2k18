@@ -172,6 +172,31 @@ public class TDS {
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
                 }
                 return 2;
+
+            //cas return
+            case "return":
+
+                //Type returnType = currentScope.getType();
+                String name ;
+                Scope tempScope = currentScope;
+                while (tempScope.getOrigin() != "function"){
+                        tempScope = tempScope.getAncestor();
+
+
+                }
+                name = tempScope.getName();
+                try {
+                    if (!(tempScope.getAncestor().getTable().get(1)).equals(currentScope.getType(t.getChild(0)).toString())) {
+                        System.err.println("Return type Error at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    }
+
+                }catch (SemanticException e){
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    }
+                return 2;
+
+
+             //attention
             case "ANOBLOCK":
                 temp = new Scope("anonymous", currentScope, "inner"+innerCount);
                 currentScope.addScopeNotInner("inner"+innerCount,temp);

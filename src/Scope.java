@@ -106,6 +106,12 @@ public class Scope {
     }
 
     /**
+     * @return Scope's Name
+     * @see Scope#name
+     */
+    public String getName(){return name;}
+
+    /**
      * Print this Scope in format : <br>
      * Scope General <br>
      *  &emsp; functionName : [function, functionReturnType] <br>

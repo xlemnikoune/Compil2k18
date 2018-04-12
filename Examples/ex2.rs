@@ -11,6 +11,7 @@ fn puissance(a : i32, b: i32) -> i32
 
 	let mut i = 1;
 	let mut result = a;
+	return;
 	while i < b
 	{
 		result = result * a;

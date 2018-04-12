@@ -3,6 +3,7 @@ import org.antlr.runtime.tree.Tree;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <b>Correspond to a Scope in code (Function, block, loop ...).</b> <br>
@@ -477,14 +478,40 @@ public class Scope {
         }
         if (isIn(name)){
             ArrayList<String> values = table.get(name);
+            if (this.getOrigin() == "function") {
+            	Scope tempscope = TDS.firstscope.getScope(name);
+            	Set<String> param = tempscope.getTable().keySet();
+            	
+            	if (child.getChildCount() > 0) {
+            		for (int j=0;j<child.getChildCount();j++) {
+            			if (!getType(child.getChild(j)).equals(((ArrayList<String>) param).get(j))) {
+            				throw new SemanticException("Error : \" Type missmatch for the Parameter "+ ((ArrayList<String>) param).get(j)+ " at " + child.getChild(j).getLine() + ":" + child.getChild(j).getCharPositionInLine());
+            			}
+            		}
+            	}
+            	
+            }
             String type = values.get(1);
             Type typeT = new Type(type);
             if (!typeT.isRaw())
                 checkType(typeT,child.getLine(), child.getCharPositionInLine());
             return typeT;
         }
-        if (isInAncestor(name)){
+       if (isInAncestor(name)){
             ArrayList<String> values = getFromAncestor(name);
+            if (this.getOrigin() == "function") {
+            	Scope tempscope = TDS.firstscope.getScope(name);
+            	Set<String> param = tempscope.getTable().keySet();
+            	
+            	if (child.getChildCount() > 0) {
+            		for (int j=0;j<child.getChildCount();j++) {
+            			if (!getType(child.getChild(j)).equals(((ArrayList<String>) param).get(j))) {
+            				throw new SemanticException("Error : \" Type missmatch for the Parameter "+ ((ArrayList<String>) param).get(j)+ " at " + child.getChild(j).getLine() + ":" + child.getChild(j).getCharPositionInLine());
+            			}
+            		}
+            	}
+            	
+            }
             String type = values.get(1);
             Type typeT = new Type(type);
             if (!typeT.isRaw())

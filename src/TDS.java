@@ -185,9 +185,17 @@ public class TDS {
 
                 }
                 name = tempScope.getName();
+                Type type = new Type(tempScope.getAncestor().getTable().get(name).get(1));
                 try {
-                    if (!(tempScope.getAncestor().getTable().get(1)).equals(currentScope.getType(t.getChild(0)).toString())) {
-                        System.err.println("Return type Error at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    if (t.getChildCount() == 0){
+                        if (!(type.getName().equals("Void"))){
+                            System.err.println("\"Mismatched types : expected "+ type +", found Void \"at " + t.getLine() + ":" + t.getCharPositionInLine());
+                            return 2;
+                        }
+                    }
+                    Type secondType = currentScope.getType(t.getChild(0));
+                    if (!(type.equals(secondType))) {
+                        System.err.println("\"Mismatched types : expected "+ type +", found "+secondType+" \"at " + t.getLine() + ":" + t.getCharPositionInLine());
                     }
 
                 }catch (SemanticException e){

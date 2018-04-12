@@ -178,7 +178,11 @@ public class Scope {
             String name = childrens.get(0).getText();
             if (!isIn(name)){
                 if (isInAncestor(name)) {
-                    System.out.println("Warning : \"Var name surcharged : " + name + "\" at " + children.get(0).getLine() + ":" + children.get(0).getCharPositionInLine());
+                	String a=getFromAncestor(name).get(0);
+                	
+                	if (a.equals("function")){
+                		throw new SemanticException("Function name" + name + "already used" );
+                		}
                 }
                 Type tempType = getType(childrens.get(1));
                 if (type != null) {

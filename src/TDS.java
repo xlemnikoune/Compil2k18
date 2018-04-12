@@ -179,18 +179,47 @@ public class TDS {
                 currentScope=temp;
                 return 1;
             case "=":
-                Boolean toDo = true;
+                boolean toDo = true;
                 for (Tree j : t.getAncestors()){
                     if (j.getText() != null && j.getText().equals("let")){
                         toDo = false;
                     }
                 }
                 if (toDo) {
-                    try {
-                        currentScope.getType(t);
-                    } catch (SemanticException e) {
-                        System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
-                    }
+                	boolean ismut = false;
+                	String name = t.getChild(0).getText();
+                	if (name.substring(0,1)=="*") {
+                		name = name.substring(1,name.length());
+                	}
+                	if (name.contains(".")) {
+                		name=name.split(".")[0];
+                	}
+                	if (name.contains("[")) {
+                		name=name.split("[")[0];
+                	}
+                	if (currentScope.isIn(name)) {
+                		if( currentScope.getTable().get(name).get(3).equals("true") ){
+                			ismut=true;
+                		}
+                	} else if (currentScope.isInAncestor(name)) {
+                		try {
+							if ( currentScope.getFromAncestor(name).get(3).equals("true")){
+								ismut=true;
+							}
+						} catch (SemanticException e) {
+							
+							e.printStackTrace();
+						}
+                	}
+                	if (ismut) {
+                		try {
+                		
+                			currentScope.getType(t);
+                     
+                    	} catch (SemanticException e) {
+                    		System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    	}
+                	}
                 }
                 return 2;
         }

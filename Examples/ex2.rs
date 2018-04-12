@@ -1,3 +1,7 @@
+struct data {
+	x : i32
+}
+
 fn puissance(a : i32, b: i32) -> i32
 {
 	if b == 0

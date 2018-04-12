@@ -478,6 +478,9 @@ public class Scope {
             if (child.getChildCount() > 1 ){
                 if (child.getChild(1).toString().equals("->")){
                     returnType=child.getChild(1).getChild(0).toString();
+                    Type tempType = new Type(returnType);
+                    if (!tempType.isRaw())
+                    	checkType(new Type(returnType));
                 }
             }
             if (returnType == null){
@@ -522,7 +525,7 @@ public class Scope {
      * @see Scope#ancestor
      * @see Scope#isInAncestor(String)
      */
-    private ArrayList<String> getFromAncestor(String name) throws SemanticException {
+    ArrayList<String> getFromAncestor(String name) throws SemanticException {
         if (!isInAncestor(name)) {
             throw new SemanticException(name + "is not in ancestor");
         } else {
@@ -541,7 +544,7 @@ public class Scope {
      * @see Scope#ancestor
      * @see Scope#isInAncestor(String)
      */
-    private boolean isInAncestor(String name) {
+    boolean isInAncestor(String name) {
         return ancestor != null && (ancestor.isIn(name) || ancestor.isInAncestor(name));
     }
 
@@ -550,7 +553,7 @@ public class Scope {
      * @param name Name of the data to search
      * @return 'true' if the data is in this scope, 'false' otherwise
      */
-    private boolean isIn(String name) {
+    boolean isIn(String name) {
         return table.containsKey(name);
     }
 
@@ -601,4 +604,15 @@ public class Scope {
             throw new SemanticException("Mismatched types : expected bool, found "+type);
         }
     }
+    public boolean IsMutable(String string, List<BaseTree> children) throws SemanticException {
+        boolean isMut = false;
+        Type type = null;
+        int index = 0; //Will track advancement of children's parsing
+        if (children.get(index).getText().equals("mut")){ //If mutable is indicated
+            isMut = true;
+            index++;
+        }
+        return isMut;
+    }
+
 }

@@ -48,6 +48,8 @@ public class MiniRustCompiler {
             System.err.println(baos.toString());
             System.exit(5); // -> Error on compilation
         }
+        System.setErr(old);
+
         tds = new TDS();
         parseTree(t,tds,false);
         if (baos.toString().length() > 0){

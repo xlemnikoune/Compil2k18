@@ -331,8 +331,12 @@ public class Scope {
             String var  = child.getChild(0).getText();
             Type valType = getType(child.getChild(1));
             Type varType = getType(child.getChild(0));
+
             if (varType.getName().startsWith("vec ")){
                 if (valType.getName().equals("i32")){
+                    if (Integer.parseInt(child.getChild(1).getText()) > Integer.parseInt(getFromAncestor(var).get(4))){
+                        throw new SemanticException("Index out of bounds at " + valType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
+                    }
                     return new Type(varType.getName().split(" ",2)[1]);
                 }
                 throw new SemanticException("Mismatched types : expected i32, found " + valType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
@@ -586,7 +590,7 @@ public class Scope {
                     returnType=child.getChild(1).getChild(0).toString();
                     Type tempType = new Type(returnType);
                     if (!tempType.isRaw())
-                    	checkType(new Type(returnType));
+                    	checkType(new Type(returnType),child.getChild(1).getChild(0).getLine(),child.getChild(1).getChild(0).getCharPositionInLine());
                 }
             }
             if (returnType == null){

@@ -94,13 +94,14 @@ public class TDS {
      */
     public int add(BaseTree t) {
         Scope temp = null;
+        String name = null;
         switch (t.toString()) {
             case "let":
                 try {
                     currentScope.addVar("var", (List<BaseTree>) t.getChildren());
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
-                    //e.printStackTrace();
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                    e.printStackTrace();
                 }
                 return 2;
             case "struct":
@@ -115,7 +116,7 @@ public class TDS {
                         currentScope.addParam("attribute", t.getChild(i+1));
                     }
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                 }
                 if (currentScope==temp)
                     return 1;
@@ -135,8 +136,8 @@ public class TDS {
                         }
                     }
                     return 1;
-                } catch (Exception e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                } catch (SemanticException e) {
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                     //e.printStackTrace();
                 }
                 if (currentScope==temp)
@@ -151,7 +152,7 @@ public class TDS {
                     currentScope=temp;
                     return 1;
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                 }
                 return 2;
             case "else":
@@ -169,9 +170,33 @@ public class TDS {
                     currentScope=temp;
                     return 1;
                 } catch (SemanticException e) {
-                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                 }
                 return 2;
+
+            //cas return
+            case "return":
+
+                //Type returnType = currentScope.getType();
+                Scope tempScope = currentScope;
+                while (tempScope.getOrigin() != "function"){
+                        tempScope = tempScope.getAncestor();
+
+
+                }
+                name = tempScope.getName();
+                try {
+                    if (!(tempScope.getAncestor().getTable().get(1)).equals(currentScope.getType(t.getChild(0)).toString())) {
+                        System.err.println("Return type Error at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    }
+
+                }catch (SemanticException e){
+                    System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    }
+                return 2;
+
+
+             //attention
             case "ANOBLOCK":
                 temp = new Scope("anonymous", currentScope, "inner"+innerCount);
                 currentScope.addScopeNotInner("inner"+innerCount,temp);
@@ -187,7 +212,7 @@ public class TDS {
                 }
                 if (toDo) {
                 	boolean ismut = false;
-                	String name = t.getChild(0).getText();
+                	name = t.getChild(0).getText();
                 	if (name.substring(0,1)=="*") {
                 		name = name.substring(1,name.length());
                 	}
@@ -217,7 +242,7 @@ public class TDS {
                 			currentScope.getType(t);
                      
                     	} catch (SemanticException e) {
-                    		System.err.println("Error : \"" + e.getMessage() + "\" at " + t.getLine() + ":" + t.getCharPositionInLine());
+                    		System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                     	}
                 	}
                 }

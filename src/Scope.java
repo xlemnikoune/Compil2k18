@@ -162,6 +162,7 @@ public class Scope {
      */
     public void addVar(String string, List<BaseTree> children) throws SemanticException {
         boolean isMut = false;
+        int vecChildCount = 0;
         Type type = null;
         int index = 0; //Will track advancement of children's parsing
         if (children.get(index).getText().equals("mut")){ //If mutable is indicated
@@ -179,7 +180,11 @@ public class Scope {
             String name = childrens.get(0).getText();
             if (!isIn(name)){
                 if (isInAncestor(name)) {
-                    System.out.println("Warning : \"Var name surcharged : " + name + "\" at " + children.get(0).getLine() + ":" + children.get(0).getCharPositionInLine());
+                	String a=getFromAncestor(name).get(0);
+                	
+                	if (a.equals("function")){
+                		throw new SemanticException("Function name" + name + "already used" );
+                		}
                 }
                 Type tempType = getType(childrens.get(1));
                 if (type != null) {
@@ -194,6 +199,15 @@ public class Scope {
                 } else {
                     type=tempType;
                 }
+
+                ////////// Counting children for vec declaration
+
+                if (childrens.get(1).getText() == "vec"){
+                    vecChildCount = childrens.get(1).getChildCount();
+
+                }
+
+                /////////
 
                 int deplacement = 0;
                 if (type.is("i32")){
@@ -214,6 +228,10 @@ public class Scope {
                 param.add(type.getName());
                 param.add(String.valueOf(deplacement));
                 param.add(String.valueOf(isMut));
+                /// adding vecChildCount to TDS
+                if(type.getName().startsWith("vec ")) {
+                    param.add(String.valueOf(vecChildCount));
+                }
 
                 table.put(name,param);
                 MiniRustCompiler.tds.getList().put(name,"var");

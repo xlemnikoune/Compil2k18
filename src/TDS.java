@@ -208,13 +208,13 @@ public class TDS {
                 try {
                     if (t.getChildCount() == 0){
                         if (!(type.getName().equals("Void"))){
-                            System.err.println("\"Mismatched types : expected "+ type +", found Void \"at " + t.getLine() + ":" + t.getCharPositionInLine());
+                            System.err.println("Error : \"Mismatched types : expected "+ type +", found Void \"at " + t.getLine() + ":" + t.getCharPositionInLine());
                             return 2;
                         }
                     }
                     Type secondType = currentScope.getType(t.getChild(0));
                     if (!(type.equals(secondType))) {
-                        System.err.println("\"Mismatched types : expected "+ type +", found "+secondType+" \"at " + t.getLine() + ":" + t.getCharPositionInLine());
+                        System.err.println("Error :\"Mismatched types : expected "+ type +", found "+secondType+" \"at " + t.getLine() + ":" + t.getCharPositionInLine());
                     }
 
                 }catch (SemanticException e){

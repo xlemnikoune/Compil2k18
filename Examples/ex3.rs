@@ -29,7 +29,7 @@ fn fibonacci(generations : i32) -> i32
 
         result = {fibonacci_computation(generations - 2, 1, 0)};
 
-    }
+    }   
 }
 
 

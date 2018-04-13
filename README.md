@@ -7,10 +7,10 @@ Projet de Compilation des langages réalisé par Sacha Lemonnier, Louise Pount, 
 Liste des contrôles réalisés : 
 
   - [X] Type de return correspond à renvoi de fonction
-  - [X] Lors d'une affectation, le membre de gauche est bel et bien une variable définie
-  - [X] Lors d'une affectation, le membre de gauche est bel et bien mutable
-  - [X] Lors d'une affectation, les types des membres de droite et gauche sont les mêmes
-  - [X] Lors d'une déclaration de variable, le nom n'est pas déjà pris par une fonction.
+  - [X] Lors d'une affectation, le membre de gauche est bel et bien une variable définie v
+  - [X] Lors d'une affectation, le membre de gauche est bel et bien mutable v
+  - [X] Lors d'une affectation, les types des membres de droite et gauche sont les mêmes v 
+  - [X] Lors d'une déclaration de variable, le nom n'est pas déjà pris par une fonction. v
   - [X] Lors d'une déclaration, si le type est renseigné, il est cohérent avec les données d'initialisation 
   - [X] Lors de la déclaration d'un tableau de tableau, la taille de chaque sous-tableau est identique
   - [X] Lors de la déclaration d'un tableau, les types de tous les élements du tableau sont identiques

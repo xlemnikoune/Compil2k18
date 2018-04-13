@@ -33,6 +33,7 @@ fn factorielle(n : i32, result : &i32)
 }
 
 fn main(){
+	let factorielle = 83 ;
 	let mut v = 0;
 	factorielle(5,&v);
 	print!(v);

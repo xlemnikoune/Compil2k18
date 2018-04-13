@@ -584,12 +584,16 @@ public class Scope {
                 LinkedList<String> ll = new LinkedList<>(param);
                 for (int j=0;j<child.getChildCount();j++) {
                     String t = getType((child.getChild(j))).getName();
-                    ArrayList<String> val = tempscope.getTable().get(ll.get(j));
-                    if (!val.get(0).equals("param")){
+                    if (ll.size() > j){
+                        ArrayList<String> val = tempscope.getTable().get(ll.get(j));
+                        if (!val.get(0).equals("param")){
+                            throw new SemanticException("Too many parameters for function "+name, child.getChild(j).getLine(),child.getChild(j).getCharPositionInLine());
+                        }
+                        if (!t.equals(val.get(1))) {
+                            throw new SemanticException("Type mismatch for the Parameter '"+ (ll.get(j))+"' : expected "+val.get(1)+", found "+t,child.getChild(j).getLine(),child.getChild(j).getCharPositionInLine());
+                        }
+                    } else {
                         throw new SemanticException("Too many parameters for function "+name, child.getChild(j).getLine(),child.getChild(j).getCharPositionInLine());
-                    }
-                    if (!t.equals(val.get(1))) {
-                        throw new SemanticException("Type mismatch for the Parameter '"+ (ll.get(j))+"' : expected "+val.get(1)+", found "+t,child.getChild(j).getLine(),child.getChild(j).getCharPositionInLine());
                     }
                 }
                 if (ll.size() >child.getChildCount()) {

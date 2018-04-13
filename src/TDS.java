@@ -283,7 +283,7 @@ public class TDS {
                             }
                         } catch (SemanticException e) {
                             System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
-                            e.printStackTrace();
+                            //e.printStackTrace();
                         }
                     } else {
                         System.err.println("Error : \"Var `"+name+"`\" doesn't exist at " + t.getLine() + ":" + t.getCharPositionInLine());
@@ -295,7 +295,7 @@ public class TDS {
 
                         } catch (SemanticException e) {
                             System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
-                            e.printStackTrace();
+                            //e.printStackTrace();
                         }
                     } else {
                         System.err.println("Error : \"cannot assign twice to immutable variable `"+name+"`\" at " + t.getLine() + ":" + t.getCharPositionInLine());
@@ -332,7 +332,7 @@ public class TDS {
                         currentScope.getType(t);
                     } catch (SemanticException e) {
                         System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                 }
         }

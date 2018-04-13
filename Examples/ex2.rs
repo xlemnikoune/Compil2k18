@@ -33,6 +33,8 @@ fn factorielle(n : i32, result : &i32)
 }
 
 fn main(){
+	let w = vec![1,2,3,4,5];
+	let x = vec![vec![true,false,true],vec![true,false,true],vec![true,false,true],vec![true,false,true]];
 	let mut v = 0;
 	factorielle(5,&v);
 	print!(v);

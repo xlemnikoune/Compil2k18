@@ -117,7 +117,7 @@ public class Scope {
      *  &emsp; functionName : [function, functionReturnType] <br>
      *  &emsp; Scope functionName: <br>
      *  &emsp; &emsp; param1 : [param, param1type, offset, mutable?] <br>
-     *  &emsp; &emps; var1 : [var, var1type, offset, mutable?, size* (if vec)] <br>
+     *  &emsp; &emsp; var1 : [var, var1type, offset, mutable?, size* (if vec)] <br>
      * @param tab Scope's offset (in tabulation)
      * @return The string representing the Scope
      */
@@ -290,6 +290,28 @@ public class Scope {
         if (name.equals("BLOCK")){
             child = child.getChild(0);
             return getType(child);
+        }
+
+        if (name.equals(".")){
+            String varName = child.getChild(0).getText();
+            String attName = child.getChild(1).getText();
+            String type;
+            if (isIn(varName)){
+                type=table.get(varName).get(1);
+            } else {
+                if (isInAncestor(varName)){
+                    type = getFromAncestor(varName).get(1);
+                } else {
+                    throw new SemanticException("Cannot find value `"+varName+"` in this scope",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
+                }
+            }
+            checkType(new Type(type), child.getLine(), child.getCharPositionInLine());
+            LinkedHashMap<String, ArrayList<String>> values = TDS.getFirstScope().getScope(type).getTable();
+            if (values.containsKey(attName)){
+                return new Type(values.get(attName).get(1));
+            } else {
+                throw new SemanticException("Unknown attribute `"+attName+"` in structure "+type,child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
+            }
         }
 
         if (name.equals("ANOBLOCK")){
@@ -633,6 +655,9 @@ public class Scope {
      * @throws SemanticException If the semantic controls failed (here a non-existing structure)
      */
     private void checkType(Type tempType, int line, int column) throws SemanticException {
+        if (tempType.is("Void")){
+            return;
+        }
         if (isIn(tempType.getName())){
             if (!table.get(tempType.getName()).get(0).equals("struct")){
                 throw new SemanticException(tempType + " is not a struct", line, column);

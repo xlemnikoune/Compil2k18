@@ -24,7 +24,7 @@ fn factorielle(n : i32, result : &i32)
 {
 	let mut i = 1;
 	let mut j = true;
-	let mut a = false;
+	let mut a = 10;
 	let mut c = vec ! [1,3];
 	a = {
 		let d = 85;
@@ -46,10 +46,14 @@ fn factorielle(n : i32, result : &i32)
 }
 
 fn main(){
+	let x = data {x:7, y:true};
 	let mut v = vec![vec![1,2],vec![1,4],vec![4,5],vec![6,7]];
 	let mut a = vec![1,2];
 	let mut b = 0;
+	b=x.x;
+	1+8;
 	v[1][1] = puissance(1,2);
-	factorielle(5,true);
+	a;
+	factorielle(5,&b);
 	print!(v);
 }

@@ -301,6 +301,36 @@ public class TDS {
                     }
                 }
                 return 2;
+            default:
+                boolean todo = true;
+                boolean realToDo = false;
+                ArrayList<String> alreadyTreated = new ArrayList<>();
+                alreadyTreated.add("=");
+                alreadyTreated.add("let");
+                alreadyTreated.add("return");
+                ArrayList<String> keywords = new ArrayList<>();
+                keywords.add("RES");
+                keywords.add("print");
+                keywords.add("BLOCK");
+                for (Tree j : t.getAncestors()){
+                    String node = j.getText();
+                    if (node != null && alreadyTreated.contains(node)){
+                        todo = false;
+                    }
+                    if (node != null && node.equals("BLOCK")){
+                        realToDo=true;
+                    }
+                }
+                if (keywords.contains(t.getText())){
+                    todo=false;
+                }
+                if (todo && realToDo){
+                    try {
+                        currentScope.getType(t);
+                    } catch (SemanticException e) {
+                        System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                    }
+                }
         }
         return 2;
     }

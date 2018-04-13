@@ -25,7 +25,7 @@ public class MiniRustCompiler {
      * @throws IOException If error on opening FileStream
      * @throws RecognitionException If error on parsing the file
      */
-    public static void main(String[] args) throws IOException, RecognitionException {
+    public static void main(String[] args) throws IOException {
         CharStream input;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
@@ -38,11 +38,18 @@ public class MiniRustCompiler {
             System.out.println("Please type your program here : ");
             input = new ANTLRInputStream(System.in);
         }
-        GrammarLexer lex = new GrammarLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(lex);
-        GrammarParser parser = new GrammarParser(tokens);
-        GrammarParser.axiom_return r = parser.axiom();
-        CommonTree t = r.tree;
+        CommonTree t=null;
+        try {
+            GrammarLexer lex = new GrammarLexer(input);
+            CommonTokenStream tokens = new CommonTokenStream(lex);
+            GrammarParser parser = new GrammarParser(tokens);
+            GrammarParser.axiom_return r = parser.axiom();
+            t = r.tree;
+        } catch (RecognitionException e){
+            System.err.println(e);
+        } catch (Exception e){
+            //System.err.println(e);
+        }
         if (baos.toString().length() > 0){
             System.setErr(old);
             System.err.println(baos.toString());
@@ -73,7 +80,6 @@ public class MiniRustCompiler {
         if (l != null){
             for (BaseTree AST : l){
                 hasChanged = tds.add(AST,fromScope);
-                tds.check(AST,t);
                 parseTree((CommonTree) AST,tds,(hasChanged == 1),fromScope);
             }
         }

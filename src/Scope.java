@@ -321,8 +321,7 @@ public class Scope {
             Tree ch = child.getChild(0);
             if (ch.getChild(ch.getChildCount()-1).getText().equals("RES")){
                 child = ch.getChild(ch.getChildCount()-2);
-                Type t = innerScopeList.get(MiniRustCompiler.tds.innerCount-2).getType(child);
-                return t;
+                return innerScopeList.get(MiniRustCompiler.tds.innerCount-2).getType(child);
             }
         }
 
@@ -435,6 +434,7 @@ public class Scope {
                         }
                         throw new SemanticException("Mismatched types : expected " + leftType + ", found " + secondType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
                     }
+
                     if (isIn(var)){
                         Type tempType = new Type(table.get(var).get(1));
                         if (haveToChange) {
@@ -765,10 +765,16 @@ public class Scope {
      * @param name Name of scope to get in secondTable
      * @return Corresponding scope
      */
-    protected Scope getScope(String name){
+    private Scope getScope(String name){
         return secondTable.get(name);
     }
 
+    /**
+     * Calculate adequate offset for variable of type type and, if vec, size of vecCoun
+     * @param type Type of the variable
+     * @param vecCoun Possible size for vec
+     * @return Adequate offset ( 4 per i32, 1 per bool, 2 per & and struct, and size*getDeplacement(type) for vec)
+     */
     private int getDeplacement(String type,ArrayList<Integer> vecCoun){
         if (type.equals("i32")){
             return 4;

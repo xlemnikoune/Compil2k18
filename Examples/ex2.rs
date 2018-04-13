@@ -47,11 +47,11 @@ fn factorielle(n : i32, result : &i32)
 
 fn main(){
 	let x = data {x:7, y:true};
-	let mut v = vec![vec![1,2],vec![1,4],vec![4,5],vec![6,7]];
+	let mut v = vec![vec![1,2],vec![1,4],vec![9,8],vec![6,7]];
 	let mut a = vec![1,2];
 	let mut b = 0;
 	b=x.x;
-	1+8;
+	1+b(5,6);
 	v[1][1] = puissance(1,2);
 	a;
 	factorielle(5,&b);

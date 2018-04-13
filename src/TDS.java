@@ -344,14 +344,6 @@ public class TDS {
     }
 
     /**
-     * Execute some semantic controls
-     * @param ast
-     * @param t
-     */
-    public void check(BaseTree ast, CommonTree t) {
-    }
-
-    /**
      * Print Symbol Table in a understandable way
      * @return The string representing the Symbol Table
      * @see Scope#toString(int)

@@ -6,22 +6,23 @@
 
  struct data
  {
- 	v : vecteur ,
+ 	vx : i32,
+ 	vy : i32,
  	to_add : bool
  }
-
- fn addition_vecteurs (l : vec<data>) -> vecteur
+ 
+ fn addition_vecteurs (l : &vec<data>) -> vecteur
  {
  	let mut i = 0;
-    let c : vec<data> = vec ![d1,d2];
  	let mut result = vecteur { x : 0 , y : 0};
 
- 	while i <= l . len ()
+
+ 	while i <= (*l).len()
  	{
- 		if l [ i ]. to_add
+ 		if (*l)[i].to_add
  		{
- 			result.x = result . x + l [ i ]. x ;
- 			result.y = result . y + l [ i ]. y ;
+ 			result.x = result . x + *l [ i ].vx ;
+ 			result.y = result . y + *l [ i ].vy ;
  		}
  		i = i + 1;
  	}
@@ -31,13 +32,13 @@
 
  fn main ()
  {
- 	let d1 = data { v : vecteur { x : 0 , y : 0} , to_add : true };
- 	let d2 = data { v : vecteur { x : 1 , y : 1} , to_add : true };
- 	let d3 = data { v : vecteur { x : 2 , y : 2} , to_add : false };
- 	let d4 = data { v : vecteur { x : 3 , y : 4} , to_add : true };
+ 	let d1 = data { vx:0, vy:0 , to_add : true };
+ 	let d2 = data { vx:1, vy:1 , to_add : true };
+ 	let d3 = data { vx:2, vy:2 , to_add : false };
+ 	let d4 = data { vx:3, vy:4 , to_add : true };
 
  	let l = vec ![ d1 , d2 , d3 , d4 ];
- 	let result = addition_vecteurs ( l ) ;
+ 	let result = addition_vecteurs ( &l ) ;
 
  	print !( result . x ) ;
  	print !( result . y ) ;

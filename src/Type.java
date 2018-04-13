@@ -39,7 +39,20 @@ public class Type {
             return true;
         } else {
             if (name.startsWith("vec ")){
-                return (new Type(name.split(" ",2)[1]).isRaw());
+                Type type = new Type(name.split(" ", 2)[1]);
+                if (type.isRaw()){
+                    return true;
+                } else {
+                    try {
+                        MiniRustCompiler.tds.currentScope.checkType(type,-1,-1);
+                    } catch (SemanticException e) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+            if (name.startsWith(("&"))) {
+                return new Type(name.substring(1)).isRaw();
             }
         }
         return false;

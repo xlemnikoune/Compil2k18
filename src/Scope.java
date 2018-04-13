@@ -189,7 +189,7 @@ public class Scope {
             Type tempType = getType(childrens.get(1));
             if (type != null) {
                 if (type.getName().startsWith("vec ")){
-                    tempType=new Type("vec "+tempType.getName());
+                    tempType=new Type(tempType.getName());
                 }
                 if (!type.equals(tempType)) {
                     throw new SemanticException("Mismatched types : expected " + type + ", found " + tempType,children.get(1).getLine(),children.get(1).getCharPositionInLine());
@@ -274,7 +274,7 @@ public class Scope {
 
         if (text.matches("[a-zA-Z][a-zA-Z0-9]+") && type==null){ //First should always be true
             type=new Type(text);
-            checkType(type,baseTree.getChild(0).getLine(), baseTree.getChild(0).getCharPositionInLine());
+            checkType(type,baseTree.getLine(), baseTree.getCharPositionInLine());
         }
         return type;
     }
@@ -296,21 +296,21 @@ public class Scope {
             String varName = child.getChild(0).getText();
             String attName = child.getChild(1).getText();
             String type;
-            if (isIn(varName)){
-                type=table.get(varName).get(1);
+            type = getType(child.getChild(0)).getName();
+            if (attName.equals("len") && type.startsWith("vec")){
+                return new Type("i32");
             } else {
-                if (isInAncestor(varName)){
-                    type = getFromAncestor(varName).get(1);
-                } else {
-                    throw new SemanticException("Cannot find value `"+varName+"` in this scope",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
+                if (attName.equals("len")) {
+                    throw new SemanticException("Cannot len on type " + type, child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
                 }
             }
             checkType(new Type(type), child.getLine(), child.getCharPositionInLine());
             LinkedHashMap<String, ArrayList<String>> values = TDS.getFirstScope().getScope(type).getTable();
+            //System.out.println(values);
             if (values.containsKey(attName)){
                 return new Type(values.get(attName).get(1));
             } else {
-                throw new SemanticException("Unknown attribute `"+attName+"` in structure "+type,child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
+                throw new SemanticException("Unknown attribute `"+attName+"` in structure "+type,child.getChild(1).getLine(), child.getChild(1).getCharPositionInLine());
             }
         }
 
@@ -322,6 +322,8 @@ public class Scope {
             if (ch.getChild(ch.getChildCount()-1).getText().equals("RES")){
                 child = ch.getChild(ch.getChildCount()-2);
                 return innerScopeList.get(MiniRustCompiler.tds.innerCount-2).getType(child);
+            } else {
+                return new Type("Void");
             }
         }
 
@@ -347,6 +349,9 @@ public class Scope {
             Type valType = getType(child.getChild(1));
             if (varType.getName().startsWith("vec ")){
                 if (valType.getName().equals("i32")){
+                    if (child.getChild(1).getText().matches("[a-z][a-zA-Z0-9]*")){
+                        return new Type(varType.getName().split(" ",i+1)[i]);
+                    }
                     int val = Integer.parseInt(child.getChild(1).getText());
                     if (isIn(var)){
                         if (val > Integer.parseInt(table.get(var).get(3+i))){
@@ -427,6 +432,15 @@ public class Scope {
 
                     if (var.equals("[")){
                         //System.out.println(TDS.getFirstScope().toString(1));
+                        Type leftType =  getType(child.getChild(0));
+                        Type secondType = getType(child.getChild(1));
+                        if (leftType.equals(secondType)){
+                            return secondType;
+                        }
+                        throw new SemanticException("Mismatched types : expected " + leftType + ", found " + secondType,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
+                    }
+
+                    if (var.equals(".")){
                         Type leftType =  getType(child.getChild(0));
                         Type secondType = getType(child.getChild(1));
                         if (leftType.equals(secondType)){
@@ -578,9 +592,11 @@ public class Scope {
                         throw new SemanticException("Type mismatch for the Parameter '"+ (ll.get(j))+"' : expected "+val.get(1)+", found "+t,child.getChild(j).getLine(),child.getChild(j).getCharPositionInLine());
                     }
                 }
-                String l = tempscope.getTable().get(ll.get(child.getChildCount())).get(0);
-                if (l!= null && l.equals("param")){
-                    throw new SemanticException("Not enough parameters for function "+name, child.getChild(child.getChildCount()-1).getLine(),child.getChild(child.getChildCount()-1).getCharPositionInLine());
+                if (ll.size() >child.getChildCount()) {
+                    String l = tempscope.getTable().get(ll.get(child.getChildCount())).get(0);
+                    if (l != null && l.equals("param")) {
+                        throw new SemanticException("Not enough parameters for function " + name, child.getChild(child.getChildCount() - 1).getLine(), child.getChild(child.getChildCount() - 1).getCharPositionInLine());
+                    }
                 }
             }
 
@@ -603,8 +619,10 @@ public class Scope {
     public void addParam(String s, Tree child) throws SemanticException {
         String name = child.toString();
         Type type = getRawType((BaseTree) child.getChild(0));
-        if (type.getName().startsWith("vec")){
-            throw new SemanticException("Cannot pass vec as parameter, please use pointer",child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
+        if (s.equals("param")) {
+            if (type.getName().startsWith("vec ")) {
+                throw new SemanticException("Cannot pass vec as parameter, please use pointer", child.getChild(0).getLine(), child.getChild(0).getCharPositionInLine());
+            }
         }
         int deplacement = this.deplacement;
         this.deplacement += getDeplacement(type.getName(), new ArrayList<>());
@@ -654,7 +672,7 @@ public class Scope {
      * @param tempType The type to be checked
      * @throws SemanticException If the semantic controls failed (here a non-existing structure)
      */
-    private void checkType(Type tempType, int line, int column) throws SemanticException {
+    protected void checkType(Type tempType, int line, int column) throws SemanticException {
         if (tempType.is("Void")){
             return;
         }

@@ -22,7 +22,7 @@ public class TDS {
      * Symbol table's current scope. Changes for each new enter or exit of block.
      * @see TDS#back()
      */
-    private Scope currentScope;
+    public Scope currentScope;
 
     /**
      * List of usable operations.
@@ -173,6 +173,7 @@ public class TDS {
                     return 1;
                 } catch (SemanticException e) {
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                    //e.printStackTrace();
                 }
                 return 2;
             case "else":
@@ -191,6 +192,7 @@ public class TDS {
                     return 1;
                 } catch (SemanticException e) {
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                    //e.printStackTrace();
                 }
                 return 2;
 
@@ -281,7 +283,7 @@ public class TDS {
                             }
                         } catch (SemanticException e) {
                             System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
-                            //e.printStackTrace();
+                            e.printStackTrace();
                         }
                     } else {
                         System.err.println("Error : \"Var `"+name+"`\" doesn't exist at " + t.getLine() + ":" + t.getCharPositionInLine());
@@ -289,12 +291,11 @@ public class TDS {
                     }
                     if (ismut) {
                         try {
-
                             currentScope.getType(t);
 
                         } catch (SemanticException e) {
                             System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
-                            //e.printStackTrace();
+                            e.printStackTrace();
                         }
                     } else {
                         System.err.println("Error : \"cannot assign twice to immutable variable `"+name+"`\" at " + t.getLine() + ":" + t.getCharPositionInLine());
@@ -308,10 +309,12 @@ public class TDS {
                 alreadyTreated.add("=");
                 alreadyTreated.add("let");
                 alreadyTreated.add("return");
+                alreadyTreated.add(".");
                 ArrayList<String> keywords = new ArrayList<>();
                 keywords.add("RES");
                 keywords.add("print");
                 keywords.add("BLOCK");
+                keywords.add("len");
                 for (Tree j : t.getAncestors()){
                     String node = j.getText();
                     if (node != null && alreadyTreated.contains(node)){
@@ -329,6 +332,7 @@ public class TDS {
                         currentScope.getType(t);
                     } catch (SemanticException e) {
                         System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
+                        e.printStackTrace();
                     }
                 }
         }

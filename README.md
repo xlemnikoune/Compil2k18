@@ -11,8 +11,8 @@ Liste des contrôles réalisés :
   - [X] Lors d'une affectation, le membre de gauche est bel et bien mutable v
   - [X] Lors d'une affectation, les types des membres de droite et gauche sont les mêmes v 
   - [X] Lors d'une déclaration de variable, le nom n'est pas déjà pris par une fonction. v
-  - [X] Lors d'une déclaration, si le type est renseigné, il est cohérent avec les données d'initialisation 
-  - [X] Lors de la déclaration d'un tableau de tableau, la taille de chaque sous-tableau est identique
+  - [X] Lors d'une déclaration, si le type est renseigné, il est cohérent avec les données d'initialisation v
+  - [X] Lors de la déclaration d'un tableau de tableau, la taille de chaque sous-tableau est identique 
   - [X] Lors de la déclaration d'un tableau, les types de tous les élements du tableau sont identiques
   - [X] Lors de la déclaration d'un tableau, les types des élements correspond au sous-type du tableau
   - [X] Lors de l'appel d'attribut ("x.a"), la variable x est bien définie

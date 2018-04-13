@@ -365,7 +365,7 @@ public class TDS {
                     notReturned.add(i);
                 }
             }
-            if (notReturned.size()>1)
+            if (notReturned.size()>0)
                 System.out.println("WARNING ! These functions does not have a proper return : "+notReturned);
         }
     }

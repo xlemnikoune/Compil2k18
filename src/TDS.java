@@ -108,6 +108,7 @@ public class TDS {
     /**
      * Add to current scope the data described by t (if needed).
      * @param t Tree corresponding to data to addVar
+     * @param fromScope Is it is called for a control purpose ?
      * @return 2 if everything went well and 1 if it is needed to go back (e.g treatment of a function, a block ...)
      */
     public int add(BaseTree t,boolean fromScope) {

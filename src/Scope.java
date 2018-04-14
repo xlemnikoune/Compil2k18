@@ -674,6 +674,8 @@ public class Scope {
     /**
      * Check the existence of the type passed in parameter (Does a structure exist in the Symbol Table ?).
      * @param tempType The type to be checked
+     * @param line Line where check occurs
+     * @param column Column where check occurs
      * @throws SemanticException If the semantic controls failed (here a non-existing structure)
      */
     protected void checkType(Type tempType, int line, int column) throws SemanticException {
@@ -795,7 +797,7 @@ public class Scope {
      * Calculate adequate offset for variable of type type and, if vec, size of vecCoun
      * @param type Type of the variable
      * @param vecCoun Possible size for vec
-     * @return Adequate offset ( 4 per i32, 1 per bool, 2 per & and struct, and size*getDeplacement(type) for vec)
+     * @return Adequate offset ( 4 per i32, 1 per bool, 2 per &amp; and struct, and size*getDeplacement(type) for vec)
      */
     private int getDeplacement(String type,ArrayList<Integer> vecCoun){
         if (type.equals("i32")){

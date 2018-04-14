@@ -23,16 +23,18 @@ public class MiniRustCompiler {
      * Exit Code : 6 -&gt; Error on semantic controls
      * @param args args[0] : file path
      * @throws IOException If error on opening FileStream
-     * @throws RecognitionException If error on parsing the file
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         CharStream input;
+        String output = "./code";
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         PrintStream old = System.err;
         System.setErr(ps);
         if (args.length > 0){
             input = new ANTLRFileStream(args[0]);
+            if (args.length >1)
+                output=args[1];
         }
         else {
             System.out.println("Please type your program here : ");
@@ -48,14 +50,13 @@ public class MiniRustCompiler {
         } catch (RecognitionException e){
             System.err.println(e);
         } catch (Exception e){
-            //System.err.println(e);
+            System.err.println(e);
         }
         if (baos.toString().length() > 0){
             System.setErr(old);
             System.err.println(baos.toString());
             System.exit(5); // -> Error on parsing
         }
-        //System.setErr(old);
         tds = new TDS();
         parseTree(t,tds,false,false);
         tds.validate();
@@ -64,7 +65,15 @@ public class MiniRustCompiler {
             System.err.println(baos.toString());
             System.exit(6); // -> Error on semantic controls
         }
-        System.out.println(tds);
+        System.setErr(old);
+        genCode(t, tds, output);
+        System.exit(0);
+    }
+
+    private static void genCode(CommonTree t, TDS tds, String output) throws Exception {
+        CodeGenerator code = new CodeGenerator(output, tds.currentScope);
+        code.generate(t);
+        code.save();
     }
 
     /**
@@ -72,6 +81,7 @@ public class MiniRustCompiler {
      * @param t Tree to parse
      * @param tds Current state of Symbol Table
      * @param b Is it a new scope ?
+     * @param fromScope Is it is called for a control purpose ?
      * @see TDS#add(BaseTree, boolean)
      */
     protected static void parseTree(CommonTree t, TDS tds, boolean b, boolean fromScope){

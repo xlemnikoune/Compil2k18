@@ -28,7 +28,6 @@ public class CodeGenerator{
         code += "BP EQU R13\n\n";
         code += "ORD LOAD_ADRS\n\n";
         code += "start main\n\n";
-        // -> À foutre après main :
     }
 
     public void save() throws Exception {
@@ -39,10 +38,6 @@ public class CodeGenerator{
         } catch (IOException e) {
             throw new Exception("You can't write on file" + outputFile);
         }
-        code+= "LDW WR, #EXIT_EXC\n\n";
-        code+= "TRP R14\n\n";
-        code+= "LDW R14, #debut\n\n";
-        code+= "JEA (R14)\n\n";
         s.write(code);
         s.close();
     }
@@ -88,7 +83,20 @@ public class CodeGenerator{
 
     private String genMain(Tree child) {
         StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("LDW SP, #STACK_ADRS\n\n");
+        codeBuilder.append("main_ LDW SP, #STACK_ADRS\n\n");
+        codeBuilder.append("LDQ NIL, BP");
+        codeBuilder.append("STW BP,-(SP)");
+        codeBuilder.append("LDW BP, SP");
+
+
+
+
+        codeBuilder.append("LDW SP, BP");
+        codeBuilder.append("LDW BP, (SP)+");
+        codeBuilder.append("LDW WR, #EXIT_EXC\n\n");
+        codeBuilder.append("TRP WR\n\n");
+        codeBuilder.append("LDW WR, #debut\n\n");
+        codeBuilder.append("JEA (WR)\n\n");
         return codeBuilder.toString();
     }
 

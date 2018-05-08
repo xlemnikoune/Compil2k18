@@ -19,7 +19,7 @@ public class CodeGenerator{
     private int scounter = 0;
     private int WhileCount = 0;
     private int ifCount = 0;
-    final String[] op = {"+", "-", "*", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
+    final String[] op = {"+", "-", "*","/", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
 
     public CodeGenerator(String output, Scope currentScope) {
 
@@ -111,6 +111,7 @@ public class CodeGenerator{
                 break;
             default:
                 codeBuilder.append(generateOperation(t));
+                break;
         }
         return codeBuilder.toString();
     }
@@ -150,6 +151,7 @@ public class CodeGenerator{
         if (!Arrays.asList(op).contains(t2.getText())) { //Si ce n'est pas une opération
             return generateValue(t2);
         } else {
+            System.out.println(t2.getText());
             switch (t2.getText()) {
                 case "+":
                     return generateAddition(t2);
@@ -341,6 +343,7 @@ public class CodeGenerator{
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
         codeBuilder.append("LDW R1, -(SP)\n\n" + "DIV R1,R0,R0\n\n");
+        //codeBuilder.append("LDW R0,R2\n\n");
         return codeBuilder.toString();
     }
 

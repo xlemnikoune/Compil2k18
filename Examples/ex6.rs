@@ -1,5 +1,3 @@
 fn main(){
-	while (5>6){
-		print!(42);
-	}
+	print!(9/2);
 }

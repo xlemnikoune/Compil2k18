@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CodeGenerator{
-
+    //TODO Optimize call to R5 -> if not already done for operation (and in print :p)
     private Scope sc;
     private String code;
     private final String outputFile;
@@ -50,6 +50,9 @@ public class CodeGenerator{
         code+="TRUE string \"true\"\n\n";
         code+="FALSE string \"false\"\n\n";
         code+="print_\n\n";
+        code+="ADD SP,R0,SP\n";
+        code+="STW BP,-(SP)\n";
+        code+="LDW BP, SP\n";
         code+=  "    STW R0,-(SP)\n"+
                 "    LDW R6,#0\n" +
                 "    STB R6,-(SP)\n" +
@@ -80,7 +83,6 @@ public class CodeGenerator{
                 "    NEG R0,R0\n" +
                 "    finsigne\n" +
                 "    LDW R7,R0\n" +
-                "    LDW R8,R0\n" +
                 "    boucle\n" +
                 "    LDW R0,R7\n" +
                 "    LDW R6,#0\n" +
@@ -102,7 +104,9 @@ public class CodeGenerator{
                 "    fin\n" +
                 "    LDW R0,SP\n" +
                 "    TRP #WRITE_EXC\n" +
-                "    LDW R0,(SP)\n"+
+                "    LDW R0,-(SP)\n" +
+                "    LDW SP,R13\n"+
+                "    LDW BP, (SP)\n"+
                 "    JEA (WR)\n\n";
 
         s.write(code);
@@ -152,8 +156,7 @@ public class CodeGenerator{
 
     private String generatePrint(BaseTree t){
         return genExpr((BaseTree) t.getChild(0)) +
-                "MPC WR \n\n" + "ADQ 8,WR\n\n" +
-                "LDW R5,#0\n\n" +
+                "MPC WR \n\n" + "ADQ 6,WR\n\n" +
                 "JMP #print_-$-2\n\n";
     }
 
@@ -249,11 +252,11 @@ public class CodeGenerator{
     private String generateValue(BaseTree t2){
         String s = t2.getText();
         if (isInteger(s)){
-            return "LDW R0, #"+Integer.parseInt(s)+"\n\n";
+            return "LDW R0, #"+Integer.parseInt(s)+"\n\n"+"LDW R5,#0\n\n";
         } else {
-            if (s.equals("true")) return "LDW R0,#1\n\n";
+            if (s.equals("true")) return "LDW R0,#1\n\n"+"LDW R5,#1\n\n";
             else {
-                if (s.equals("false")) return "LDW R0,#0\n\n";
+                if (s.equals("false")) return "LDW R0,#0\n\n"+"LDW R5,#1\n\n";
             }
 
         }
@@ -276,7 +279,8 @@ public class CodeGenerator{
         return ("MPC WR \n\n" + "ADQ 10,WR\n\n") +
                 "CMP R1, R0\n\n" +
                 jump + " #run-$-2\n\n" +
-                "LDW R0, #0\n\n";
+                "LDW R0, #0\n\n"+
+                "LDW R5,#1\n\n";
     }
 
 // pour le moment toutes les comparaisons sont les mêmes, mais il faut faire des jumps à la fin donc ça sera plus les mêmes :)
@@ -347,7 +351,7 @@ public class CodeGenerator{
         return generateOperation(leftSide) +
                 "STW R0, (SP)+\n\n" +
                 generateOperation(rightSide) +
-                "LDW R1, -(SP)\n\n" + "ADD R1, R0, R0\n\n";
+                "LDW R1, -(SP)\n\n" + "ADD R1, R0, R0\n\n"+"LDW R5,#0\n\n";
     }
 
     private String generateSubstraction(BaseTree t2){
@@ -356,7 +360,7 @@ public class CodeGenerator{
         return generateOperation(left) +
                 "STW R0, (SP)+\n\n" +
                 generateOperation(right) +
-                "LDW R1, -(SP)\n\n" + "SUB R1, R0, R0\n\n";
+                "LDW R1, -(SP)\n\n" + "SUB R1, R0, R0\n\n"+"LDW R5,#0\n\n";
     }
 
     private String generateMultiplication(BaseTree t2){
@@ -365,7 +369,7 @@ public class CodeGenerator{
         return generateOperation(left) +
                 "STW R0, (SP)+\n\n" +
                 generateOperation(right) +
-                "LDW R1, -(SP)\n\n" + "MUL R1, R0, R0\n\n";
+                "LDW R1, -(SP)\n\n" + "MUL R1, R0, R0\n\n"+"LDW R5,#0\n\n";
     }
 
     private String generateDivision(BaseTree t2){
@@ -374,7 +378,7 @@ public class CodeGenerator{
         return generateOperation(left) +
                 "STW R0, (SP)+\n\n" +
                 generateOperation(right) +
-                "LDW R1, -(SP)\n\n" + "DIV R1,R0,R0\n\n";
+                "LDW R1, -(SP)\n\n" + "DIV R1,R0,R0\n\n"+"LDW R5,#0\n\n";
     }
 
     private String generateNo(BaseTree t2){
@@ -390,7 +394,7 @@ public class CodeGenerator{
     private String generateUniSub(BaseTree t2){
         BaseTree Value = (BaseTree) t2.getChild(0);
         return generateOperation(Value) + //Calcul de op1
-                "NEG R0,R0\n\n";
+                "NEG R0,R0\n\n"+"LDW R5,#1\n\n";
     }
 
     private String generateUniStar(BaseTree t2){
@@ -404,7 +408,7 @@ public class CodeGenerator{
                 "STW R0, (SP)+\n\n" +
                 generateOperation(right) +
                 "LDW R1, -(SP)\n\n" +
-                "AND R0,R1,R0 \n\n";
+                "AND R0,R1,R0 \n\n"+"LDW R5,#1\n\n";
     }
 
     private String generateOrBool(BaseTree t2){
@@ -414,7 +418,7 @@ public class CodeGenerator{
                 "STW R0, (SP)+\n\n" +
                 generateOperation(right) +
                 "LDW R1, -(SP)\n\n" +
-                "OR R0,R1,R0\n\n";
+                "OR R0,R1,R0\n\n"+"LDW R5,#1\n\n";
     }
 
     private String generateInstr(BaseTree t){

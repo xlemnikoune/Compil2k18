@@ -6,9 +6,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CodeGenerator{
@@ -16,10 +15,10 @@ public class CodeGenerator{
     private Scope sc;
     private String code;
     private final String outputFile;
-    private int scounter = 0;
+    //private int scounter = 0;
     private int WhileCount = 0;
     private int ifCount = 0;
-    final String[] op = {"+", "-", "*","/", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
+    private final String[] op = {"+", "-", "*","/", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
 
     public CodeGenerator(String output, Scope currentScope) {
 
@@ -38,7 +37,7 @@ public class CodeGenerator{
         code += "start main_\n\n";
     }
 
-    public void save() throws Exception {
+    void save() throws Exception {
         File out = new File(outputFile);
         BufferedWriter s;
         try {
@@ -48,11 +47,69 @@ public class CodeGenerator{
         }
         code+="run LDW R0,#1\n\n";
         code+="JEA (WR)\n\n";
+        code+="TRUE string \"true\"\n\n";
+        code+="FALSE string \"false\"\n\n";
+        code+="print_\n\n";
+        code+=  "    STW R0,-(SP)\n"+
+                "    LDW R6,#0\n" +
+                "    STB R6,-(SP)\n" +
+                "    LDW R6,#0x000a\n" +
+                "    STB R6,-(SP)\n" +
+                "    LDW R4, #0\n" +
+                "    CMP R5,R4\n" +
+                "    JEQ #ent-$-2\n" +
+                "    CMP R0,R4\n" +
+                "    JEQ #false-$-2\n" +
+                "    LDW R0,#TRUE\n" +
+                "    TRP #WRITE_EXC\n" +
+                "    JMP #fin-$-2\n" +
+                "    false\n" +
+                "    LDW R0,#FALSE\n" +
+                "    TRP #WRITE_EXC\n" +
+                "    JMP #fin-$-2\n" +
+                "    ent\n" +
+                "    CMP R0,R4\n" +
+                "    JNE #nonzero-$-2\n" +
+                "    LDW R6,#0x0030\n" +
+                "    STB R6,-(SP)\n" +
+                "    JMP #fin-$-2\n" +
+                "    nonzero\n" +
+                "    CMP R0,R4\n" +
+                "    JGE #finsigne-$-2\n" +
+                "    LDW R4,#1\n" +
+                "    NEG R0,R0\n" +
+                "    finsigne\n" +
+                "    LDW R7,R0\n" +
+                "    LDW R8,R0\n" +
+                "    boucle\n" +
+                "    LDW R0,R7\n" +
+                "    LDW R6,#0\n" +
+                "    CMP R0,R6\n" +
+                "    JEQ #finboucle-$-2\n" +
+                "    LDW R6,#10\n" +
+                "    DIV R0,R6,R6\n" +
+                "    STW R6,R7\n" +
+                "    LDW R6,#0x0030\n" +
+                "    ADD R6,R0,R6\n" +
+                "    STB R6,-(SP)\n" +
+                "    JMP #boucle-$-2\n" +
+                "    finboucle\n" +
+                "    LDW R6,#1\n" +
+                "    CMP R4,R6\n" +
+                "    JNE #fin-$-2\n" +
+                "    LDW R0,#0x002d\n" +
+                "    STB R0,-(SP)\n" +
+                "    fin\n" +
+                "    LDW R0,SP\n" +
+                "    TRP #WRITE_EXC\n" +
+                "    LDW R0,(SP)\n"+
+                "    JEA (WR)\n\n";
+
         s.write(code);
         s.close();
     }
 
-    public void generate(CommonTree t){
+    void generate(CommonTree t){
         StringBuilder codeBuilder = new StringBuilder();
         if (t.getText() != null){ //Si c'est une feuille (ou un noeud nommé), on génére
             codeBuilder.append(genCode(t));
@@ -94,10 +151,10 @@ public class CodeGenerator{
     }
 
     private String generatePrint(BaseTree t){
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(genExpr((BaseTree) t.getChild(0)));
-        codeBuilder.append("TRP R0\n\n");
-        return codeBuilder.toString();
+        return genExpr((BaseTree) t.getChild(0)) +
+                "MPC WR \n\n" + "ADQ 8,WR\n\n" +
+                "LDW R5,#0\n\n" +
+                "JMP #print_-$-2\n\n";
     }
 
     private String genExpr(BaseTree t) {
@@ -121,19 +178,17 @@ public class CodeGenerator{
     }
 
     private String genMain(BaseTree t) {
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("main_ LDW SP, #STACK_ADRS\n\n");
-        codeBuilder.append("LDQ NIL, BP\n\n");
-        codeBuilder.append("STW BP,-(SP)\n\n");
-        codeBuilder.append("LDW BP, SP\n\n");
-        codeBuilder.append(generateBlock(t));
-        codeBuilder.append("LDW SP, BP\n\n");
-        codeBuilder.append("LDW BP, (SP)+\n\n");
-        codeBuilder.append("LDW WR, #EXIT_EXC\n\n");
-        codeBuilder.append("TRP WR\n\n");
-        codeBuilder.append("LDW WR, #main_\n\n");
-        codeBuilder.append("JEA (WR)\n\n");
-        return codeBuilder.toString();
+        return "main_ LDW SP, #STACK_ADRS\n\n" +
+                "LDQ NIL, BP\n\n" +
+                "STW BP,-(SP)\n\n" +
+                "LDW BP, SP\n\n" +
+                generateBlock(t) +
+                "LDW SP, BP\n\n" +
+                "LDW BP, (SP)+\n\n" +
+                "LDW WR, #EXIT_EXC\n\n" +
+                "TRP WR\n\n" +
+                "LDW WR, #main_\n\n" +
+                "JEA (WR)\n\n";
     }
 
     private String generateBlock (BaseTree t) {
@@ -144,14 +199,12 @@ public class CodeGenerator{
         return codeBuilder.toString();
     }
     private String generateStruct(BaseTree t) {
-
         return "";
     }
     private String generateOperation(BaseTree t2) {
         if (!Arrays.asList(op).contains(t2.getText())) { //Si ce n'est pas une opération
             return generateValue(t2);
         } else {
-            System.out.println(t2.getText());
             switch (t2.getText()) {
                 case "+":
                     return generateAddition(t2);
@@ -220,139 +273,114 @@ public class CodeGenerator{
     }
 
     private String generOpBool(String jump){
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("MPC WR \n\n"+"ADQ 10,WR\n\n");
-        codeBuilder.append("CMP R1, R0\n\n");
-        codeBuilder.append(jump+" #run-$-2\n\n");
-        codeBuilder.append("LDW R0, #0\n\n");
-        return codeBuilder.toString();
+        return ("MPC WR \n\n" + "ADQ 10,WR\n\n") +
+                "CMP R1, R0\n\n" +
+                jump + " #run-$-2\n\n" +
+                "LDW R0, #0\n\n";
     }
 
 // pour le moment toutes les comparaisons sont les mêmes, mais il faut faire des jumps à la fin donc ça sera plus les mêmes :)
     private String generateEqual(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append(generOpBool("JEQ"));
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                generOpBool("JEQ");
     }
 
     private String generateNotEqual(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append(generOpBool("JNE"));
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                generOpBool("JNE");
     }
 
     private String generateGreaterOrEqual(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append(generOpBool("JGE"));
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                generOpBool("JGE");
     }
 
     private String generateLowerOrEqual(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append(generOpBool("JLE"));
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                generOpBool("JLE");
     }
 
     private String generateGreater(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append(generOpBool("JGT"));
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                generOpBool("JGT");
     }
 
 
     private String generateLower(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append(generOpBool("JLW"));
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                generOpBool("JLW");
     }
 
     private String generateAddition(BaseTree t2){
         BaseTree leftSide = (BaseTree) t2.getChild(0);
         BaseTree rightSide = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(leftSide));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(rightSide));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "ADD R1, R0, R0\n\n");
-        return codeBuilder.toString();
+        return generateOperation(leftSide) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(rightSide) +
+                "LDW R1, -(SP)\n\n" + "ADD R1, R0, R0\n\n";
     }
 
     private String generateSubstraction(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "SUB R1, R0, R0\n\n");
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" + "SUB R1, R0, R0\n\n";
     }
 
     private String generateMultiplication(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "MUL R1, R0, R0\n\n");
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" + "MUL R1, R0, R0\n\n";
     }
 
     private String generateDivision(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "DIV R1,R0,R0\n\n");
-        //codeBuilder.append("LDW R0,R2\n\n");
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" + "DIV R1,R0,R0\n\n";
     }
 
     private String generateNo(BaseTree t2){
         BaseTree Value = (BaseTree) t2.getChild(0);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(Value)); //Calcul de op1
-        codeBuilder.append("NOT R0,R0\n\n");
-        return codeBuilder.toString();
+        return generateOperation(Value) + //Calcul de op1
+                "NOT R0,R0\n\n";
     }
 
     private String generateAddress(BaseTree t2){
@@ -361,10 +389,8 @@ public class CodeGenerator{
 
     private String generateUniSub(BaseTree t2){
         BaseTree Value = (BaseTree) t2.getChild(0);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(Value)); //Calcul de op1
-        codeBuilder.append("NEG R0,R0\n\n");
-        return codeBuilder.toString();
+        return generateOperation(Value) + //Calcul de op1
+                "NEG R0,R0\n\n";
     }
 
     private String generateUniStar(BaseTree t2){
@@ -374,25 +400,21 @@ public class CodeGenerator{
     private String generateAndBool(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append("AND R0,R1,R0 \n\n");
-        return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                "AND R0,R1,R0 \n\n";
     }
 
     private String generateOrBool(BaseTree t2){
         BaseTree left = (BaseTree) t2.getChild(0);
         BaseTree right = (BaseTree) t2.getChild(1);
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append(generateOperation(left));
-        codeBuilder.append("STW R0, (SP)+\n\n");
-        codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append("OR R0,R1,R0\n\n");
-       return codeBuilder.toString();
+        return generateOperation(left) +
+                "STW R0, (SP)+\n\n" +
+                generateOperation(right) +
+                "LDW R1, -(SP)\n\n" +
+                "OR R0,R1,R0\n\n";
     }
 
     private String generateInstr(BaseTree t){
@@ -421,7 +443,7 @@ public class CodeGenerator{
         codeBuilder.append("LDW R1, #0\n\n");
         codeBuilder.append("CMP R0,R1\n\n");
         String labelIf = "if"+ic;
-        codeBuilder.append("JEQ ").append("#").append(labelIf+"-$-2\n\n");
+        codeBuilder.append("JEQ ").append("#").append(labelIf).append("-$-2\n\n");
 
         codeBuilder.append(generateBlock(then));
 
@@ -443,19 +465,18 @@ public class CodeGenerator{
     }
 
     private String generateWhile(BaseTree t) {
-        System.out.println("Couou");
         StringBuilder codeBuilder = new StringBuilder();
         WhileCount++;
-        codeBuilder.append("While"+WhileCount+"\n\n");
+        codeBuilder.append("While").append(WhileCount).append("\n\n");
         BaseTree Bool = (BaseTree) t.getChild(0);
         BaseTree Block = (BaseTree) t.getChild(1);
         codeBuilder.append(generateOperation(Bool));
         codeBuilder.append("LDW R1,#0\n\n");
         codeBuilder.append("CMP R0,R1\n\n");
-        codeBuilder.append("JEQ #EndWhile"+WhileCount+"-$-2\n\n");
+        codeBuilder.append("JEQ #EndWhile").append(WhileCount).append("-$-2\n\n");
         codeBuilder.append(generateBlock(Block));
-        codeBuilder.append("JMP #While"+WhileCount+"\n\n");
-        codeBuilder.append("EndWhile"+WhileCount+"\n\n");
+        codeBuilder.append("JMP #While").append(WhileCount).append("\n\n");
+        codeBuilder.append("EndWhile").append(WhileCount).append("\n\n");
         return codeBuilder.toString();
     }
 

@@ -62,8 +62,6 @@ public class Scope {
      */
     private LinkedHashMap<String, Scope> secondTable;
 
-    /*******************************************************************************************************************/
-
     /**
      * @param id Scope's origin
      * @param anc Scope's ancestor
@@ -93,7 +91,7 @@ public class Scope {
      * @return Scope's origin
      * @see Scope#origin
      */
-    public String getOrigin() {
+    String getOrigin() {
         return origin;
     }
 
@@ -155,11 +153,10 @@ public class Scope {
 
     /**
      * Add a var to this Scope
-     * @param string "Var", leftover of an unique function
      * @param children List of arguments
      * @throws SemanticException If semantic controls fail
      */
-    public void addVar(String string, List<BaseTree> children) throws SemanticException {
+    void addVar(List<BaseTree> children) throws SemanticException {
         boolean isMut = false;
         int vecChildCount;
         Type type = null;
@@ -230,7 +227,7 @@ public class Scope {
 
 
             ArrayList<String> param = new ArrayList<>();
-            param.add(string);
+            param.add("var");
             param.add(type.getName());
             param.add(String.valueOf(deplacement));
             param.add(String.valueOf(isMut));
@@ -285,7 +282,7 @@ public class Scope {
      * @return Found type ('unknown' if none were found)
      * @exception SemanticException If semantic controls fail
      */
-    protected Type getType(Tree child) throws SemanticException {
+    Type getType(Tree child) throws SemanticException {
         String name = child.getText();
         if (name.equals("BLOCK")){
             child = child.getChild(0);
@@ -293,7 +290,6 @@ public class Scope {
         }
 
         if (name.equals(".")){
-            String varName = child.getChild(0).getText();
             String attName = child.getChild(1).getText();
             String type;
             type = getType(child.getChild(0)).getName();
@@ -620,7 +616,7 @@ public class Scope {
      * @param child Tree to add
      * @throws SemanticException If semantic controls fail
      */
-    public void addParam(String s, Tree child) throws SemanticException {
+    void addParam(String s, Tree child) throws SemanticException {
         String name = child.toString();
         Type type = getRawType((BaseTree) child.getChild(0));
         if (s.equals("param")) {
@@ -642,11 +638,10 @@ public class Scope {
 
     /**
      * Add a function to this scope.
-     * @param s "Function", leftover of an unique function
      * @param child Tree to add
      * @throws SemanticException If semantic controls fail
      */
-    public void addFunction(String s, Tree child) throws SemanticException {
+    void addFunction(Tree child) throws SemanticException {
         String name = child.getChild(0).toString();
         if (!isIn(name)){
             String returnType = null;
@@ -662,7 +657,7 @@ public class Scope {
                 returnType="Void";
             }
             ArrayList<String> param = new ArrayList<>();
-            param.add(s);
+            param.add("function");
             param.add(returnType);
             table.put(name,param);
             MiniRustCompiler.tds.getList().put(name,"function");
@@ -678,7 +673,7 @@ public class Scope {
      * @param column Column where check occurs
      * @throws SemanticException If the semantic controls failed (here a non-existing structure)
      */
-    protected void checkType(Type tempType, int line, int column) throws SemanticException {
+    void checkType(Type tempType, int line, int column) throws SemanticException {
         if (tempType.is("Void")){
             return;
         }
@@ -750,21 +745,20 @@ public class Scope {
      * @param temp Scope to add
      * @see Scope#secondTable
      */
-    public void addScopeNotInner(String s, Scope temp) {
+    void addScopeNotInner(String s, Scope temp) {
         secondTable.put(s, temp);
     }
 
     /**
      * Add a structure to this scope
-     * @param struct "Struct", leftover of an unique function
      * @param t Tree to add
      * @exception SemanticException If structure name already used
      */
-    public void addStruct(String struct, BaseTree t) throws SemanticException {
+    void addStruct(BaseTree t) throws SemanticException {
         String name = t.getChild(0).toString();
         if (!isIn(name)){
             ArrayList<String> param = new ArrayList<>();
-            param.add(struct);
+            param.add("struct");
             table.put(name,param);
             MiniRustCompiler.tds.getList().put(name,"struct");
         } else {
@@ -778,7 +772,7 @@ public class Scope {
      * @param child Tree to check
      * @exception SemanticException If tree is not a boolean
      */
-    public void checkCondition(Tree child) throws SemanticException {
+    void checkCondition(Tree child) throws SemanticException {
         Type type=getType(child);
         if (!type.getName().equals("bool")){
             throw new SemanticException("Mismatched types : expected bool, found "+type,child.getLine(), child.getCharPositionInLine());
@@ -821,11 +815,11 @@ public class Scope {
     /**
      * @param temp Inner Scope to add
      */
-    public void addInnerScope(Scope temp) {
+    void addInnerScope(Scope temp) {
         innerScopeList.add(temp);
     }
 
-    public Scope isInIf() {
+    Scope isInIf() {
         Scope t = this;
         while (t.getAncestor() != null){
             if (t.getOrigin().equals("if")){
@@ -836,7 +830,7 @@ public class Scope {
         return null;
     }
 
-    public Scope isInElse() {
+    Scope isInElse() {
         Scope t = this;
         while (t.getAncestor() != null){
             if (t.getOrigin().equals("else")){
@@ -847,7 +841,7 @@ public class Scope {
         return null;
     }
 
-    public Scope isInWhile() {
+    Scope isInWhile() {
         Scope t = this;
         while (t.getAncestor() != null){
             if (t.getOrigin().equals("while")){
@@ -858,7 +852,7 @@ public class Scope {
         return null;
     }
 
-    public Scope isInAno() {
+    Scope isInAno() {
         Scope t = this;
         while (t.getAncestor() != null){
             if (t.getOrigin().equals("inner")){
@@ -869,7 +863,7 @@ public class Scope {
         return null;
     }
 
-    public ArrayList<String> find(String text) throws Exception {
+    ArrayList<String> find(String text) throws Exception {
         if (isIn(text)){
             return table.get(text);
         } else {

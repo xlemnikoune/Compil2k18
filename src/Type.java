@@ -34,7 +34,7 @@ public class Type {
      * Check if type is a structure or a "raw type".
      * @return 'true' if this type is raw, 'false' otherwise
      */
-    public boolean isRaw(){
+    boolean isRaw(){
         if (name.equals("i32") || name.equals("bool") || name.equals("&i32") || name.equals("&bool")){
             return true;
         } else {

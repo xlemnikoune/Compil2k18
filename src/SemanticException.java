@@ -29,14 +29,14 @@ public class SemanticException extends Exception{
     /**
      * @return Column where the crash occurs
      */
-    public int getColumn() {
+    int getColumn() {
         return column;
     }
 
     /**
      * @return Line where the crash occurs
      */
-    public int getLine() {
+    int getLine() {
         return line;
     }
 }

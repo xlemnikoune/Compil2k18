@@ -1,5 +1,4 @@
 import org.antlr.runtime.tree.BaseTree;
-import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
 
 import java.util.ArrayList;
@@ -22,22 +21,22 @@ public class TDS {
      * Symbol table's current scope. Changes for each new enter or exit of block.
      * @see TDS#back()
      */
-    public Scope currentScope;
+    Scope currentScope;
 
     /**
      * List of usable operations.
      */
-    protected final static ArrayList<String> op = new ArrayList<>();
+    final static ArrayList<String> op = new ArrayList<>();
 
     /**
      * List of usable operations for booleans.
      */
-    protected final static  ArrayList<String> opBool = new ArrayList<>();
+    final static  ArrayList<String> opBool = new ArrayList<>();
 
     /**
      * Count of anonymous blocks (for naming purpose).
      */
-    protected int innerCount=1;
+    int innerCount=1;
 
     /**
      * Count of if blocks (for naming purpose)
@@ -60,9 +59,6 @@ public class TDS {
     private static HashMap<String, Boolean> functionReturned = new HashMap<>();
 
     private static HashMap<String, ArrayList<Integer>> functionPartiallyReturned = new HashMap<>();
-
-
-    /*******************************************************************************************************************/
 
     /**
      *
@@ -88,7 +84,7 @@ public class TDS {
 
     }
 
-    public static Scope getFirstScope() {
+    static Scope getFirstScope() {
         return firstScope;
     }
 
@@ -96,7 +92,7 @@ public class TDS {
      * Go back in current scope's ancestor (e.g after treatment of a function)
      * @see TDS#currentScope
      */
-    public void back(){
+    void back(){
         currentScope = currentScope.getAncestor();
     }
 
@@ -112,7 +108,7 @@ public class TDS {
         switch (t.toString()) {
             case "let":
                 try {
-                    currentScope.addVar("var", (List<BaseTree>) t.getChildren());
+                    currentScope.addVar((List<BaseTree>) t.getChildren());
                 } catch (SemanticException e) {
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                     //e.printStackTrace();
@@ -120,7 +116,7 @@ public class TDS {
                 return 2;
             case "struct":
                 try {
-                    currentScope.addStruct("struct", t);
+                    currentScope.addStruct(t);
                     temp = new Scope("struct", currentScope, t.getChild(0).toString());
                     currentScope.addScopeNotInner(t.getChild(0).toString(),temp);
                     currentScope=temp;
@@ -137,7 +133,7 @@ public class TDS {
                 return 2;
             case "fn":
                 try {
-                    currentScope.addFunction("function", t);
+                    currentScope.addFunction(t);
                     functionReturned.put(t.getChild(0).getText(),false);
                     functionPartiallyReturned.put(t.getChild(0).getText(), new ArrayList<>());
                     temp = new Scope("function", currentScope, t.getChild(0).toString());
@@ -352,7 +348,7 @@ public class TDS {
         return currentScope.toString(1);
     }
 
-    public void validate() {
+    void validate() {
         if (functionReturned.containsValue(false)){
             ArrayList<String> notReturned = new ArrayList<>();
             for (String i : functionReturned.keySet()){

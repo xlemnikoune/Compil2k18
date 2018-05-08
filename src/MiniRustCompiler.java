@@ -1,4 +1,7 @@
-import org.antlr.runtime.*;
+import org.antlr.runtime.ANTLRFileStream;
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.CharStream;
+import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.tree.BaseTree;
 import org.antlr.runtime.tree.CommonTree;
 
@@ -14,8 +17,6 @@ import java.util.List;
  */
 public class MiniRustCompiler {
     public static TDS tds;
-
-    /*******************************************************************************************************************/
 
     /**
      * Compile the file passed in argument. <br>
@@ -47,8 +48,6 @@ public class MiniRustCompiler {
             GrammarParser parser = new GrammarParser(tokens);
             GrammarParser.axiom_return r = parser.axiom();
             t = r.tree;
-        } catch (RecognitionException e){
-            System.err.println(e);
         } catch (Exception e){
             System.err.println(e);
         }
@@ -58,6 +57,7 @@ public class MiniRustCompiler {
             System.exit(5); // -> Error on parsing
         }
         tds = new TDS();
+        assert t != null;
         parseTree(t,tds,false,false);
         tds.validate();
         if (baos.toString().length() > 0){
@@ -85,7 +85,7 @@ public class MiniRustCompiler {
      * @param fromScope Is it is called for a control purpose ?
      * @see TDS#add(BaseTree, boolean)
      */
-    protected static void parseTree(CommonTree t, TDS tds, boolean b, boolean fromScope){
+    static void parseTree(CommonTree t, TDS tds, boolean b, boolean fromScope){
         int hasChanged;
         List<BaseTree> l = (List<BaseTree>) t.getChildren();
         if (l != null){

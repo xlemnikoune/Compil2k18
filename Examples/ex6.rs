@@ -1,3 +1,3 @@
 fn main(){
-	print!(9/2);
+	print!(56-96);
 }

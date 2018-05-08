@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CodeGenerator{
@@ -54,6 +55,7 @@ public class CodeGenerator{
                 }
             }
         }
+        code += codeBuilder.toString();
     }
 
     private String genCode(BaseTree t){
@@ -76,23 +78,49 @@ public class CodeGenerator{
 
     private String generateFun(BaseTree t) {
         if (t.getChild(0).getText().equals("main")){
-            return genMain(t.getChild(1));
+            return genMain((BaseTree) t.getChild(1));
         }
+
         return "";
     }
 
-    private String genMain(Tree child) {
+    private String generatePrint(BaseTree t){
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(genExpr((BaseTree) t.getChild(0)));
+        codeBuilder.append("LDW WR, #WRITE_EXC\n\n");
+        codeBuilder.append("TRP WR\n\n");
+        return codeBuilder.toString();
+    }
+
+    private String genExpr(BaseTree t) {
+        StringBuilder codeBuilder = new StringBuilder();
+        switch (t.getText()){
+            case "print":
+                codeBuilder.append(generatePrint(t));
+                break;
+            case "VEC":
+                codeBuilder.append(genVec(t));
+                break;
+            default:
+                codeBuilder.append(generateNo(t));
+        }
+        return codeBuilder.toString();
+    }
+
+    private String genVec(BaseTree t) {
+    }
+
+    private String genMain(BaseTree t) {
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("main_ LDW SP, #STACK_ADRS\n\n");
-        codeBuilder.append("LDQ NIL, BP");
-        codeBuilder.append("STW BP,-(SP)");
-        codeBuilder.append("LDW BP, SP");
-
-
-
-
-        codeBuilder.append("LDW SP, BP");
-        codeBuilder.append("LDW BP, (SP)+");
+        codeBuilder.append("LDQ NIL, BP\n\n");
+        codeBuilder.append("STW BP,-(SP)\n\n");
+        codeBuilder.append("LDW BP, SP\n\n");
+        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
+            codeBuilder.append(generateInstr(t2));
+        }
+        codeBuilder.append("LDW SP, BP\n\n");
+        codeBuilder.append("LDW BP, (SP)+\n\n");
         codeBuilder.append("LDW WR, #EXIT_EXC\n\n");
         codeBuilder.append("TRP WR\n\n");
         codeBuilder.append("LDW WR, #debut\n\n");
@@ -102,5 +130,20 @@ public class CodeGenerator{
 
     private String generateStruct(BaseTree t) {
         return "";
+    }
+
+    private String generateInstr(BaseTree t) {
+        StringBuilder codeBuilder = new StringBuilder();
+        switch (t.getText()){
+            case "print":
+                codeBuilder.append(generatePrint(t));
+                break;
+        }
+        return codeBuilder.toString();
+    }
+
+    private int getDeplacement(String text) throws Exception {
+        ArrayList<String> l = sc.find(text);
+        return Integer.valueOf(l.get(2));
     }
 }

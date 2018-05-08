@@ -6,26 +6,37 @@ STACK_ADRS EQU 0X1000
 
 LOAD_ADRS EQU 0XF000
 
-SP EQU R15
+NIL EQU 0SP EQU R15
 
 WR EQU R14
 
 BP EQU R13
 
-LDW SP, #STACK_ADRS
-
 ORD LOAD_ADRS
 
-start debut
+start main
 
+main_ LDW SP, #STACK_ADRS
 
-debut
+LDQ NIL, BP
+
+STW BP,-(SP)
+
+LDW BP, SP
+
+LDW WR, #WRITE_EXC
+
+TRP WR
+
+LDW SP, BP
+
+LDW BP, (SP)+
 
 LDW WR, #EXIT_EXC
 
-TRP R14
+TRP WR
 
-LDW R14, #debut
+LDW WR, #debut
 
-JEA (R14)
+JEA (WR)
 

@@ -868,4 +868,12 @@ public class Scope {
         }
         return null;
     }
+
+    public ArrayList<String> find(String text) throws Exception {
+        if (isIn(text)){
+            return table.get(text);
+        } else {
+            return getFromAncestor(text);
+        }
+    }
 }

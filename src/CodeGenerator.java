@@ -1,5 +1,6 @@
 import org.antlr.runtime.tree.BaseTree;
 import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.Tree;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,12 +22,13 @@ public class CodeGenerator{
         code += "WRITE_EXC EQU 66\n\n";
         code += "STACK_ADRS EQU 0X1000\n\n";
         code += "LOAD_ADRS EQU 0XF000\n\n";
+        code += "NIL EQU 0";
         code += "SP EQU R15\n\n";
         code += "WR EQU R14\n\n";
         code += "BP EQU R13\n\n";
-        code += "LDW SP, #STACK_ADRS\n\n";
         code += "ORD LOAD_ADRS\n\n";
         code += "start main\n\n";
+        // -> À foutre après main :
     }
 
     public void save() throws Exception {
@@ -78,7 +80,16 @@ public class CodeGenerator{
     }
 
     private String generateFun(BaseTree t) {
+        if (t.getChild(0).getText().equals("main")){
+            return genMain(t.getChild(1));
+        }
         return "";
+    }
+
+    private String genMain(Tree child) {
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append("LDW SP, #STACK_ADRS\n\n");
+        return codeBuilder.toString();
     }
 
     private String generateStruct(BaseTree t) {

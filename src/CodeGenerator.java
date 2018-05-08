@@ -6,6 +6,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class CodeGenerator{
     private Scope sc;
     private String code;
     private final String outputFile;
+    final String[] op = {"+", "-", "*", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
 
     public CodeGenerator(String output, Scope currentScope) {
+
         outputFile = output;
         sc = currentScope;
         code = ""; //Initialiser le code assembleur ici
@@ -129,6 +133,120 @@ public class CodeGenerator{
     }
 
     private String generateStruct(BaseTree t) {
+
+        return "";
+    }
+    private String generateOperation(BaseTree t2) throws Exception {
+        if (!Arrays.asList(op).contains(t2.getText())) { //Si ce n'est pas une opération
+            return generateValue(t2);
+        } else {
+            switch (t2.getText()) {
+                case "+":
+                    return generateAddition(t2);
+                case "-":
+                    return generateSubstraction(t2);
+                case "*":
+                    return generateMultiplication(t2);
+                case "/":
+                    return generateDivision(t2);
+                case ">":
+                    return generateGreater(t2);
+                case "<":
+                    return generateLower(t2);
+                case ">=":
+                    return generateGreaterOrEqual(t2);
+                case "<=":
+                    return generateLowerOrEqual(t2);
+                case "==":
+                    return generateEqual(t2);
+                case "!=":
+                    return generateNotEqual(t2);
+                case "!":
+                    return generateNo(t2);
+                case "&":
+                    return generateAddress(t2);
+                case "&&":
+                    return generateAndBool(t2);
+                case "||":
+                    return generateOrBool(t2);
+                case "UNISUB":
+                    return generateUniSub(t2);
+                case "UNISTAR":
+                    return generateUniStar(t2);
+                default:
+                    throw new Exception("Opération non gérée !");
+            }
+
+        }
+    }
+
+    private String generateValue(BaseTree t2) throws Exception {
+        return "";
+    }
+
+
+    private String generateEqual(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateNotEqual(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateGreaterOrEqual(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateLowerOrEqual(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateGreater(BaseTree t2) throws Exception {
+        return "";
+    }
+
+
+    private String generateLower(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateAddition(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateSubstraction(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateMultiplication(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateDivision(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateNo(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateAddress(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateUniSub(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateUniStar(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateAndBool(BaseTree t2) throws Exception {
+        return "";
+    }
+
+    private String generateOrBool(BaseTree t2) throws Exception {
         return "";
     }
 
@@ -146,4 +264,6 @@ public class CodeGenerator{
         ArrayList<String> l = sc.find(text);
         return Integer.valueOf(l.get(2));
     }
+
+
 }

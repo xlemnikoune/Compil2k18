@@ -50,7 +50,7 @@ public class CodeGenerator{
             List<BaseTree> l = (List<BaseTree>) t.getChildren();
             if (l != null){
                 for (BaseTree t2 : l){
-                    codeBuilder.append(genCode(t));
+                    codeBuilder.append(genCode(t2));
                 }
             }
         }

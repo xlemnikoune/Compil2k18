@@ -14,7 +14,7 @@ WR EQU R14
 
 BP EQU R13
 
-ORD LOAD_ADRS
+ORG LOAD_ADRS
 
 start main_
 
@@ -26,17 +26,17 @@ STW BP,-(SP)
 
 LDW BP, SP
 
-LDW R0, #5
+LDW R0, #86
 
 STW R0, (SP)+
 
-LDW R0, #3
+LDW R0, #34
 
 LDW R1, -(SP)
 
-ADD R1, R0, R0LDW WR, #WRITE_EXC
+ADD R1, R0, R0
 
-TRP WR
+TRP R0
 
 LDW SP, BP
 
@@ -46,7 +46,7 @@ LDW WR, #EXIT_EXC
 
 TRP WR
 
-LDW WR, #debut
+LDW WR, #main_
 
 JEA (WR)
 

@@ -16,6 +16,7 @@ public class CodeGenerator{
     private Scope sc;
     private String code;
     private final String outputFile;
+    private int scounter = 0;
     final String[] op = {"+", "-", "*", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
 
     public CodeGenerator(String output, Scope currentScope) {
@@ -31,7 +32,7 @@ public class CodeGenerator{
         code += "SP EQU R15\n\n";
         code += "WR EQU R14\n\n";
         code += "BP EQU R13\n\n";
-        code += "ORD LOAD_ADRS\n\n";
+        code += "ORG LOAD_ADRS\n\n";
         code += "start main_\n\n";
     }
 
@@ -91,8 +92,7 @@ public class CodeGenerator{
     private String generatePrint(BaseTree t){
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append(genExpr((BaseTree) t.getChild(0)));
-        codeBuilder.append("LDW WR, #WRITE_EXC\n\n");
-        codeBuilder.append("TRP WR\n\n");
+        codeBuilder.append("TRP R0\n\n");
         return codeBuilder.toString();
     }
 
@@ -128,7 +128,7 @@ public class CodeGenerator{
         codeBuilder.append("LDW BP, (SP)+\n\n");
         codeBuilder.append("LDW WR, #EXIT_EXC\n\n");
         codeBuilder.append("TRP WR\n\n");
-        codeBuilder.append("LDW WR, #debut\n\n");
+        codeBuilder.append("LDW WR, #main_\n\n");
         codeBuilder.append("JEA (WR)\n\n");
         return codeBuilder.toString();
     }
@@ -277,7 +277,7 @@ public class CodeGenerator{
         codeBuilder.append(generateOperation(leftSide));
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(rightSide));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "ADD R1, R0, R0");
+        codeBuilder.append("LDW R1, -(SP)\n\n" + "ADD R1, R0, R0\n\n");
         return codeBuilder.toString();
     }
 

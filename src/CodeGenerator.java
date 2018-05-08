@@ -239,7 +239,8 @@ public class CodeGenerator{
         codeBuilder.append(generateOperation(left));
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "CMP R1, R0\n\n");
+        codeBuilder.append("LDW R1, -(SP)\n\n");
+        codeBuilder.append(generOpBool("JNE"));
         return codeBuilder.toString();
     }
 
@@ -250,7 +251,8 @@ public class CodeGenerator{
         codeBuilder.append(generateOperation(left));
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "CMP R1, R0\n\n");
+        codeBuilder.append("LDW R1, -(SP)\n\n");
+        codeBuilder.append(generOpBool("JGE"));
         return codeBuilder.toString();
     }
 
@@ -261,7 +263,8 @@ public class CodeGenerator{
         codeBuilder.append(generateOperation(left));
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "CMP R1, R0\n\n");
+        codeBuilder.append("LDW R1, -(SP)\n\n");
+        codeBuilder.append(generOpBool("JLE"));
         return codeBuilder.toString();
     }
 
@@ -272,7 +275,8 @@ public class CodeGenerator{
         codeBuilder.append(generateOperation(left));
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "CMP R1, R0\n\n");
+        codeBuilder.append("LDW R1, -(SP)\n\n");
+        codeBuilder.append(generOpBool("JGT"));
         return codeBuilder.toString();
     }
 
@@ -284,7 +288,8 @@ public class CodeGenerator{
         codeBuilder.append(generateOperation(left));
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
-        codeBuilder.append("LDW R1, -(SP)\n\n" + "CMP R1, R0\n\n");
+        codeBuilder.append("LDW R1, -(SP)\n\n");
+        codeBuilder.append(generOpBool("JLW"));
         return codeBuilder.toString();
     }
 
@@ -336,8 +341,7 @@ public class CodeGenerator{
         BaseTree Value = (BaseTree) t2.getChild(0);
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append(generateOperation(Value)); //Calcul de op1
-        codeBuilder.append("LDW R2, #1\n\n");
-        codeBuilder.append("SUB R2,R0,R0 \n\n");
+        codeBuilder.append("NOT R0,R0\n\n");
         return codeBuilder.toString();
     }
 
@@ -349,8 +353,7 @@ public class CodeGenerator{
         BaseTree Value = (BaseTree) t2.getChild(0);
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append(generateOperation(Value)); //Calcul de op1
-        codeBuilder.append("LDW R2, #-1\n\n");
-        codeBuilder.append("MUL R0,R2,R0 \n\n");
+        codeBuilder.append("NEG R0,R0\n\n");
         return codeBuilder.toString();
     }
 
@@ -366,7 +369,7 @@ public class CodeGenerator{
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
         codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append("MUL R0,R1,R0 \n\n");
+        codeBuilder.append("AND R0,R1,R0 \n\n");
         return codeBuilder.toString();
     }
 
@@ -378,9 +381,7 @@ public class CodeGenerator{
         codeBuilder.append("STW R0, (SP)+\n\n");
         codeBuilder.append(generateOperation(right));
         codeBuilder.append("LDW R1, -(SP)\n\n");
-        codeBuilder.append("ADD R0,R1,R2\n\n");
-        codeBuilder.append("MUL R0,R1,R0\n\n");
-        codeBuilder.append("SUB R2,R0,R0\n\n");
+        codeBuilder.append("OR R0,R1,R0\n\n");
        return codeBuilder.toString();
     }
 

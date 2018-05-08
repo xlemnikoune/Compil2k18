@@ -65,6 +65,7 @@ public class MiniRustCompiler {
             System.err.println(baos.toString());
             System.exit(6); // -> Error on semantic controls
         }
+        //System.out.println(tds);
         System.setErr(old);
         genCode(t, tds, output);
         System.exit(0);

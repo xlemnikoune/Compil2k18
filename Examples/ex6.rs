@@ -1,3 +1,5 @@
 fn main(){
-	print!(5==5);
+	while (5>6){
+		print!(42);
+	}
 }

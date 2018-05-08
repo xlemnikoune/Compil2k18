@@ -45,11 +45,6 @@ public class TDS {
     private int ifCount=1;
 
     /**
-     * Count of else blocks (for naming purpose)
-     */
-    private int elseCount=1;
-
-    /**
      * Count of while blocks (for naming purpose)
      */
     private int whileCount=1;
@@ -178,9 +173,8 @@ public class TDS {
                 }
                 return 2;
             case "else":
-                temp = new Scope("else", currentScope, "else"+elseCount);
-                currentScope.addScopeNotInner("else"+elseCount,temp);
-                elseCount++;
+                temp = new Scope("else", currentScope, "else"+(ifCount-1));
+                currentScope.addScopeNotInner("else"+(ifCount-1),temp);
                 currentScope=temp;
                 return 1;
             case "while":

@@ -20,9 +20,11 @@ fn factorielle(n : i32, result : &i32)
 	let mut i = 1;
 	if n==0
 	{
+		let b = 5;
 		*result = 1;
 
 	} else{
+		let gh = 42;
         *result = 1;
 		while i <= n
 		{

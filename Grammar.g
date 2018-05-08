@@ -74,7 +74,7 @@ instruct :
 dotIDF 	: 
 IDF ('.'^ IDF)?;
 
-ifExpr : 'if' expr block ('else' block )? -> ^('if' expr block) ^('else' block)?;
+ifExpr : 'if' expr block ('else' block )? -> ^('if' expr block ^('else' block)?);
 
 binExpr1 : binExpr2 (EQUAL^ binExpr2)*; 
 

@@ -398,16 +398,23 @@ public class CodeGenerator{
             case "print":
                 codeBuilder.append(generatePrint(t));
                 break;
+            case "if":
+                codeBuilder.append(generateIf(t));
+                break;
+            case "while":
+                codeBuilder.append(generateWhile(t));
+                break;
+
         }
         return codeBuilder.toString();
     }
 
-    private String generateIf(BaseTree t) throws Exception{
+    private String generateIf(BaseTree t){
         StringBuilder codeBuilder = new StringBuilder();
         Tree bool = t.getChild(0);
         BaseTree then = (BaseTree) t.getChild(1);
         codeBuilder.append(generateOperation((BaseTree) bool));
-        int ic = ifCount++;
+        int ic = ++ifCount;
         codeBuilder.append("LDW R1, #0\n\n");
         codeBuilder.append("CMP R0,R1\n\n");
         String labelIf = "if"+ic;
@@ -418,8 +425,7 @@ public class CodeGenerator{
         if (t.getChildCount() > 2) {
             codeBuilder.append("JMP #else").append(ic).append("-$-2\n\n");
             codeBuilder.append(labelIf).append("\n\n");
-            BaseTree elseT = (BaseTree) t.getChild(2);
-            List<BaseTree> l2 = (List<BaseTree>) elseT.getChildren();
+            BaseTree elseT = (BaseTree) t.getChild(2).getChild(0);
             codeBuilder.append(generateBlock(elseT));
             codeBuilder.append("else").append(ic).append("\n\n");
         } else {
@@ -434,18 +440,20 @@ public class CodeGenerator{
     }
 
     private String generateWhile(BaseTree t) {
+        System.out.println("Couou");
         StringBuilder codeBuilder = new StringBuilder();
         WhileCount++;
         codeBuilder.append("While"+WhileCount+"\n\n");
         BaseTree Bool = (BaseTree) t.getChild(0);
         BaseTree Block = (BaseTree) t.getChild(1);
         codeBuilder.append(generateOperation(Bool));
-        codeBuilder.append("CMP R0,#0\n\n");
-        codeBuilder.append("JEQ EndWhile"+WhileCount+"-$-2\n\n");
+        codeBuilder.append("LDW R1,#0\n\n");
+        codeBuilder.append("CMP R0,R1\n\n");
+        codeBuilder.append("JEQ #EndWhile"+WhileCount+"-$-2\n\n");
         codeBuilder.append(generateBlock(Block));
-        codeBuilder.append("JMP While"+WhileCount+"\n\n");
+        codeBuilder.append("JMP #While"+WhileCount+"\n\n");
         codeBuilder.append("EndWhile"+WhileCount+"\n\n");
-        return "";
+        return codeBuilder.toString();
     }
 
 }

@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 Grammar.g 2018-05-08 16:48:17
+// $ANTLR 3.5.2 Grammar.g 2018-05-08 17:56:49
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -2344,7 +2344,7 @@ public class GrammarParser extends Parser {
 
 
 	// $ANTLR start "ifExpr"
-	// Grammar.g:77:1: ifExpr : 'if' expr block ( 'else' block )? -> ^( 'if' expr block ) ( ^( 'else' block ) )? ;
+	// Grammar.g:77:1: ifExpr : 'if' expr block ( 'else' block )? -> ^( 'if' expr block ( ^( 'else' block ) )? ) ;
 	public final GrammarParser.ifExpr_return ifExpr() throws RecognitionException {
 		GrammarParser.ifExpr_return retval = new GrammarParser.ifExpr_return();
 		retval.start = input.LT(1);
@@ -2365,7 +2365,7 @@ public class GrammarParser extends Parser {
 		RewriteRuleSubtreeStream stream_block=new RewriteRuleSubtreeStream(adaptor,"rule block");
 
 		try {
-			// Grammar.g:77:8: ( 'if' expr block ( 'else' block )? -> ^( 'if' expr block ) ( ^( 'else' block ) )? )
+			// Grammar.g:77:8: ( 'if' expr block ( 'else' block )? -> ^( 'if' expr block ( ^( 'else' block ) )? ) )
 			// Grammar.g:77:10: 'if' expr block ( 'else' block )?
 			{
 			string_literal90=(Token)match(input,IF,FOLLOW_IF_in_ifExpr619);  
@@ -2415,30 +2415,30 @@ public class GrammarParser extends Parser {
 			RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 			root_0 = (CommonTree)adaptor.nil();
-			// 77:43: -> ^( 'if' expr block ) ( ^( 'else' block ) )?
+			// 77:43: -> ^( 'if' expr block ( ^( 'else' block ) )? )
 			{
-				// Grammar.g:77:46: ^( 'if' expr block )
+				// Grammar.g:77:46: ^( 'if' expr block ( ^( 'else' block ) )? )
 				{
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot(stream_IF.nextNode(), root_1);
 				adaptor.addChild(root_1, stream_expr.nextTree());
 				adaptor.addChild(root_1, stream_block.nextTree());
-				adaptor.addChild(root_0, root_1);
-				}
-
-				// Grammar.g:77:65: ( ^( 'else' block ) )?
+				// Grammar.g:77:64: ( ^( 'else' block ) )?
 				if ( stream_block.hasNext()||stream_44.hasNext() ) {
-					// Grammar.g:77:65: ^( 'else' block )
+					// Grammar.g:77:64: ^( 'else' block )
 					{
-					CommonTree root_1 = (CommonTree)adaptor.nil();
-					root_1 = (CommonTree)adaptor.becomeRoot(stream_44.nextNode(), root_1);
-					adaptor.addChild(root_1, stream_block.nextTree());
-					adaptor.addChild(root_0, root_1);
+					CommonTree root_2 = (CommonTree)adaptor.nil();
+					root_2 = (CommonTree)adaptor.becomeRoot(stream_44.nextNode(), root_2);
+					adaptor.addChild(root_2, stream_block.nextTree());
+					adaptor.addChild(root_1, root_2);
 					}
 
 				}
 				stream_block.reset();
 				stream_44.reset();
+
+				adaptor.addChild(root_0, root_1);
+				}
 
 			}
 

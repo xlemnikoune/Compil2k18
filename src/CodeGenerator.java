@@ -17,6 +17,7 @@ public class CodeGenerator{
     private String code;
     private final String outputFile;
     private int scounter = 0;
+    private int ifCount = 0;
     final String[] op = {"+", "-", "*", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
 
     public CodeGenerator(String output, Scope currentScope) {
@@ -391,6 +392,32 @@ public class CodeGenerator{
             case "print":
                 codeBuilder.append(generatePrint(t));
                 break;
+        }
+        return codeBuilder.toString();
+    }
+
+    private String generateIf(BaseTree t) throws Exception{
+        StringBuilder codeBuilder = new StringBuilder();
+        Tree bool = t.getChild(0);
+        BaseTree then = (BaseTree) t.getChild(1);
+        codeBuilder.append(generateOperation((BaseTree) bool));
+        int ic = ifCount++;
+        codeBuilder.append("LDW R1, #0\n\n");
+        codeBuilder.append("CMP R0,R1\n\n");
+        String labelIf = "if"+ic;
+        codeBuilder.append("JEQ ").append("#").append(labelIf+"-$-2\n\n");
+
+        codeBuilder.append(generateBlock(then));
+
+        if (t.getChildCount() > 2) {
+            codeBuilder.append("JMP #else").append(ic).append("-$-2\n\n");
+            codeBuilder.append(labelIf).append("\n\n");
+            BaseTree elseT = (BaseTree) t.getChild(2);
+            List<BaseTree> l2 = (List<BaseTree>) elseT.getChildren();
+            codeBuilder.append(generateBlock(elseT));
+            codeBuilder.append("else").append(ic).append("\n\n");
+        } else {
+            codeBuilder.append(labelIf).append("\n\n");
         }
         return codeBuilder.toString();
     }

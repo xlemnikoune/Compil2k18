@@ -95,7 +95,7 @@ starExpr
 	| moinsExpr;
 	
 moinsExpr 
-	:	 SUB atom -> ^(UNISUB atom)
+	:	 SUB moinsExpr -> ^(UNISUB moinsExpr)
 	| atom;
 
 
@@ -133,7 +133,7 @@ bigstarExpr
 	| bigmoinsExpr;
 	
 bigmoinsExpr 
-	:	 SUB bigatom -> ^(UNISUB bigatom)
+	:	 SUB bigmoinsExpr -> ^(UNISUB bigmoinsExpr)
 	| bigatom;
 
 

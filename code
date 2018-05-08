@@ -26,15 +26,23 @@ STW BP,-(SP)
 
 LDW BP, SP
 
-LDW R0, #86
+LDW R0, #5
 
 STW R0, (SP)+
 
-LDW R0, #34
+LDW R0, #5
 
 LDW R1, -(SP)
 
-ADD R1, R0, R0
+MPC WR 
+
+ADQ 10,WR
+
+CMP R1, R0
+
+JEQ #run-$-2
+
+LDW R0, #0
 
 TRP R0
 
@@ -47,6 +55,10 @@ LDW WR, #EXIT_EXC
 TRP WR
 
 LDW WR, #main_
+
+JEA (WR)
+
+run LDW R0,#1
 
 JEA (WR)
 

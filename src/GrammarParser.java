@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 Grammar.g 2018-04-13 01:21:48
+// $ANTLR 3.5.2 Grammar.g 2018-05-08 16:48:17
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -3320,7 +3320,7 @@ public class GrammarParser extends Parser {
 
 
 	// $ANTLR start "moinsExpr"
-	// Grammar.g:97:1: moinsExpr : ( SUB atom -> ^( UNISUB atom ) | atom );
+	// Grammar.g:97:1: moinsExpr : ( SUB moinsExpr -> ^( UNISUB moinsExpr ) | atom );
 	public final GrammarParser.moinsExpr_return moinsExpr() throws RecognitionException {
 		GrammarParser.moinsExpr_return retval = new GrammarParser.moinsExpr_return();
 		retval.start = input.LT(1);
@@ -3328,15 +3328,15 @@ public class GrammarParser extends Parser {
 		CommonTree root_0 = null;
 
 		Token SUB124=null;
-		ParserRuleReturnScope atom125 =null;
+		ParserRuleReturnScope moinsExpr125 =null;
 		ParserRuleReturnScope atom126 =null;
 
 		CommonTree SUB124_tree=null;
 		RewriteRuleTokenStream stream_SUB=new RewriteRuleTokenStream(adaptor,"token SUB");
-		RewriteRuleSubtreeStream stream_atom=new RewriteRuleSubtreeStream(adaptor,"rule atom");
+		RewriteRuleSubtreeStream stream_moinsExpr=new RewriteRuleSubtreeStream(adaptor,"rule moinsExpr");
 
 		try {
-			// Grammar.g:98:2: ( SUB atom -> ^( UNISUB atom ) | atom )
+			// Grammar.g:98:2: ( SUB moinsExpr -> ^( UNISUB moinsExpr ) | atom )
 			int alt37=2;
 			int LA37_0 = input.LA(1);
 			if ( (LA37_0==SUB) ) {
@@ -3354,18 +3354,18 @@ public class GrammarParser extends Parser {
 
 			switch (alt37) {
 				case 1 :
-					// Grammar.g:98:5: SUB atom
+					// Grammar.g:98:5: SUB moinsExpr
 					{
 					SUB124=(Token)match(input,SUB,FOLLOW_SUB_in_moinsExpr822);  
 					stream_SUB.add(SUB124);
 
-					pushFollow(FOLLOW_atom_in_moinsExpr824);
-					atom125=atom();
+					pushFollow(FOLLOW_moinsExpr_in_moinsExpr824);
+					moinsExpr125=moinsExpr();
 					state._fsp--;
 
-					stream_atom.add(atom125.getTree());
+					stream_moinsExpr.add(moinsExpr125.getTree());
 					// AST REWRITE
-					// elements: atom
+					// elements: moinsExpr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -3375,13 +3375,13 @@ public class GrammarParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 98:14: -> ^( UNISUB atom )
+					// 98:19: -> ^( UNISUB moinsExpr )
 					{
-						// Grammar.g:98:17: ^( UNISUB atom )
+						// Grammar.g:98:22: ^( UNISUB moinsExpr )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(UNISUB, "UNISUB"), root_1);
-						adaptor.addChild(root_1, stream_atom.nextTree());
+						adaptor.addChild(root_1, stream_moinsExpr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
 
@@ -4929,7 +4929,7 @@ public class GrammarParser extends Parser {
 
 
 	// $ANTLR start "bigmoinsExpr"
-	// Grammar.g:135:1: bigmoinsExpr : ( SUB bigatom -> ^( UNISUB bigatom ) | bigatom );
+	// Grammar.g:135:1: bigmoinsExpr : ( SUB bigmoinsExpr -> ^( UNISUB bigmoinsExpr ) | bigatom );
 	public final GrammarParser.bigmoinsExpr_return bigmoinsExpr() throws RecognitionException {
 		GrammarParser.bigmoinsExpr_return retval = new GrammarParser.bigmoinsExpr_return();
 		retval.start = input.LT(1);
@@ -4937,15 +4937,15 @@ public class GrammarParser extends Parser {
 		CommonTree root_0 = null;
 
 		Token SUB185=null;
-		ParserRuleReturnScope bigatom186 =null;
+		ParserRuleReturnScope bigmoinsExpr186 =null;
 		ParserRuleReturnScope bigatom187 =null;
 
 		CommonTree SUB185_tree=null;
 		RewriteRuleTokenStream stream_SUB=new RewriteRuleTokenStream(adaptor,"token SUB");
-		RewriteRuleSubtreeStream stream_bigatom=new RewriteRuleSubtreeStream(adaptor,"rule bigatom");
+		RewriteRuleSubtreeStream stream_bigmoinsExpr=new RewriteRuleSubtreeStream(adaptor,"rule bigmoinsExpr");
 
 		try {
-			// Grammar.g:136:2: ( SUB bigatom -> ^( UNISUB bigatom ) | bigatom )
+			// Grammar.g:136:2: ( SUB bigmoinsExpr -> ^( UNISUB bigmoinsExpr ) | bigatom )
 			int alt55=2;
 			int LA55_0 = input.LA(1);
 			if ( (LA55_0==SUB) ) {
@@ -4963,18 +4963,18 @@ public class GrammarParser extends Parser {
 
 			switch (alt55) {
 				case 1 :
-					// Grammar.g:136:5: SUB bigatom
+					// Grammar.g:136:5: SUB bigmoinsExpr
 					{
 					SUB185=(Token)match(input,SUB,FOLLOW_SUB_in_bigmoinsExpr1156);  
 					stream_SUB.add(SUB185);
 
-					pushFollow(FOLLOW_bigatom_in_bigmoinsExpr1158);
-					bigatom186=bigatom();
+					pushFollow(FOLLOW_bigmoinsExpr_in_bigmoinsExpr1158);
+					bigmoinsExpr186=bigmoinsExpr();
 					state._fsp--;
 
-					stream_bigatom.add(bigatom186.getTree());
+					stream_bigmoinsExpr.add(bigmoinsExpr186.getTree());
 					// AST REWRITE
-					// elements: bigatom
+					// elements: bigmoinsExpr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -4984,13 +4984,13 @@ public class GrammarParser extends Parser {
 					RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.getTree():null);
 
 					root_0 = (CommonTree)adaptor.nil();
-					// 136:17: -> ^( UNISUB bigatom )
+					// 136:22: -> ^( UNISUB bigmoinsExpr )
 					{
-						// Grammar.g:136:20: ^( UNISUB bigatom )
+						// Grammar.g:136:25: ^( UNISUB bigmoinsExpr )
 						{
 						CommonTree root_1 = (CommonTree)adaptor.nil();
 						root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(UNISUB, "UNISUB"), root_1);
-						adaptor.addChild(root_1, stream_bigatom.nextTree());
+						adaptor.addChild(root_1, stream_bigmoinsExpr.nextTree());
 						adaptor.addChild(root_0, root_1);
 						}
 
@@ -5849,8 +5849,8 @@ public class GrammarParser extends Parser {
 	public static final BitSet FOLLOW_STAR_in_starExpr795 = new BitSet(new long[]{0x0100000208028200L});
 	public static final BitSet FOLLOW_moinsExpr_in_starExpr797 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_moinsExpr_in_starExpr810 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_SUB_in_moinsExpr822 = new BitSet(new long[]{0x0100000200028200L});
-	public static final BitSet FOLLOW_atom_in_moinsExpr824 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SUB_in_moinsExpr822 = new BitSet(new long[]{0x0100000208028200L});
+	public static final BitSet FOLLOW_moinsExpr_in_moinsExpr824 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_atom_in_moinsExpr837 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_vectExpr_in_dotExpr846 = new BitSet(new long[]{0x0000002000000002L});
 	public static final BitSet FOLLOW_37_in_dotExpr849 = new BitSet(new long[]{0x0000800000008000L});
@@ -5910,8 +5910,8 @@ public class GrammarParser extends Parser {
 	public static final BitSet FOLLOW_STAR_in_bigstarExpr1129 = new BitSet(new long[]{0x0100000208028200L});
 	public static final BitSet FOLLOW_bigmoinsExpr_in_bigstarExpr1131 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_bigmoinsExpr_in_bigstarExpr1144 = new BitSet(new long[]{0x0000000000000002L});
-	public static final BitSet FOLLOW_SUB_in_bigmoinsExpr1156 = new BitSet(new long[]{0x0100000200028200L});
-	public static final BitSet FOLLOW_bigatom_in_bigmoinsExpr1158 = new BitSet(new long[]{0x0000000000000002L});
+	public static final BitSet FOLLOW_SUB_in_bigmoinsExpr1156 = new BitSet(new long[]{0x0100000208028200L});
+	public static final BitSet FOLLOW_bigmoinsExpr_in_bigmoinsExpr1158 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_bigatom_in_bigmoinsExpr1171 = new BitSet(new long[]{0x0000000000000002L});
 	public static final BitSet FOLLOW_bigvectExpr_in_bigdotExpr1180 = new BitSet(new long[]{0x0000002000000002L});
 	public static final BitSet FOLLOW_37_in_bigdotExpr1183 = new BitSet(new long[]{0x0000800000008000L});

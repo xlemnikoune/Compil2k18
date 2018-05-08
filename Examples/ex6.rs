@@ -1,3 +1,3 @@
 fn main(){
-	print!(86+34);
+	print!(5==5);
 }

@@ -17,6 +17,7 @@ public class CodeGenerator{
     private String code;
     private final String outputFile;
     private int scounter = 0;
+    private int WhileCount = 0;
     final String[] op = {"+", "-", "*", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
 
     public CodeGenerator(String output, Scope currentScope) {
@@ -123,9 +124,7 @@ public class CodeGenerator{
         codeBuilder.append("LDQ NIL, BP\n\n");
         codeBuilder.append("STW BP,-(SP)\n\n");
         codeBuilder.append("LDW BP, SP\n\n");
-        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
-            codeBuilder.append(generateInstr(t2));
-        }
+        codeBuilder.append(generateBlock(t));
         codeBuilder.append("LDW SP, BP\n\n");
         codeBuilder.append("LDW BP, (SP)+\n\n");
         codeBuilder.append("LDW WR, #EXIT_EXC\n\n");
@@ -135,6 +134,13 @@ public class CodeGenerator{
         return codeBuilder.toString();
     }
 
+    private String generateBlock (BaseTree t) {
+        StringBuilder codeBuilder = new StringBuilder();
+        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
+            codeBuilder.append(generateInstr(t2));
+        }
+        return codeBuilder.toString();
+    }
     private String generateStruct(BaseTree t) {
 
         return "";
@@ -400,5 +406,19 @@ public class CodeGenerator{
         return Integer.valueOf(l.get(2));
     }
 
+    private String generateWhile(BaseTree t) {
+        StringBuilder codeBuilder = new StringBuilder();
+        WhileCount++;
+        codeBuilder.append("While"+WhileCount+"\n\n");
+        BaseTree Bool = (BaseTree) t.getChild(0);
+        BaseTree Block = (BaseTree) t.getChild(1);
+        codeBuilder.append(generateOperation(Bool));
+        codeBuilder.append("CMP R0,#0\n\n");
+        codeBuilder.append("JEQ EndWhile"+WhileCount+"-$-2\n\n");
+        codeBuilder.append(generateBlock(Block));
+        codeBuilder.append("JMP While"+WhileCount+"\n\n");
+        codeBuilder.append("EndWhile"+WhileCount+"\n\n");
+        return "";
+    }
 
 }

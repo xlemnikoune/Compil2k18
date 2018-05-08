@@ -240,15 +240,36 @@ public class CodeGenerator{
     }
 
     private String generateSubstraction(BaseTree t2){
-        return "";
+        BaseTree left = (BaseTree) t2.getChild(0);
+        BaseTree right = (BaseTree) t2.getChild(1);
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(generateOperation(left));
+        codeBuilder.append("stw R0, (R15)+\n\n");
+        codeBuilder.append(generateOperation(right));
+        codeBuilder.append("ldw R1, -(R15)\n\n" + "SUB R1, R0, R0\n\n");
+        return codeBuilder.toString();
     }
 
     private String generateMultiplication(BaseTree t2){
-        return "";
+        BaseTree left = (BaseTree) t2.getChild(0);
+        BaseTree right = (BaseTree) t2.getChild(1);
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(generateOperation(left));
+        codeBuilder.append("stw R0, (R15)+\n\n");
+        codeBuilder.append(generateOperation(right));
+        codeBuilder.append("ldw R1, -(R15)\n\n" + "MUL R1, R0, R0\n\n");
+        return codeBuilder.toString();
     }
 
     private String generateDivision(BaseTree t2){
-        return "";
+        BaseTree left = (BaseTree) t2.getChild(0);
+        BaseTree right = (BaseTree) t2.getChild(1);
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(generateOperation(left));
+        codeBuilder.append("stw R0, (R15)+\n\n");
+        codeBuilder.append(generateOperation(right));
+        codeBuilder.append("ldw R1, -(R15)\n\n" + "DIV R1, R0, R0\n\n");
+        return codeBuilder.toString();
     }
 
     private String generateNo(BaseTree t2){
@@ -260,7 +281,12 @@ public class CodeGenerator{
     }
 
     private String generateUniSub(BaseTree t2){
-        return "";
+        BaseTree Value = (BaseTree) t2.getChild(0);
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(generateOperation(Value)); //Calcul de op1
+        codeBuilder.append("LDW R2, #-1\n\n");
+        codeBuilder.append("MUL R0,R2,R0 \n\n");
+        return codeBuilder.toString();
     }
 
     private String generateUniStar(BaseTree t2){

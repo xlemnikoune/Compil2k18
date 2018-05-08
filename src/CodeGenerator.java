@@ -27,12 +27,12 @@ public class CodeGenerator{
         code += "WRITE_EXC EQU 66\n\n";
         code += "STACK_ADRS EQU 0X1000\n\n";
         code += "LOAD_ADRS EQU 0XF000\n\n";
-        code += "NIL EQU 0";
+        code += "NIL EQU 0\n\n";
         code += "SP EQU R15\n\n";
         code += "WR EQU R14\n\n";
         code += "BP EQU R13\n\n";
         code += "ORD LOAD_ADRS\n\n";
-        code += "start main\n\n";
+        code += "start main_\n\n";
     }
 
     public void save() throws Exception {
@@ -106,12 +106,13 @@ public class CodeGenerator{
                 codeBuilder.append(genVec(t));
                 break;
             default:
-                codeBuilder.append(generateNo(t));
+                codeBuilder.append(generateOperation(t));
         }
         return codeBuilder.toString();
     }
 
     private String genVec(BaseTree t) {
+        return "";
     }
 
     private String genMain(BaseTree t) {
@@ -136,7 +137,7 @@ public class CodeGenerator{
 
         return "";
     }
-    private String generateOperation(BaseTree t2) throws Exception {
+    private String generateOperation(BaseTree t2) {
         if (!Arrays.asList(op).contains(t2.getText())) { //Si ce n'est pas une opération
             return generateValue(t2);
         } else {
@@ -174,83 +175,107 @@ public class CodeGenerator{
                 case "UNISTAR":
                     return generateUniStar(t2);
                 default:
-                    throw new Exception("Opération non gérée !");
+                    System.err.println("Opération non gérée !");
             }
 
         }
+        return "";
     }
 
-    private String generateValue(BaseTree t2) throws Exception {
+    private String generateValue(BaseTree t2){
+        String s = t2.getText();
+        if (isInteger(s)){
+            return "LDW R0, #"+Integer.parseInt(s)+"\n\n";
+        }
+        return "";
+    }
+
+    private static boolean isInteger(String s){
+        if (s.isEmpty()) return false;
+        for (int i = 0; i<s.length(); i++){
+            if (i==0 && s.charAt(i) == '-'){
+                if (s.length() == 1) return false;
+                else continue;
+            }
+            if (Character.digit(s.charAt(i),10)<0) return false;
+        }
+        return true;
+    }
+
+
+    private String generateEqual(BaseTree t2){
+        return "";
+    }
+
+    private String generateNotEqual(BaseTree t2){
+        return "";
+    }
+
+    private String generateGreaterOrEqual(BaseTree t2){
+        return "";
+    }
+
+    private String generateLowerOrEqual(BaseTree t2){
+        return "";
+    }
+
+    private String generateGreater(BaseTree t2){
         return "";
     }
 
 
-    private String generateEqual(BaseTree t2) throws Exception {
+    private String generateLower(BaseTree t2){
         return "";
     }
 
-    private String generateNotEqual(BaseTree t2) throws Exception {
+    private String generateAddition(BaseTree t2){
+        BaseTree leftSide = (BaseTree) t2.getChild(0);
+        BaseTree rightSide = (BaseTree) t2.getChild(1);
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(generateOperation(leftSide));
+        codeBuilder.append("STW R0, (SP)+\n\n");
+        codeBuilder.append(generateOperation(rightSide));
+        codeBuilder.append("LDW R1, -(SP)\n\n" + "ADD R1, R0, R0");
+        return codeBuilder.toString();
+    }
+
+    private String generateSubstraction(BaseTree t2){
         return "";
     }
 
-    private String generateGreaterOrEqual(BaseTree t2) throws Exception {
+    private String generateMultiplication(BaseTree t2){
         return "";
     }
 
-    private String generateLowerOrEqual(BaseTree t2) throws Exception {
+    private String generateDivision(BaseTree t2){
         return "";
     }
 
-    private String generateGreater(BaseTree t2) throws Exception {
+    private String generateNo(BaseTree t2){
         return "";
     }
 
-
-    private String generateLower(BaseTree t2) throws Exception {
+    private String generateAddress(BaseTree t2){
         return "";
     }
 
-    private String generateAddition(BaseTree t2) throws Exception {
+    private String generateUniSub(BaseTree t2){
         return "";
     }
 
-    private String generateSubstraction(BaseTree t2) throws Exception {
+    private String generateUniStar(BaseTree t2){
         return "";
     }
 
-    private String generateMultiplication(BaseTree t2) throws Exception {
+    private String generateAndBool(BaseTree t2){
         return "";
     }
 
-    private String generateDivision(BaseTree t2) throws Exception {
+    private String generateOrBool(BaseTree t2){
         return "";
     }
 
-    private String generateNo(BaseTree t2) throws Exception {
-        return "";
-    }
-
-    private String generateAddress(BaseTree t2) throws Exception {
-        return "";
-    }
-
-    private String generateUniSub(BaseTree t2) throws Exception {
-        return "";
-    }
-
-    private String generateUniStar(BaseTree t2) throws Exception {
-        return "";
-    }
-
-    private String generateAndBool(BaseTree t2) throws Exception {
-        return "";
-    }
-
-    private String generateOrBool(BaseTree t2) throws Exception {
-        return "";
-    }
-
-    private String generateInstr(BaseTree t) {
+    private String generateInstr(BaseTree t){
         StringBuilder codeBuilder = new StringBuilder();
         switch (t.getText()){
             case "print":

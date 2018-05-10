@@ -253,6 +253,9 @@ public class CodeGenerator{
     }
 
     private String generateValue(BaseTree t2){
+        if (t2.getChildCount()>0){
+            return genCall(t2);
+        }
         String s = t2.getText();
         if (isInteger(s)){
             return "LDW R0, #"+Integer.parseInt(s)+"\n\n"+"LDW R5,#0\n\n";
@@ -263,6 +266,30 @@ public class CodeGenerator{
             }
             return "LDW R0, (BP)"+getDeplacement(s)+"\n\n";
         }
+    }
+
+    private String genCall(BaseTree t2) {
+        String code = "";
+        int to = 0;
+        for (BaseTree t : (List<BaseTree>)t2.getChildren()){
+            int k =0;
+            try {
+                ArrayList<String> p = sc.find(t.getText());
+                Integer i = Integer.valueOf(p.get(2));
+                k = Math.max(0,i-2);
+                to+=i;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            code+=genExpr(t);
+            code+="STW R0, -(SP)\n\n";
+            if (k>0){
+                code+="ADQ -"+k+",SP\n\n";
+            }
+        }
+        code+="JSR @"+t2.getText()+"_\n\n";
+        return code;
     }
 
     private static boolean isInteger(String s){
@@ -441,6 +468,10 @@ public class CodeGenerator{
                 else
                     codeBuilder.append(generateAffect((BaseTree) t.getChild(0)));
                 break;
+            case "return":
+                codeBuilder.append(genExpr((BaseTree) t.getChild(0)));
+                codeBuilder.append(goBack(sc.getName()));
+                codeBuilder.append("RTS\n\n");
             default:
                 codeBuilder.append(genExpr((BaseTree) t));
                 break;

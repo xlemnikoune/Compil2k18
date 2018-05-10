@@ -153,18 +153,21 @@ public class CodeGenerator{
             return genMain((BaseTree) t.getChild(1));
         } else {
             StringBuilder codeBuilder = new StringBuilder();
+            codeBuilder.append(t.getChild(0).getText()+"_ ");
             codeBuilder.append(ChangeScope(t.getChild(0).getText()));
-            codeBuilder.append(t.getChild(0).getText()+"_ STW BP,SP \n\n");
+            codeBuilder.append("STW BP,SP \n\n");
             codeBuilder.append("LDW BP,SP\n\n");
             for (BaseTree t2 : (List<BaseTree>) t.getChildren()) {
-                if (t2.getText().equals("block")) {
+                if (t2.getText().equals("BLOCK")) {
                     codeBuilder.append(generateBlock((BaseTree) t2));
                 }
             }
             codeBuilder.append("LDW SP, BP\n\n");
             codeBuilder.append("LDW BP, (SP)+\n\n");
+
+            codeBuilder.append("LDW WR, (SP)+\n\n");
             codeBuilder.append(goBack(t.getChild(0).getText()));
-            codeBuilder.append("RTS\n\n");
+            codeBuilder.append("JEA (WR)\n\n");
             return codeBuilder.toString();
         }
     }
@@ -283,16 +286,16 @@ public class CodeGenerator{
 
     private String genCall(BaseTree t2) {
         String code = "";
-        int to = 0;
         for (BaseTree t : (List<BaseTree>)t2.getChildren()){
             int k =0;
-            try {
-                ArrayList<String> p = sc.find(t.getText());
-                Integer i = Integer.valueOf(p.get(2));
-                k = Math.max(0,i-2);
-                to+=i;
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!isInteger(t.getText())) {
+                try {
+                    ArrayList<String> p = sc.find(t.getText());
+                    Integer i = Integer.valueOf(p.get(2));
+                    k = Math.max(0, i - 2);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             code+=genExpr(t);
@@ -301,7 +304,11 @@ public class CodeGenerator{
                 code+="ADQ -"+k+",SP\n\n";
             }
         }
-        code+="JSR @"+t2.getText()+"_\n\n";
+        code+="LDW R0, #"+t2.getText()+"_\n\n";
+        code+="MPC WR\n\n";
+        code+="ADQ 8, WR\n\n";
+        code+="STW WR, -(SP)\n\n";
+        code+="JEA (R0)\n\n";
         return code;
     }
 

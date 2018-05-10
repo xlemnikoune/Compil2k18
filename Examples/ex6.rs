@@ -1,8 +1,7 @@
+fn test(i:i32){
+	print!(42);
+}
+
 fn main(){
-	let mut i=2;
-	if (i<4){
-		let i = 9;
-		print!(i);
-	}
-	print!(i);
+	test(62);
 }

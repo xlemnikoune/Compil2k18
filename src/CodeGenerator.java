@@ -455,6 +455,7 @@ public class CodeGenerator{
         BaseTree then = (BaseTree) t.getChild(1);
         codeBuilder.append(generateOperation((BaseTree) bool));
         int ic = ++ifCount;
+        codeBuilder.append(ChangeScope("If"+ic));
         codeBuilder.append("LDW R1, #0\n\n");
         codeBuilder.append("CMP R0,R1\n\n");
         String labelIf = "if"+ic;
@@ -471,6 +472,8 @@ public class CodeGenerator{
         } else {
             codeBuilder.append(labelIf).append("\n\n");
         }
+        sc=sc.getAncestor();
+        codeBuilder.append("LDW SP, BP\n\n"+"LDW BP, (SP)+\n\n");
         return codeBuilder.toString();
     }
 
@@ -489,6 +492,7 @@ public class CodeGenerator{
     private String generateWhile(BaseTree t) {
         StringBuilder codeBuilder = new StringBuilder();
         WhileCount++;
+        codeBuilder.append(ChangeScope("If"+WhileCount));
         codeBuilder.append("While").append(WhileCount).append("\n\n");
         BaseTree Bool = (BaseTree) t.getChild(0);
         BaseTree Block = (BaseTree) t.getChild(1);
@@ -499,6 +503,8 @@ public class CodeGenerator{
         codeBuilder.append(generateBlock(Block));
         codeBuilder.append("JMP #While").append(WhileCount).append("\n\n");
         codeBuilder.append("EndWhile").append(WhileCount).append("\n\n");
+        sc=sc.getAncestor();
+        codeBuilder.append("LDW SP, BP\n\n"+"LDW BP, (SP)+\n\n");
         return codeBuilder.toString();
     }
 

@@ -39,7 +39,14 @@
 
  	let l = vec ![ d1 , d2 , d3 , d4 ];
  	let result = addition_vecteurs ( &l ) ;
-
+	if 1>2 
+	{
+		let d5=1;
+	}
+	if 2>1
+	{
+		let d6=2;
+	}
  	print !( result . x ) ;
  	print !( result . y ) ;
  }

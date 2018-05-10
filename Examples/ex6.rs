@@ -1,7 +1,7 @@
 fn test(i:i32){
-	print!(42);
+	i+5;
 }
 
 fn main(){
-	test(62);
+	test(45);
 }

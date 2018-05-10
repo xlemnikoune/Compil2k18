@@ -153,20 +153,16 @@ public class CodeGenerator{
             return genMain((BaseTree) t.getChild(1));
         } else {
             StringBuilder codeBuilder = new StringBuilder();
-            codeBuilder.append(t.getChild(0).getText()+"_ ");
+            codeBuilder.append(t.getChild(0).getText()).append("_ ");
             codeBuilder.append(ChangeScope(t.getChild(0).getText()));
-            codeBuilder.append("STW BP,SP \n\n");
-            codeBuilder.append("LDW BP,SP\n\n");
             for (BaseTree t2 : (List<BaseTree>) t.getChildren()) {
                 if (t2.getText().equals("BLOCK")) {
                     codeBuilder.append(generateBlock((BaseTree) t2));
                 }
             }
-            codeBuilder.append("LDW SP, BP\n\n");
-            codeBuilder.append("LDW BP, (SP)+\n\n");
 
-            codeBuilder.append("LDW WR, (SP)+\n\n");
             codeBuilder.append(goBack(t.getChild(0).getText()));
+            codeBuilder.append("LDW WR, (SP)+\n\n");
             codeBuilder.append("JEA (WR)\n\n");
             return codeBuilder.toString();
         }
@@ -287,7 +283,7 @@ public class CodeGenerator{
     private String genCall(BaseTree t2) {
         String code = "";
         for (BaseTree t : (List<BaseTree>)t2.getChildren()){
-            int k =0;
+            /*int k =0;
             if (!isInteger(t.getText())) {
                 try {
                     ArrayList<String> p = sc.find(t.getText());
@@ -296,13 +292,11 @@ public class CodeGenerator{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
 
             code+=genExpr(t);
             code+="STW R0, -(SP)\n\n";
-            if (k>0){
-                code+="ADQ -"+k+",SP\n\n";
-            }
+            code+="ADQ -2,SP\n\n";
         }
         code+="LDW R0, #"+t2.getText()+"_\n\n";
         code+="MPC WR\n\n";
@@ -576,24 +570,32 @@ public class CodeGenerator{
         codeBuilder.append("STW BP, -(SP)\n\n");
         int dep= 0;
         for (String i : sc.getTable().keySet()) {
-            String type=sc.getTable().get(i).get(1);
-            if (type.equals("i32")){
-                dep+= 4;
-            } else {
-                if (type.equals("bool")){
-                    dep+= 1;
+            if (!sc.getTable().get(i).get(0).equals("function") && !sc.getTable().get(i).get(0).equals("param")) {
+                String type = sc.getTable().get(i).get(1);
+                if (type.equals("i32")) {
+                    System.out.println(4 + sc.getName());
+                    dep += 4;
                 } else {
-                    if (type.startsWith("vec ")){
-                        //int a =vecCoun.get(0);
-                        //vecCoun.remove(vecCoun.get(0));
-                        //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
-                        dep+= 2;
+                    if (type.equals("bool")) {
+                        dep += 1;
+                        System.out.println(1 + sc.getName());
                     } else {
-                        dep+=2;
+                        if (type.startsWith("vec ")) {
+                            //int a =vecCoun.get(0);
+                            //vecCoun.remove(vecCoun.get(0));
+                            //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
+                            dep += 2;
+                        } else {
+                            if (!type.equals("function"))
+                                dep += 2;
+                            System.out.println(type + 2 + sc.getName());
+
+                        }
                     }
                 }
             }
         }
+        System.out.println(dep+sc.getName());
         d+=dep+2;
         codeBuilder.append("ADQ -" + dep + ", SP\n\n");
         codeBuilder.append("LDW BP, SP\n\n");
@@ -607,20 +609,22 @@ public class CodeGenerator{
 
         int dep= 0;
         for (String i : sc.getTable().keySet()) {
-            String type=sc.getTable().get(i).get(1);
-            if (type.equals("i32")){
-                dep+= 4;
-            } else {
-                if (type.equals("bool")){
-                    dep+= 1;
+            if (!sc.getTable().get(i).get(0).equals("function") && !sc.getTable().get(i).get(0).equals("param")) {
+                String type = sc.getTable().get(i).get(1);
+                if (type.equals("i32")) {
+                    dep += 4;
                 } else {
-                    if (type.startsWith("vec ")){
-                        //int a =vecCoun.get(0);
-                        //vecCoun.remove(vecCoun.get(0));
-                        //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
-                        dep+= 2;
+                    if (type.equals("bool")) {
+                        dep += 1;
                     } else {
-                        dep+=2;
+                        if (type.startsWith("vec ")) {
+                            //int a =vecCoun.get(0);
+                            //vecCoun.remove(vecCoun.get(0));
+                            //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
+                            dep += 2;
+                        } else {
+                            dep += 2;
+                        }
                     }
                 }
             }

@@ -1,7 +1,7 @@
 fn main(){
-	print!(56-96);
-    print!(2-4);
-    print!(false);
-    print!(9>6);
-    print!(6>9);
+	let mut i=01;
+	while(i<=10){
+		i=i+1;
+	}
+	print!(i);
 }

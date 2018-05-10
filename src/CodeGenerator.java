@@ -50,7 +50,7 @@ public class CodeGenerator{
         code+="TRUE string \"true\"\n\n";
         code+="FALSE string \"false\"\n\n";
         code+="print_\n\n";
-        code+="ADD SP,R0,SP\n";
+        code+="SUB SP,R0,SP\n";
         code+="STW BP,-(SP)\n";
         code+="LDW BP, SP\n";
         code+=  "    STW R0,-(SP)\n"+
@@ -105,8 +105,8 @@ public class CodeGenerator{
                 "    LDW R0,SP\n" +
                 "    TRP #WRITE_EXC\n" +
                 "    LDW R0,-(SP)\n" +
-                "    LDW SP,R13\n"+
-                "    LDW BP, (SP)\n"+
+                "    LDW SP,BP\n"+
+                "    LDW BP, (SP)+\n"+
                 "    JEA (WR)\n\n";
 
         s.write(code);
@@ -169,6 +169,9 @@ public class CodeGenerator{
             case "VEC":
                 codeBuilder.append(genVec(t));
                 break;
+            case "=":
+                codeBuilder.append(generateAffect(t));
+                break;
             default:
                 codeBuilder.append(generateOperation(t));
                 break;
@@ -183,8 +186,7 @@ public class CodeGenerator{
     private String genMain(BaseTree t) {
         return "main_ LDW SP, #STACK_ADRS\n\n" +
                 "LDQ NIL, BP\n\n" +
-                "STW BP,-(SP)\n\n" +
-                "LDW BP, SP\n\n" +
+                ChangeScope("General")+
                 generateBlock(t) +
                 "LDW SP, BP\n\n" +
                 "LDW BP, (SP)+\n\n" +
@@ -276,7 +278,7 @@ public class CodeGenerator{
 
     private String generOpBool(String jump){
         return ("MPC WR \n\n" + "ADQ 10,WR\n\n") +
-                "CMP R1, R0\n\n" +
+                "CMP R1, R0\n\n"+
                 jump + " #run-$-2\n\n" +
                 "LDW R0, #0\n\n"+
                 "LDW R5,#1\n\n";
@@ -433,7 +435,13 @@ public class CodeGenerator{
                 codeBuilder.append(generateWhile(t));
                 break;
             case "let":
-                codeBuilder.append(generateAffect(t));
+                if (t.getChild(0).getText().equals("mut"))
+                    codeBuilder.append(generateAffect((BaseTree) t.getChild(1)));
+                else
+                    codeBuilder.append(generateAffect((BaseTree) t.getChild(0)));
+                break;
+            default:
+                codeBuilder.append(genExpr((BaseTree) t));
                 break;
 
 
@@ -509,17 +517,23 @@ public class CodeGenerator{
         for (String i : sc.getTable().keySet()) {
             dep+=Integer.parseInt(sc.getTable().get(i).get(2));
         }
+        Object[] keyA = sc.getTable().keySet().toArray();
+        dep += Integer.parseInt(sc.getTable().get(keyA[keyA.length-1]).get(2));
+        System.out.println(dep);
+        codeBuilder.append("ADQ -"+(dep+4)+", SP\n\n");
         return codeBuilder.toString();
     }
 
     private String generateAffect(BaseTree t){
+        System.out.println(sc.getName());
         StringBuilder codeBuilder = new StringBuilder();
         Tree t1 = t.getChild(0);
-        Tree t2 = t.getChild(2);
+        Tree t2 = t.getChild(1);
         String expr = genExpr((BaseTree) t2);
         int deplacement = 0;
         deplacement = getDeplacement(t1.getText());
         codeBuilder.append(expr);
+        System.out.println(t1.getText()+" depl : "+deplacement);
         codeBuilder.append("STW R0, (BP)-"+deplacement+"\n\n");
         return codeBuilder.toString();
 

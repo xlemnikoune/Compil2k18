@@ -151,9 +151,22 @@ public class CodeGenerator{
     private String generateFun(BaseTree t) {
         if (t.getChild(0).getText().equals("main")){
             return genMain((BaseTree) t.getChild(1));
+        } else {
+            StringBuilder codeBuilder = new StringBuilder();
+            codeBuilder.append(ChangeScope(t.getChild(0).getText()));
+            codeBuilder.append(t.getChild(0).getText()+"_ STW BP,SP \n\n");
+            codeBuilder.append("LDW BP,SP\n\n");
+            for (BaseTree t2 : (List<BaseTree>) t.getChildren()) {
+                if (t2.getText().equals("block")) {
+                    codeBuilder.append(generateBlock((BaseTree) t2));
+                }
+            }
+            codeBuilder.append("LDW SP, BP\n\n");
+            codeBuilder.append("LDW BP, (SP)+\n\n");
+            codeBuilder.append(goBack(t.getChild(0).getText()));
+            codeBuilder.append("RTS\n\n");
+            return codeBuilder.toString();
         }
-
-        return "";
     }
 
     private String generatePrint(BaseTree t){

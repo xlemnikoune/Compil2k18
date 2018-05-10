@@ -432,6 +432,10 @@ public class CodeGenerator{
             case "while":
                 codeBuilder.append(generateWhile(t));
                 break;
+            case "let":
+                codeBuilder.append(generateAffect(t));
+                break;
+
 
         }
         return codeBuilder.toString();
@@ -487,6 +491,24 @@ public class CodeGenerator{
         codeBuilder.append(generateBlock(Block));
         codeBuilder.append("JMP #While").append(WhileCount).append("\n\n");
         codeBuilder.append("EndWhile").append(WhileCount).append("\n\n");
+        return codeBuilder.toString();
+    }
+
+    private String ChangeScope(String nom) {
+        StringBuilder codeBuilder = new StringBuilder();
+        ArrayList<Scope> scopes = sc.getScopeList();
+        for (Scope s : scopes) {
+            if (s.getName().equals(nom)) {
+                sc = s;
+                break;
+            }
+        }
+        codeBuilder.append("STW BP, -(SP)\n\n");
+        codeBuilder.append("LDW BP, SP\n\n");
+        int dep= 0;
+        for (String i : sc.getTable().keySet()) {
+            dep+=Integer.parseInt(sc.getTable().get(i).get(2));
+        }
         return codeBuilder.toString();
     }
 

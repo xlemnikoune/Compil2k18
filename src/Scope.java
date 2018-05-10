@@ -78,6 +78,15 @@ public class Scope {
         ancestor = anc;
         name = string;
     }
+    public ArrayList<Scope> getScopeList() {
+        ArrayList<Scope> liste = new ArrayList<Scope> ();
+        for (Map.Entry<String,Scope> e : secondTable.entrySet()) {
+            liste.add(e.getValue());
+        }
+        return liste;
+    }
+
+
 
     /**
      * @return Scope's offset

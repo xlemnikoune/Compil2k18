@@ -60,11 +60,13 @@ public class MiniRustCompiler {
         assert t != null;
         parseTree(t,tds,false,false);
         tds.validate();
+        System.out.println(tds);
         if (baos.toString().length() > 0){
             System.setErr(old);
             System.err.println(baos.toString());
             System.exit(6); // -> Error on semantic controls
         }
+
         //System.out.println(tds);
         System.setErr(old);
         genCode(t, tds, output);

@@ -258,9 +258,8 @@ public class CodeGenerator{
             else {
                 if (s.equals("false")) return "LDW R0,#0\n\n"+"LDW R5,#1\n\n";
             }
-
+            return "LDW R0, (BP)-"+getDeplacement(s)+"\n\n";
         }
-        return "";
     }
 
     private static boolean isInteger(String s){
@@ -470,9 +469,16 @@ public class CodeGenerator{
         return codeBuilder.toString();
     }
 
-    private int getDeplacement(String text) throws Exception {
-        ArrayList<String> l = sc.find(text);
-        return Integer.valueOf(l.get(2));
+    private int getDeplacement(String text) {
+        ArrayList<String> l = null;
+        try {
+            l = sc.find(text);
+            return Integer.valueOf(l.get(2));
+        } catch (Exception e) {
+            System.err.println("Error ancestor");
+            System.exit(-1);
+        }
+        return "Should not happen".hashCode();
     }
 
     private String generateWhile(BaseTree t) {
@@ -493,10 +499,6 @@ public class CodeGenerator{
         codeBuilder.append("LDW SP, BP\n\n"+"LDW BP, (SP)+\n\n");
         return codeBuilder.toString();
     }
-    private String generateAffect(BaseTree t) {
-
-        return "";
-    }
 
     private String ChangeScope(String nom) {
         StringBuilder codeBuilder = new StringBuilder();
@@ -515,4 +517,18 @@ public class CodeGenerator{
         }
         return codeBuilder.toString();
     }
+
+    private String generateAffect(BaseTree t){
+        StringBuilder codeBuilder = new StringBuilder();
+        Tree t1 = t.getChild(0);
+        Tree t2 = t.getChild(2);
+        String expr = genExpr((BaseTree) t2);
+        int deplacement = 0;
+        deplacement = getDeplacement(t1.getText());
+        codeBuilder.append(expr);
+        codeBuilder.append("STW R0, (BP)-"+deplacement+"\n\n");
+        return codeBuilder.toString();
+
+    }
+
 }

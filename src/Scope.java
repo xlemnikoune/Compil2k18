@@ -810,9 +810,10 @@ public class Scope {
                 return 1;
             } else {
                 if (type.startsWith("vec ")){
-                    int a =vecCoun.get(0);
-                    vecCoun.remove(vecCoun.get(0));
-                    return a*getDeplacement(type.split(" ",2)[1], vecCoun);
+                    //int a =vecCoun.get(0);
+                    //vecCoun.remove(vecCoun.get(0));
+                    //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
+                    return 2;
                 } else {
                     return 2;
                 }

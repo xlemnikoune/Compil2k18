@@ -167,12 +167,12 @@ public class TDS {
                     System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());
                     //e.printStackTrace();
                 }
-                return 2;
-            case "else":
-                temp = new Scope("else", currentScope, "else"+(ifCount-1));
-                currentScope.addScopeNotInner("else"+(ifCount-1),temp);
-                currentScope=temp;
                 return 1;
+            case "else":
+                temp = new Scope("else", currentScope.getAncestor(), "else"+(ifCount-1));
+                currentScope.getAncestor().addScopeNotInner("else"+(ifCount-1),temp);
+                currentScope=temp;
+                return 2;
             case "while":
                 temp = new Scope("while", currentScope, "while"+whileCount);
                 currentScope.addScopeNotInner("while"+whileCount,temp);
@@ -320,6 +320,7 @@ public class TDS {
                 }
                 if (todo && realToDo){
                     try {
+                        //System.out.println(currentScope);
                         currentScope.getType(t);
                     } catch (SemanticException e) {
                         System.err.println("Error : \"" + e.getMessage() + "\" at " + e.getLine() + ":" + e.getColumn());

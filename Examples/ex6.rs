@@ -1,7 +1,8 @@
 fn main(){
-	let mut i=01;
-	while(i<=10){
-		i=i+1;
+	let mut i=2;
+	if (i<4){
+		let i = 9;
+		print!(i);
 	}
 	print!(i);
 }

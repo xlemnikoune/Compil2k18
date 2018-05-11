@@ -1,8 +1,5 @@
-fn test() -> bool{
-    return true;
-}
-
 fn main(){
-    print!(test());
+	let i = 9+6;
+	print!("Le resultat est : ",i);
 }
 

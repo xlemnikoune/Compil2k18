@@ -22,6 +22,7 @@ public class CodeGenerator{
     private boolean isPrint = false;
     private boolean isR5Done = false;
     private final String[] op = {"+", "-", "*","/", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
+    private int scounter = 0;
 
     public CodeGenerator(String output, Scope currentScope) {
 
@@ -52,18 +53,22 @@ public class CodeGenerator{
         code+="JEA (WR)\n\n";
         code+="TRUE string \"true\"\n\n";
         code+="FALSE string \"false\"\n\n";
-        code+="print_\n\n";
+        code+="print_\n\n"; //Va peut-être falloir commenter ce truc obscur
         //code+="SUB SP,R0,SP\n";
         code+="STW BP,-(SP)\n";
         code+="LDW BP, SP\n";
         code+=  "    STW R0,-(SP)\n"+
                 "    LDW R6,#0\n" +
                 "    STB R6,-(SP)\n" +
-                "    LDW R6,#0x000a\n" +
-                "    STB R6,-(SP)\n" +
                 "    LDW R4, #0\n" +
                 "    CMP R5,R4\n" +
                 "    JEQ #ent-$-2\n" +
+                "    LDW R4, #2\n" +
+                "    CMP R5,R4\n" +
+                "    JEQ #str-$-2\n" +
+                "    LDW R4, #3\n" +
+                "    CMP R5, R4\n"+
+                "    JEQ #CRLF-$-2\n" +
                 "    CMP R0,R4\n" +
                 "    JEQ #false-$-2\n" +
                 "    LDW R0,#TRUE\n" +
@@ -73,6 +78,12 @@ public class CodeGenerator{
                 "    LDW R0,#FALSE\n" +
                 "    TRP #WRITE_EXC\n" +
                 "    JMP #fin-$-2\n" +
+                "    str \n"+
+                "    JMP #fin_str-$-2\n"+
+                "    CRLF \n"+
+                "    LDW R6,#0x000a\n" +
+                "    STB R6,-(SP)\n" +
+                "    JMP #fin-$-2\n"+
                 "    ent\n" +
                 "    CMP R0,R4\n" +
                 "    JNE #nonzero-$-2\n" +
@@ -104,6 +115,9 @@ public class CodeGenerator{
                 "    JNE #fin-$-2\n" +
                 "    LDW R0,#0x002d\n" +
                 "    STB R0,-(SP)\n" +
+                "    JMP #fin-$-2\n"+
+                "    fin_str \n"+
+                "    TRP#WRITE_EXC\n"+
                 "    fin\n" +
                 "    LDW R0,SP\n" +
                 "    TRP #WRITE_EXC\n" +
@@ -181,8 +195,14 @@ public class CodeGenerator{
 
     private String generatePrint(BaseTree t){
         isPrint=true;
-        isR5Done=false;
-        String s = genExpr((BaseTree) t.getChild(0)) +
+        String s = "";
+        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
+            isR5Done = false;
+            s +=  genExpr(t2) +
+                    "MPC WR \n\n" + "ADQ 6,WR\n\n" +
+                    "JMP #print_-$-2\n\n";
+        }
+        s += "LDW R5, #3\n\n" +
                 "MPC WR \n\n" + "ADQ 6,WR\n\n" +
                 "JMP #print_-$-2\n\n";
         isPrint = false;
@@ -293,6 +313,10 @@ public class CodeGenerator{
             if (s.equals("true")) return "LDW R0,#1\n\n"+genR5(1);
             else {
                 if (s.equals("false")) return "LDW R0,#0\n\n"+genR5(1);
+            }
+            if (s.matches("\"(\\S| )*\"")) {
+                scounter++;
+                return "STR"+scounter+" string "+s+"\n\n"+genR5(2)+"LDW R0, #STR"+scounter+"\n\n";
             }
 
             return "LDW R0, (BP)"+getDeplacement(s)+"\n\n"+genR5(getType(s));

@@ -616,6 +616,11 @@ public class Scope {
                 checkType(typeT,child.getLine(), child.getCharPositionInLine());
             return typeT;
         }
+        System.out.println(child.getText());
+        if (child.getText().matches("\"(\\S| )*\"")){
+            return new Type("String");
+        }
+
         if (!child.getText().equals("CALLFUN"))
             throw new SemanticException("Cannot find value `"+name+"` in this scope",child.getLine(), child.getCharPositionInLine());
         return null;

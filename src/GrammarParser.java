@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 Grammar.g 2018-05-10 23:05:17
+// $ANTLR 3.5.2 Grammar.g 2018-05-11 06:38:03
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -408,7 +408,7 @@ public class GrammarParser extends Parser {
 			stream_57.add(char_literal10);
 
 			// AST REWRITE
-			// elements: args, 53, IDF
+			// elements: 53, IDF, args
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -544,7 +544,7 @@ public class GrammarParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: IDF, type
+			// elements: type, IDF
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -557,7 +557,7 @@ public class GrammarParser extends Parser {
 			// 37:41: -> ( ^( IDF type ) )*
 			{
 				// Grammar.g:37:44: ( ^( IDF type ) )*
-				while ( stream_IDF.hasNext()||stream_type.hasNext() ) {
+				while ( stream_type.hasNext()||stream_IDF.hasNext() ) {
 					// Grammar.g:37:45: ^( IDF type )
 					{
 					CommonTree root_1 = (CommonTree)adaptor.nil();
@@ -567,8 +567,8 @@ public class GrammarParser extends Parser {
 					}
 
 				}
-				stream_IDF.reset();
 				stream_type.reset();
+				stream_IDF.reset();
 
 			}
 
@@ -727,7 +727,7 @@ public class GrammarParser extends Parser {
 
 					stream_block.add(block25.getTree());
 					// AST REWRITE
-					// elements: args, type, block, 36, 45, IDF
+					// elements: args, 36, block, type, 45, IDF
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -745,7 +745,7 @@ public class GrammarParser extends Parser {
 						root_1 = (CommonTree)adaptor.becomeRoot(stream_45.nextNode(), root_1);
 						adaptor.addChild(root_1, stream_IDF.nextNode());
 						// Grammar.g:40:68: ( ^( '->' type ) )?
-						if ( stream_type.hasNext()||stream_36.hasNext() ) {
+						if ( stream_36.hasNext()||stream_type.hasNext() ) {
 							// Grammar.g:40:68: ^( '->' type )
 							{
 							CommonTree root_2 = (CommonTree)adaptor.nil();
@@ -755,8 +755,8 @@ public class GrammarParser extends Parser {
 							}
 
 						}
-						stream_type.reset();
 						stream_36.reset();
+						stream_type.reset();
 
 						// Grammar.g:40:82: ( args )?
 						if ( stream_args.hasNext() ) {
@@ -794,7 +794,7 @@ public class GrammarParser extends Parser {
 
 					stream_block.add(block29.getTree());
 					// AST REWRITE
-					// elements: 45, MAIN, block
+					// elements: MAIN, 45, block
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1035,7 +1035,7 @@ public class GrammarParser extends Parser {
 
 					stream_type.add(type38.getTree());
 					// AST REWRITE
-					// elements: type, EPERLU
+					// elements: EPERLU, type
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1406,7 +1406,7 @@ public class GrammarParser extends Parser {
 			stream_57.add(char_literal55);
 
 			// AST REWRITE
-			// elements: IDF, bigExpr
+			// elements: bigExpr, IDF
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -1423,7 +1423,7 @@ public class GrammarParser extends Parser {
 				CommonTree root_1 = (CommonTree)adaptor.nil();
 				root_1 = (CommonTree)adaptor.becomeRoot((CommonTree)adaptor.create(NEW, "NEW"), root_1);
 				// Grammar.g:57:68: ( ^( IDF bigExpr ) )*
-				while ( stream_IDF.hasNext()||stream_bigExpr.hasNext() ) {
+				while ( stream_bigExpr.hasNext()||stream_IDF.hasNext() ) {
 					// Grammar.g:57:68: ^( IDF bigExpr )
 					{
 					CommonTree root_2 = (CommonTree)adaptor.nil();
@@ -1433,8 +1433,8 @@ public class GrammarParser extends Parser {
 					}
 
 				}
-				stream_IDF.reset();
 				stream_bigExpr.reset();
+				stream_IDF.reset();
 
 				adaptor.addChild(root_0, root_1);
 				}
@@ -1891,7 +1891,7 @@ public class GrammarParser extends Parser {
 					}
 
 					// AST REWRITE
-					// elements: 48, bigExpr, type, instruct, dotIDF, EQUAL, 50
+					// elements: type, bigExpr, instruct, EQUAL, 48, 50, dotIDF
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -1981,7 +1981,7 @@ public class GrammarParser extends Parser {
 					}
 
 					// AST REWRITE
-					// elements: expr, block, 55, instruct
+					// elements: 55, instruct, block, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2065,7 +2065,7 @@ public class GrammarParser extends Parser {
 					}
 
 					// AST REWRITE
-					// elements: expr, instruct, 52
+					// elements: 52, instruct, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2135,7 +2135,7 @@ public class GrammarParser extends Parser {
 					}
 
 					// AST REWRITE
-					// elements: block, 49, instruct
+					// elements: block, instruct, 49
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -2427,7 +2427,7 @@ public class GrammarParser extends Parser {
 			}
 
 			// AST REWRITE
-			// elements: IF, block, expr, block, 44
+			// elements: block, IF, 44, block, expr
 			// token labels: 
 			// rule labels: retval
 			// token list labels: 
@@ -4011,7 +4011,7 @@ public class GrammarParser extends Parser {
 					stream_41.add(char_literal150);
 
 					// AST REWRITE
-					// elements: expr, 54
+					// elements: 54, expr
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 
@@ -5450,7 +5450,7 @@ public class GrammarParser extends Parser {
 					stream_34.add(char_literal208);
 
 					// AST REWRITE
-					// elements: 51, expr
+					// elements: expr, 51
 					// token labels: 
 					// rule labels: retval
 					// token list labels: 

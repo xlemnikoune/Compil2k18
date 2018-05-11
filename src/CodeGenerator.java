@@ -166,7 +166,6 @@ public class CodeGenerator{
             StringBuilder codeBuilder = new StringBuilder();
             codeBuilder.append(t.getChild(0).getText()).append("_ ");
             codeBuilder.append(ChangeScope(t.getChild(0).getText()));
-            System.out.println("We're in : "+sc.getName());
             for (BaseTree t2 : (List<BaseTree>) t.getChildren()) {
                 if (t2.getText().equals("BLOCK")) {
                     codeBuilder.append(generateBlock((BaseTree) t2));
@@ -218,7 +217,6 @@ public class CodeGenerator{
         String s ="main_ LDW SP, #STACK_ADRS\n\n" +
                 "LDQ NIL,BP\n\n"+
                 ChangeScope("--/.-/../-.////");
-        System.out.println(sc.getName());
         s+=
                 generateBlock(t) +
                 goBack("--/.-/../-.////")+
@@ -318,27 +316,30 @@ public class CodeGenerator{
 
     private String genCall(BaseTree t2) {
         String code = "";
+        String v = t2.getText();
         t2 = (BaseTree) t2.getChild(0);
         System.out.println(t2.getText());
         List<BaseTree> l = (List<BaseTree>) t2.getChildren();
-        for (int i = l.size()-1;i>=0;i--){
-            BaseTree t = l.get(i);
-            code+=genExpr(t);
-            code+="STW R0, -(SP)\n\n";
-            String s = t.getText();
-            if (!isInteger(s) && !s.equals("true") && !s.equals("false")) {
-                try {
-                    if (sc.find(t.getText()).get(1).equals("i32")){
-                        code+="ADQ -2,SP\n\n";
+        if (l != null) {
+            for (int i = l.size() - 1; i >= 0; i--) {
+                BaseTree t = l.get(i);
+                code += genExpr(t);
+                code += "STW R0, -(SP)\n\n";
+                String s = t.getText();
+                if (!isInteger(s) && !s.equals("true") && !s.equals("false")) {
+                    try {
+                        if (sc.find(t.getText()).get(1).equals("i32")) {
+                            code += "ADQ -2,SP\n\n";
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }
-        code+="LDW R0, #"+t2.getText()+"_\n\n";
+        code+="LDW R0, #"+v+"_\n\n";
         code+="MPC WR\n\n";
-        code+="ADQ 8, WR\n\n";
+        code+="ADQ 6, WR\n\n";
         code+="STW WR, -(SP)\n\n";
         code+="JEA (R0)\n\n";
         return code;
@@ -523,7 +524,9 @@ public class CodeGenerator{
             case "return":
                 codeBuilder.append(genExpr((BaseTree) t.getChild(0)));
                 codeBuilder.append(goBack(sc.getName(),false));
-                codeBuilder.append("RTS\n\n");
+                codeBuilder.append("LDW WR, (SP)+\n\n");
+                codeBuilder.append("JEA (WR)\n\n");
+
                 break;
             default:
                 codeBuilder.append(genExpr((BaseTree) t));

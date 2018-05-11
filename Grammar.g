@@ -52,7 +52,7 @@ block : '{' instruct'}'-> ^(BLOCK  instruct) //Voir pour le dernier return (si e
 ;
 
 
-callFun : '(' (expr (',' expr)*)? ')' -> ^CALLFUN expr*;
+callFun : '(' (expr (',' expr)*)? ')' -> ^(CALLFUN expr*);
 
 newStruc : '{' IDF ':' bigExpr (',' IDF ':' bigExpr)* '}' -> ^(NEW ^(IDF bigExpr)*);
 

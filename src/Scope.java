@@ -584,6 +584,7 @@ public class Scope {
         if (isInAncestor(name)){
             ArrayList<String> values = getFromAncestor(name);
             if (child.getChildCount() > 0) {
+                child = child.getChild(0);
                 Scope tempscope = TDS.getFirstScope().getScope(name);
                 Set<String> param = tempscope.getTable().keySet();
                 LinkedList<String> ll = new LinkedList<>(param);
@@ -615,8 +616,9 @@ public class Scope {
                 checkType(typeT,child.getLine(), child.getCharPositionInLine());
             return typeT;
         }
-
-        throw new SemanticException("Cannot find value `"+name+"` in this scope",child.getLine(), child.getCharPositionInLine());
+        if (!child.getText().equals("CALLFUN"))
+            throw new SemanticException("Cannot find value `"+name+"` in this scope",child.getLine(), child.getCharPositionInLine());
+        return null;
     }
 
     /**

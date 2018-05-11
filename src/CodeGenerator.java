@@ -18,7 +18,9 @@ public class CodeGenerator{
     //private int scounter = 0;
     private int WhileCount = 0;
     private int ifCount = 0;
-    int d =-2;
+    private int d =-2;
+    private boolean isPrint = false;
+    private boolean isR5Done = false;
     private final String[] op = {"+", "-", "*","/", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
 
     public CodeGenerator(String output, Scope currentScope) {
@@ -115,6 +117,15 @@ public class CodeGenerator{
         s.close();
     }
 
+    private String genR5(int mode){
+        if (isPrint)
+            if (!isR5Done)
+                return "LDW R5,#"+mode+"\n\n";
+            else
+                isR5Done=true;
+        return "";
+    }
+
     void generate(CommonTree t){
         StringBuilder codeBuilder = new StringBuilder();
         if (t.getText() != null){ //Si c'est une feuille (ou un noeud nommé), on génére
@@ -155,6 +166,7 @@ public class CodeGenerator{
             StringBuilder codeBuilder = new StringBuilder();
             codeBuilder.append(t.getChild(0).getText()).append("_ ");
             codeBuilder.append(ChangeScope(t.getChild(0).getText()));
+            System.out.println("We're in : "+sc.getName());
             for (BaseTree t2 : (List<BaseTree>) t.getChildren()) {
                 if (t2.getText().equals("BLOCK")) {
                     codeBuilder.append(generateBlock((BaseTree) t2));
@@ -169,9 +181,13 @@ public class CodeGenerator{
     }
 
     private String generatePrint(BaseTree t){
-        return genExpr((BaseTree) t.getChild(0)) +
+        isPrint=true;
+        isR5Done=false;
+        String s = genExpr((BaseTree) t.getChild(0)) +
                 "MPC WR \n\n" + "ADQ 6,WR\n\n" +
                 "JMP #print_-$-2\n\n";
+        isPrint = false;
+        return s;
     }
 
     private String genExpr(BaseTree t) {
@@ -198,15 +214,19 @@ public class CodeGenerator{
     }
 
     private String genMain(BaseTree t) {
-        return "main_ LDW SP, #STACK_ADRS\n\n" +
+
+        String s ="main_ LDW SP, #STACK_ADRS\n\n" +
                 "LDQ NIL,BP\n\n"+
-                ChangeScope("General")+
+                ChangeScope("--/.-/../-.////");
+        System.out.println(sc.getName());
+        s+=
                 generateBlock(t) +
-                goBack("General")+
+                goBack("--/.-/../-.////")+
                 "LDW WR, #EXIT_EXC\n\n" +
                 "TRP WR\n\n" +
                 "LDW WR, #main_\n\n" +
                 "JEA (WR)\n\n";
+        return s;
     }
 
     private String generateBlock (BaseTree t) {
@@ -270,33 +290,51 @@ public class CodeGenerator{
         }
         String s = t2.getText();
         if (isInteger(s)){
-            return "LDW R0, #"+Integer.parseInt(s)+"\n\n"+"LDW R5,#0\n\n";
+            return "LDW R0, #"+Integer.parseInt(s)+"\n\n"+genR5(0);
         } else {
-            if (s.equals("true")) return "LDW R0,#1\n\n"+"LDW R5,#1\n\n";
+            if (s.equals("true")) return "LDW R0,#1\n\n"+genR5(1);
             else {
-                if (s.equals("false")) return "LDW R0,#0\n\n"+"LDW R5,#1\n\n";
+                if (s.equals("false")) return "LDW R0,#0\n\n"+genR5(1);
             }
-            return "LDW R0, (BP)"+getDeplacement(s)+"\n\n";
+
+            return "LDW R0, (BP)"+getDeplacement(s)+"\n\n"+genR5(getType(s));
         }
+    }
+
+    private int getType(String s) {
+        try {
+            String t = sc.find(s).get(1);
+            switch (t){
+                case "i32":
+                    return 0;
+                case "bool":
+                    return 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     private String genCall(BaseTree t2) {
         String code = "";
-        for (BaseTree t : (List<BaseTree>)t2.getChildren()){
-            /*int k =0;
-            if (!isInteger(t.getText())) {
+        t2 = (BaseTree) t2.getChild(0);
+        System.out.println(t2.getText());
+        List<BaseTree> l = (List<BaseTree>) t2.getChildren();
+        for (int i = l.size()-1;i>=0;i--){
+            BaseTree t = l.get(i);
+            code+=genExpr(t);
+            code+="STW R0, -(SP)\n\n";
+            String s = t.getText();
+            if (!isInteger(s) && !s.equals("true") && !s.equals("false")) {
                 try {
-                    ArrayList<String> p = sc.find(t.getText());
-                    Integer i = Integer.valueOf(p.get(2));
-                    k = Math.max(0, i - 2);
+                    if (sc.find(t.getText()).get(1).equals("i32")){
+                        code+="ADQ -2,SP\n\n";
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }*/
-
-            code+=genExpr(t);
-            code+="STW R0, -(SP)\n\n";
-            code+="ADQ -2,SP\n\n";
+            }
         }
         code+="LDW R0, #"+t2.getText()+"_\n\n";
         code+="MPC WR\n\n";
@@ -323,7 +361,7 @@ public class CodeGenerator{
                 "CMP R1, R0\n\n"+
                 jump + " #run-$-2\n\n" +
                 "LDW R0, #0\n\n"+
-                "LDW R5,#1\n\n";
+                genR5(1);
     }
 
 // pour le moment toutes les comparaisons sont les mêmes, mais il faut faire des jumps à la fin donc ça sera plus les mêmes :)
@@ -394,7 +432,7 @@ public class CodeGenerator{
         return generateOperation(leftSide) +
                 "STW R0, -(SP)\n\n" +
                 generateOperation(rightSide) +
-                "LDW R1, (SP)+\n\n" + "ADD R1, R0, R0\n\n"+"LDW R5,#0\n\n";
+                "LDW R1, (SP)+\n\n" + "ADD R1, R0, R0\n\n"+genR5(0);
     }
 
     private String generateSubstraction(BaseTree t2){
@@ -403,7 +441,7 @@ public class CodeGenerator{
         return generateOperation(left) +
                 "STW R0, -(SP)\n\n" +
                 generateOperation(right) +
-                "LDW R1, (SP)+\n\n" + "SUB R1, R0, R0\n\n"+"LDW R5,#0\n\n";
+                "LDW R1, (SP)+\n\n" + "SUB R1, R0, R0\n\n"+genR5(0);
     }
 
     private String generateMultiplication(BaseTree t2){
@@ -412,7 +450,7 @@ public class CodeGenerator{
         return generateOperation(left) +
                 "STW R0, -(SP)\n\n" +
                 generateOperation(right) +
-                "LDW R1, (SP)+\n\n" + "MUL R1, R0, R0\n\n"+"LDW R5,#0\n\n";
+                "LDW R1, (SP)+\n\n" + "MUL R1, R0, R0\n\n"+genR5(0);
     }
 
     private String generateDivision(BaseTree t2){
@@ -421,13 +459,13 @@ public class CodeGenerator{
         return generateOperation(left) +
                 "STW R0, -(SP)\n\n" +
                 generateOperation(right) +
-                "LDW R1, (SP)+\n\n" + "DIV R1,R0,R0\n\n"+"LDW R5,#0\n\n";
+                "LDW R1, (SP)+\n\n" + "DIV R1,R0,R0\n\n"+genR5(0);
     }
 
     private String generateNo(BaseTree t2){
         BaseTree Value = (BaseTree) t2.getChild(0);
         return generateOperation(Value) + //Calcul de op1
-                "NOT R0,R0\n\n";
+                "NOT R0,R0\n\n"+genR5(1);
     }
 
     private String generateAddress(BaseTree t2){
@@ -437,7 +475,7 @@ public class CodeGenerator{
     private String generateUniSub(BaseTree t2){
         BaseTree Value = (BaseTree) t2.getChild(0);
         return generateOperation(Value) + //Calcul de op1
-                "NEG R0,R0\n\n"+"LDW R5,#1\n\n";
+                "NEG R0,R0\n\n"+genR5(0);
     }
 
     private String generateUniStar(BaseTree t2){
@@ -451,7 +489,7 @@ public class CodeGenerator{
                 "STW R0, -(SP)\n\n" +
                 generateOperation(right) +
                 "LDW R1, (SP)+\n\n" +
-                "AND R0,R1,R0 \n\n"+"LDW R5,#1\n\n";
+                "AND R0,R1,R0 \n\n"+genR5(1);
     }
 
     private String generateOrBool(BaseTree t2){
@@ -461,7 +499,7 @@ public class CodeGenerator{
                 "STW R0, -(SP)\n\n" +
                 generateOperation(right) +
                 "LDW R1, (SP)+\n\n" +
-                "OR R0,R1,R0\n\n"+"LDW R5,#1\n\n";
+                "OR R0,R1,R0\n\n"+genR5(1);
     }
 
     private String generateInstr(BaseTree t){
@@ -484,14 +522,55 @@ public class CodeGenerator{
                 break;
             case "return":
                 codeBuilder.append(genExpr((BaseTree) t.getChild(0)));
-                codeBuilder.append(goBack(sc.getName()));
+                codeBuilder.append(goBack(sc.getName(),false));
                 codeBuilder.append("RTS\n\n");
+                break;
             default:
                 codeBuilder.append(genExpr((BaseTree) t));
                 break;
 
 
         }
+        return codeBuilder.toString();
+    }
+
+    private String goBack(String name, boolean b) {
+        boolean b2 = false;
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append("//Quidditch "+name+"\n\n");
+
+        int dep= 0;
+        for (String i : sc.getTable().keySet()) {
+            if (!sc.getTable().get(i).get(0).equals("function") && !sc.getTable().get(i).get(0).equals("param")) {
+                String type = sc.getTable().get(i).get(1);
+                if (type.equals("i32")) {
+                    dep += 4;
+                } else {
+                    if (type.equals("bool")) {
+                        dep += 2;
+                    } else {
+                        if (type.startsWith("vec ")) {
+                            //int a =vecCoun.get(0);
+                            //vecCoun.remove(vecCoun.get(0));
+                            //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
+                            dep += 2;
+                        } else {
+                            dep += 2;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (b) {
+            d -= dep + 2;
+            sc = sc.getAncestor();
+        }
+        codeBuilder.append("LDW SP,BP\n\n");
+        codeBuilder.append("ADQ " + dep + ", SP\n\n");
+
+        codeBuilder.append("LDW BP,(SP)+\n\n");
+        codeBuilder.append("//Not in aymore :(\n");
         return codeBuilder.toString();
     }
 
@@ -527,6 +606,27 @@ public class CodeGenerator{
         ArrayList<String> l = null;
         try {
             l = sc.find(text);
+            if (l.get(0).equals("param")) {
+                String type = l.get(1);
+                int dep = 2+Integer.valueOf(l.get(2));
+                if (type.equals("i32")){
+                    dep+=4;
+                } else {
+                    if (type.equals("bool")){
+                        dep+=2;
+                    } else {
+                        if (type.startsWith("vec ")){
+                            //int a =vecCoun.get(0);
+                            //vecCoun.remove(vecCoun.get(0));
+                            //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
+                            dep+=2;
+                        } else {
+                            dep+=2;
+                        }
+                    }
+                }
+                return dep;
+            }
             return Integer.valueOf(l.get(2))+d;
         } catch (Exception e) {
             System.out.println(text);
@@ -556,16 +656,28 @@ public class CodeGenerator{
     }
 
     private String ChangeScope(String nom) {
+        boolean b = false;
+        if (nom.equals("--/.-/../-.////")){
+             b = true;
+            nom = "General";
+        }
+        ArrayList<Scope> scopes = sc.getScopeList();
+
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("//Entering "+nom+"\n\n");
-        ArrayList<Scope> scopes = sc.getScopeList();
-        for (Scope s : scopes) {
+        for (Scope s : scopes) { ;
             if (s.getName().equals(nom)) {
                 sc = s;
                 break;
             }
         }
-
+        if (b){
+            for (Scope s : sc.getScopeList()){
+                if (s.getName().equals("main")){
+                    sc = s;
+                }
+            }
+        }
 
         codeBuilder.append("STW BP, -(SP)\n\n");
         int dep= 0;
@@ -573,12 +685,10 @@ public class CodeGenerator{
             if (!sc.getTable().get(i).get(0).equals("function") && !sc.getTable().get(i).get(0).equals("param")) {
                 String type = sc.getTable().get(i).get(1);
                 if (type.equals("i32")) {
-                    System.out.println(4 + sc.getName());
                     dep += 4;
                 } else {
                     if (type.equals("bool")) {
-                        dep += 1;
-                        System.out.println(1 + sc.getName());
+                        dep += 2;
                     } else {
                         if (type.startsWith("vec ")) {
                             //int a =vecCoun.get(0);
@@ -588,14 +698,11 @@ public class CodeGenerator{
                         } else {
                             if (!type.equals("function"))
                                 dep += 2;
-                            System.out.println(type + 2 + sc.getName());
-
                         }
                     }
                 }
             }
         }
-        System.out.println(dep+sc.getName());
         d+=dep+2;
         codeBuilder.append("ADQ -" + dep + ", SP\n\n");
         codeBuilder.append("LDW BP, SP\n\n");
@@ -604,39 +711,7 @@ public class CodeGenerator{
     }
 
     private String goBack(String nom) {
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("//Quidditch "+nom+"\n\n");
-
-        int dep= 0;
-        for (String i : sc.getTable().keySet()) {
-            if (!sc.getTable().get(i).get(0).equals("function") && !sc.getTable().get(i).get(0).equals("param")) {
-                String type = sc.getTable().get(i).get(1);
-                if (type.equals("i32")) {
-                    dep += 4;
-                } else {
-                    if (type.equals("bool")) {
-                        dep += 1;
-                    } else {
-                        if (type.startsWith("vec ")) {
-                            //int a =vecCoun.get(0);
-                            //vecCoun.remove(vecCoun.get(0));
-                            //return a*getDeplacement(type.split(" ",2)[1], vecCoun);
-                            dep += 2;
-                        } else {
-                            dep += 2;
-                        }
-                    }
-                }
-            }
-        }
-        d-=dep+2;
-        sc=sc.getAncestor();
-        codeBuilder.append("LDW SP,BP\n\n");
-        codeBuilder.append("ADQ " + dep + ", SP\n\n");
-
-        codeBuilder.append("LDW BP,(SP)+\n\n");
-        codeBuilder.append("//Not in aymore :(\n");
-        return codeBuilder.toString();
+        return goBack(nom,true);
     }
 
     private String generateAffect(BaseTree t){

@@ -807,7 +807,7 @@ public class Scope {
             return 4;
         } else {
             if (type.equals("bool")){
-                return 1;
+                return 2;
             } else {
                 if (type.startsWith("vec ")){
                     //int a =vecCoun.get(0);

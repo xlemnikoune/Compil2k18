@@ -112,6 +112,7 @@ public class CodeGenerator{
                 "    JEA (WR)\n\n";
 
         s.write(code);
+        System.out.println(code);
         s.close();
     }
 

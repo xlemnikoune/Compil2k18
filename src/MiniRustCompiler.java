@@ -24,6 +24,8 @@ public class MiniRustCompiler {
      * Exit Code : 6 -&gt; Error on semantic controls
      * @param args args[0] : file path
      * @throws IOException If error on opening FileStream
+     * @see #parseTree(CommonTree, TDS, boolean, boolean)
+     * @see #genCode(CommonTree, TDS, String)
      */
     public static void main(String[] args) throws Exception {
         CharStream input;
@@ -72,6 +74,16 @@ public class MiniRustCompiler {
         System.exit(0);
     }
 
+
+    /**
+     * Generate the PIUP code corresponding to AST and associated Symbol Table
+     * @param t AST to parse
+     * @param tds Associated Symbol Table
+     * @param output Path to save code output
+     * @throws Exception
+     * @see CodeGenerator#generate(CommonTree)
+     * @see CodeGenerator#save();
+     */
     private static void genCode(CommonTree t, TDS tds, String output) throws Exception {
         CodeGenerator code = new CodeGenerator(output, tds.currentScope);
         code.generate(t);

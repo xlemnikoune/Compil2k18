@@ -1,7 +1,11 @@
-fn test(i:i32){
-	print!(42);
+     fn test(){
+print!("Hey",5);
 }
 
 fn main(){
-	test(62);
+	let i = 9+6;
+	print !(9);
+	let i = 9+6;
+	print !("Le resultat est : ",i);
 }
+

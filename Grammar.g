@@ -110,7 +110,7 @@ atom : INT
 | '('expr')'-> expr; 
 
 expr : 'vec' '!' '[' expr(',' expr)* ']' -> ^('vec' expr*)
-| 'print' '!' '(' exS  (',' exS)* ')' -> ^('print' exS*)
+|'print' '!' '(' exS  (',' exS)* ')' -> ^('print' exS*)
 |	binExpr1;
 
 exS : expr
@@ -194,6 +194,7 @@ IDF 			: ('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
 INT 			: '0'..'9'+
 ;
 
+WS  			: ( ' ' | ' ' | '\t' | '\r' | '\n' ) {$channel=HIDDEN;};
 
 
 STRING	
@@ -204,4 +205,3 @@ COMMENT			: '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;};
 
 ATTRIBUTE : '#' ( options {greedy=false;} : .)* ('\n'|'\t') {$channel=HIDDEN;}; 
 
-WS  			: ( ' ' | '\t' | '\r' | '\n' ) {$channel=HIDDEN;};

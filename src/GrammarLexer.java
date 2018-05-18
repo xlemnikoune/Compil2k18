@@ -1,4 +1,4 @@
-// $ANTLR 3.5.2 Grammar.g 2018-05-11 07:27:23
+// $ANTLR 3.5.2 Grammar.g 2018-05-11 21:52:20
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -1107,16 +1107,44 @@ public class GrammarLexer extends Lexer {
 	}
 	// $ANTLR end "INT"
 
+	// $ANTLR start "WS"
+	public final void mWS() throws RecognitionException {
+		try {
+			int _type = WS;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// Grammar.g:197:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// Grammar.g:197:10: ( ' ' | '\\t' | '\\r' | '\\n' )
+			{
+			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
+				input.consume();
+			}
+			else {
+				MismatchedSetException mse = new MismatchedSetException(null,input);
+				recover(mse);
+				throw mse;
+			}
+			_channel=HIDDEN;
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "WS"
+
 	// $ANTLR start "STRING"
 	public final void mSTRING() throws RecognitionException {
 		try {
 			int _type = STRING;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:200:3: ( '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"' )
-			// Grammar.g:200:3: '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"'
+			// Grammar.g:201:3: ( '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"' )
+			// Grammar.g:201:3: '\"' (~ ( '\\r' | '\\n' | '\"' ) )* '\"'
 			{
 			match('\"'); 
-			// Grammar.g:200:7: (~ ( '\\r' | '\\n' | '\"' ) )*
+			// Grammar.g:201:7: (~ ( '\\r' | '\\n' | '\"' ) )*
 			loop5:
 			while (true) {
 				int alt5=2;
@@ -1162,12 +1190,12 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = COMMENT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:203:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
-			// Grammar.g:203:13: '/*' ( options {greedy=false; } : . )* '*/'
+			// Grammar.g:204:11: ( '/*' ( options {greedy=false; } : . )* '*/' )
+			// Grammar.g:204:13: '/*' ( options {greedy=false; } : . )* '*/'
 			{
 			match("/*"); 
 
-			// Grammar.g:203:18: ( options {greedy=false; } : . )*
+			// Grammar.g:204:18: ( options {greedy=false; } : . )*
 			loop6:
 			while (true) {
 				int alt6=2;
@@ -1188,7 +1216,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt6) {
 				case 1 :
-					// Grammar.g:203:46: .
+					// Grammar.g:204:46: .
 					{
 					matchAny(); 
 					}
@@ -1218,11 +1246,11 @@ public class GrammarLexer extends Lexer {
 		try {
 			int _type = ATTRIBUTE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:205:11: ( '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' ) )
-			// Grammar.g:205:13: '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' )
+			// Grammar.g:206:11: ( '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' ) )
+			// Grammar.g:206:13: '#' ( options {greedy=false; } : . )* ( '\\n' | '\\t' )
 			{
 			match('#'); 
-			// Grammar.g:205:17: ( options {greedy=false; } : . )*
+			// Grammar.g:206:17: ( options {greedy=false; } : . )*
 			loop7:
 			while (true) {
 				int alt7=2;
@@ -1236,7 +1264,7 @@ public class GrammarLexer extends Lexer {
 
 				switch (alt7) {
 				case 1 :
-					// Grammar.g:205:45: .
+					// Grammar.g:206:45: .
 					{
 					matchAny(); 
 					}
@@ -1267,37 +1295,9 @@ public class GrammarLexer extends Lexer {
 	}
 	// $ANTLR end "ATTRIBUTE"
 
-	// $ANTLR start "WS"
-	public final void mWS() throws RecognitionException {
-		try {
-			int _type = WS;
-			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// Grammar.g:207:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// Grammar.g:207:10: ( ' ' | '\\t' | '\\r' | '\\n' )
-			{
-			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
-				input.consume();
-			}
-			else {
-				MismatchedSetException mse = new MismatchedSetException(null,input);
-				recover(mse);
-				throw mse;
-			}
-			_channel=HIDDEN;
-			}
-
-			state.type = _type;
-			state.channel = _channel;
-		}
-		finally {
-			// do for sure before leaving
-		}
-	}
-	// $ANTLR end "WS"
-
 	@Override
 	public void mTokens() throws RecognitionException {
-		// Grammar.g:1:8: ( T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS )
+		// Grammar.g:1:8: ( T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | WS | STRING | COMMENT | ATTRIBUTE )
 		int alt8=47;
 		alt8 = dfa8.predict(input);
 		switch (alt8) {
@@ -1603,30 +1603,30 @@ public class GrammarLexer extends Lexer {
 				}
 				break;
 			case 44 :
-				// Grammar.g:1:258: STRING
+				// Grammar.g:1:258: WS
+				{
+				mWS(); 
+
+				}
+				break;
+			case 45 :
+				// Grammar.g:1:261: STRING
 				{
 				mSTRING(); 
 
 				}
 				break;
-			case 45 :
-				// Grammar.g:1:265: COMMENT
+			case 46 :
+				// Grammar.g:1:268: COMMENT
 				{
 				mCOMMENT(); 
 
 				}
 				break;
-			case 46 :
-				// Grammar.g:1:273: ATTRIBUTE
+			case 47 :
+				// Grammar.g:1:276: ATTRIBUTE
 				{
 				mATTRIBUTE(); 
-
-				}
-				break;
-			case 47 :
-				// Grammar.g:1:283: WS
-				{
-				mWS(); 
 
 				}
 				break;
@@ -1637,7 +1637,7 @@ public class GrammarLexer extends Lexer {
 
 	protected DFA8 dfa8 = new DFA8(this);
 	static final String DFA8_eotS =
-		"\1\uffff\1\46\3\uffff\1\51\5\uffff\13\42\2\uffff\1\73\1\uffff\1\75\1\76"+
+		"\1\uffff\1\44\3\uffff\1\51\5\uffff\13\42\2\uffff\1\73\1\uffff\1\75\1\76"+
 		"\1\77\1\100\2\uffff\1\102\1\42\10\uffff\3\42\1\107\2\42\1\112\11\42\11"+
 		"\uffff\4\42\1\uffff\1\42\1\132\1\uffff\1\133\1\134\1\42\1\136\4\42\1\143"+
 		"\2\42\1\146\1\42\1\150\1\42\3\uffff\1\152\1\uffff\1\153\3\42\1\uffff\1"+
@@ -1665,15 +1665,15 @@ public class GrammarLexer extends Lexer {
 		"\1\156\1\164\1\172\3\uffff\2\172\3\uffff";
 	static final String DFA8_acceptS =
 		"\2\uffff\1\2\1\3\1\4\1\uffff\1\6\1\7\1\10\1\11\1\12\13\uffff\1\31\1\32"+
-		"\1\uffff\1\34\4\uffff\1\41\1\42\2\uffff\1\52\1\53\1\54\1\56\1\57\1\1\1"+
-		"\5\1\47\20\uffff\1\40\1\33\1\35\1\45\1\36\1\37\1\44\1\55\1\43\4\uffff"+
+		"\1\uffff\1\34\4\uffff\1\41\1\42\2\uffff\1\52\1\53\1\54\1\55\1\57\1\1\1"+
+		"\5\1\47\20\uffff\1\40\1\33\1\35\1\45\1\36\1\37\1\44\1\56\1\43\4\uffff"+
 		"\1\16\2\uffff\1\46\17\uffff\1\17\1\20\1\21\1\uffff\1\23\4\uffff\1\27\2"+
 		"\uffff\1\13\1\uffff\1\15\1\uffff\1\22\1\50\4\uffff\1\51\1\14\1\24\2\uffff"+
 		"\1\30\1\25\1\26";
 	static final String DFA8_specialS =
 		"\170\uffff}>";
 	static final String[] DFA8_transitionS = {
-			"\2\46\2\uffff\1\46\22\uffff\1\1\1\35\1\44\1\45\2\uffff\1\32\1\uffff\1"+
+			"\2\44\2\uffff\1\44\22\uffff\1\1\1\35\1\45\1\46\2\uffff\1\32\1\uffff\1"+
 			"\2\1\3\1\37\1\36\1\4\1\5\1\6\1\40\12\43\1\7\1\10\1\33\1\30\1\34\34\uffff"+
 			"\1\11\1\uffff\1\12\3\uffff\1\42\1\13\2\42\1\14\1\15\2\42\1\16\2\42\1"+
 			"\17\1\20\2\42\1\21\1\42\1\22\1\23\1\41\1\42\1\24\1\25\3\42\1\26\1\31"+
@@ -1830,7 +1830,7 @@ public class GrammarLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | STRING | COMMENT | ATTRIBUTE | WS );";
+			return "1:1: Tokens : ( T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | EQUAL | ORBOOL | ANDBOOL | PREV | NEXT | OPBOOLEQ | ADD | STAR | DIV | UNAIRE | EPERLU | IF | SUB | MAIN | BOOL | IDF | INT | WS | STRING | COMMENT | ATTRIBUTE );";
 		}
 	}
 

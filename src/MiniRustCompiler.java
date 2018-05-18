@@ -62,7 +62,7 @@ public class MiniRustCompiler {
         assert t != null;
         parseTree(t,tds,false,false);
         tds.validate();
-        System.out.println(tds);
+        //System.out.println(tds);
         if (baos.toString().length() > 0){
             System.setErr(old);
             System.err.println(baos.toString());

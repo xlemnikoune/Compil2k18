@@ -706,7 +706,6 @@ public class CodeGenerator{
     private String goBack(String name, boolean b) {
         boolean b2 = false;
         StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("//Quidditch "+name+"\n\n");
 
         int dep= 0;
         for (String i : sc.getTable().keySet()) {
@@ -739,7 +738,6 @@ public class CodeGenerator{
         codeBuilder.append("ADQ " + dep + ", SP\n\n");
 
         codeBuilder.append("LDW BP,(SP)+\n\n");
-        codeBuilder.append("//Not in aymore :(\n");
         return codeBuilder.toString();
     }
 
@@ -833,7 +831,6 @@ public class CodeGenerator{
         ArrayList<Scope> scopes = sc.getScopeList();
 
         StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("//Entering "+nom+"\n\n");
         for (Scope s : scopes) { ;
             if (s.getName().equals(nom)) {
                 sc = s;
@@ -875,7 +872,6 @@ public class CodeGenerator{
         d+=dep+2;
         codeBuilder.append("ADQ -" + dep + ", SP\n\n");
         codeBuilder.append("LDW BP, SP\n\n");
-        codeBuilder.append("//We're in !\n");
         return codeBuilder.toString();
     }
 

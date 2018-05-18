@@ -17,6 +17,7 @@ tokens {
 	ANOBLOCK;
 	RES;
 }
+
 @members{
 boolean mainFound = false;
 }
@@ -145,7 +146,7 @@ bigunExpr : (UNAIRE^|EPERLU^)? bigdotExpr;
 
 bigExpr 
 :	'vec' '!' '[' expr (',' expr)*']' -> ^('vec' expr*)
-|' print' '!' '(' exS (',' exS)* ')' -> ^('print' exS*)
+|   'print' '!' '(' exS (',' exS)* ')' -> ^('print' exS*)
 |	bigbinExpr1;
 
 bigatom : INT
@@ -194,8 +195,7 @@ IDF 			: ('a'..'z') ('a'..'z'|'A'..'Z'|'0'..'9'|'_')*
 INT 			: '0'..'9'+
 ;
 
-WS  			: ( ' ' | ' ' | '\t' | '\r' | '\n' ) {$channel=HIDDEN;};
-
+WS  			: ( ' '| '\t' | '\r' | '\n' ) {$channel=HIDDEN;};
 
 STRING	
 : '"' ~('\r' | '\n' | '"')* '"'

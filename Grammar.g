@@ -67,7 +67,6 @@ instruct :
 | 'let' 'mut'? dotIDF (':' type)? '=' bigExpr ';' instruct?-> ^('let' 'mut'? (type)? ^('=' dotIDF bigExpr))  instruct?
 | 'while' expr block instruct?-> ^('while' expr block) instruct?
 | 'return' expr? ';' instruct?-> ^('return' expr?) instruct?
-| 'loop' block instruct?-> ^('loop' block) instruct?
 | 'break' ';' instruct?-> 'break' instruct?
 | ifExpr instruct?
 ;

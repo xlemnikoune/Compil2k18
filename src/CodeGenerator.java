@@ -75,7 +75,7 @@ public class CodeGenerator{
     /**
      * Array of all possible operations
      */
-    private final String[] op = {"+", "-", "*","/", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||",};
+    private final String[] op = {"+", "-", "*","/", ">", "<", "<=", "==", ">=", "!=","UNISUB","UNISTAR","!","&","&&","||","["};
 
     /**
      * Count static Strings defined (for printing)
@@ -102,6 +102,7 @@ public class CodeGenerator{
         code += "SP EQU R15\n\n";
         code += "WR EQU R14\n\n";
         code += "BP EQU R13\n\n";
+        code += "HP EQU R12\n\n";
         code += "ORG LOAD_ADRS\n\n";
         code += "start main_\n\n";
     }
@@ -214,7 +215,6 @@ public class CodeGenerator{
                 "    JEA (WR)\n\n";
 
         s.write(code);
-        System.out.println(code);
         s.close();
     }
 
@@ -352,8 +352,8 @@ public class CodeGenerator{
             case "input":
                 codeBuilder.append(generateInput((t)));
                 break;
-            case "VEC":
-                codeBuilder.append(genVec(t));
+            case "vec":
+                codeBuilder.append(generateVec1(t));
                 break;
             case "=":
                 codeBuilder.append(generateAffect(t));
@@ -385,7 +385,8 @@ public class CodeGenerator{
      * @return Assembly code
      */
     private String genMain(BaseTree t) {
-        String s ="main_ LDW SP, #STACK_ADRS\n\n" +      //Additive bit of code
+        String s ="main_ LDW SP, #STACK_ADRS\n\n" +
+                "LDW HP, #STACK_ADRS\n\n"+//Additive bit of code
                 "LDQ NIL,BP\n\n"+
                 ChangeScope("--/.-/../-.////");     //"Main" in morse, no functions should be called like that, right ?
         s+=
@@ -427,39 +428,47 @@ public class CodeGenerator{
      * @return ATM, ""
      */
     private String generateVec1(BaseTree t) {
-        int a = getDeplacement(t.getText());
+        //int a = getDeplacement(t.getText());
         StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("LDW R12, -(SP)\n\n");
+        codeBuilder.append("STW HP, -(SP)\n\n");
 
         for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
             codeBuilder.append(generateValue(t2));
-            codeBuilder.append("LDW R0, (R12)\n\n");
-            codeBuilder.append("ADQ R12, #"+String.valueOf(getDeplacement(t2.getText()))+"\n\n");
+            codeBuilder.append("STW R0, (HP)\n\n");
+            codeBuilder.append("ADQ 2,HP\n\n"); //TODO À modifier, oon a déjà le type du tableau
         }
-        return "";
+        codeBuilder.append("LDW R0, (SP)+\n\nTRP R0\n\n");
+        return codeBuilder.toString();
 
     }
+
     private String generateVec2(BaseTree t) {
         int a = getDeplacement(t.getText());
         StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("LDW R12, (R12)\n\n");
+        codeBuilder.append("STW HP, (HP)\n\n");
 
         for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
             codeBuilder.append(generateValue(t2));
-            codeBuilder.append("LDW R0, (R12)\n\n");
-            codeBuilder.append("ADQ R12, #"+String.valueOf(getDeplacement(t2.getText()))+"\n\n");
+            codeBuilder.append("LDW R0, (HP)\n\n");
+            codeBuilder.append("ADQ HP, #4\n\n");
         }
         return "";
 
     }
-    private String callVec(String name, int indice) {
-        StringBuilder codeBuilder = new StringBuilder();
-        return "";
+    private String callVec(BaseTree t) {
+        String s = "";
+        BaseTree t1 = (BaseTree) t.getChild(0);
+        BaseTree t2 = (BaseTree) t.getChild(1);
+        int d = getDeplacement(t1.getText());
+        int index = Integer.parseInt(t2.getText());
+        s+="LDW R0, (BP)"+d+"\n\n"+
+                "LDW R0,(R0)"+index*2+"\n\n";
+        return s;
     }
 
 
     /**
-     * Genereate code corresponding to an operation node
+     * Generate code corresponding to an operation node
      * @param t2 Corresponding node
      * @return Assembly code
      */
@@ -500,6 +509,8 @@ public class CodeGenerator{
                     return generateUniSub(t2);
                 case "UNISTAR":
                     return generateUniStar(t2);
+                case "[":
+                    return callVec(t2);
                 default:
                     System.err.println("Opération non gérée !");
             }
@@ -552,7 +563,6 @@ public class CodeGenerator{
         String code = "";
         String v = t2.getText();
         t2 = (BaseTree) t2.getChild(0);
-        System.out.println(t2.getText());
         List<BaseTree> l = (List<BaseTree>) t2.getChildren();
         if (l != null) {
             for (int i = l.size() - 1; i >= 0; i--) {
@@ -742,13 +752,11 @@ public class CodeGenerator{
 
     private String generateInstr(BaseTree t){
         StringBuilder codeBuilder = new StringBuilder();
-        System.out.println(t.getText());
         switch (t.getText()){
             case "print":
                 codeBuilder.append(generatePrint(t));
                 break;
             case "input":
-                System.out.println(generateInput(t));
                 codeBuilder.append(generateInput(t));
                 break;
             case "if":
@@ -873,7 +881,6 @@ public class CodeGenerator{
             return Integer.valueOf(l.get(2))+d;
         } catch (Exception e) {
             System.out.println(text);
-            System.out.println(sc.getName());
             System.err.println("Error ancestor");
             System.exit(-1);
         }

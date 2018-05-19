@@ -232,7 +232,6 @@ public class Scope {
             /////////
 
             int deplacement = this.deplacement;
-            System.out.println(type);
             this.deplacement += getDeplacement(type.getName(), (ArrayList<Integer>) veCount.clone());
 
 

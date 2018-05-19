@@ -95,6 +95,7 @@ public class CodeGenerator{
         code = "";
         code += "EXIT_EXC EQU 64\n\n";
         code += "WRITE_EXC EQU 66\n\n";
+        code += "READ_EXC EQU 65\n\n";
         code += "STACK_ADRS EQU 0X1000\n\n";
         code += "LOAD_ADRS EQU 0XF000\n\n";
         code += "NIL EQU 0\n\n";
@@ -195,6 +196,22 @@ public class CodeGenerator{
                 "    LDW SP,BP\n"+
                 "    LDW BP, (SP)+\n"+
                 "    JEA (WR)\n\n";         //Go back to the code
+        code+="input_\n\n";                 //Subrouting for printing
+        code+=  "    STW BP,-(SP)\n";
+        code+=  "    LDW BP, SP\n"+
+                "    LDW R0, #0x0000\n"+
+                "    TRP #WRITE_EXC\n"+
+                "    TRP #READ_EXC\n" +
+                "    LDW R2, #0x0000\n"+
+                "    LDW R0, (R2)\n" +
+                "    LDW R1, #0x3000\n" +
+                "    SUB R0,R1,R0\n" +
+                "    LDW R1, #256\n" +
+                "    DIV R0,R1,R1\n" +
+                "    LDW R0,R1\n"+
+                "    LDW SP,BP\n"+
+                "    LDW BP, (SP)+\n"+
+                "    JEA (WR)\n\n";
 
         s.write(code);
         s.close();
@@ -305,6 +322,17 @@ public class CodeGenerator{
         return s;
     }
 
+    private String generateInput(BaseTree t){
+        String s = "";
+        if (t.getChildCount()>0){
+            s+=generatePrint(t);
+        }
+        s += "LDW R5, #3\n\n" + // Adding automatically a \n at the end of the string (artificially)
+                "MPC WR \n\n" + "ADQ 6,WR\n\n" +
+                "JMP #input_-$-2\n\n";
+        return s;
+    }
+
     /**
      * Generate assembly code for a node corresponding to an expression
      * @param t Corresponding node
@@ -319,6 +347,9 @@ public class CodeGenerator{
         switch (t.getText()){
             case "print":
                 codeBuilder.append(generatePrint(t));
+                break;
+            case "input":
+                codeBuilder.append(generateInput((t)));
                 break;
             case "VEC":
                 codeBuilder.append(genVec(t));
@@ -460,7 +491,6 @@ public class CodeGenerator{
                 scounter++;
                 return "STR"+scounter+" string "+s+"\n\n"+genR5(2)+"LDW R0, #STR"+scounter+"\n\n";
             }
-
             return "LDW R0, (BP)"+getDeplacement(s)+"\n\n"+genR5(getType(s));
         }
     }
@@ -671,9 +701,14 @@ public class CodeGenerator{
 
     private String generateInstr(BaseTree t){
         StringBuilder codeBuilder = new StringBuilder();
+        System.out.println(t.getText());
         switch (t.getText()){
             case "print":
                 codeBuilder.append(generatePrint(t));
+                break;
+            case "input":
+                System.out.println(generateInput(t));
+                codeBuilder.append(generateInput(t));
                 break;
             case "if":
                 codeBuilder.append(generateIf(t));

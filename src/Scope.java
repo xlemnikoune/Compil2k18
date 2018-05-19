@@ -232,6 +232,7 @@ public class Scope {
             /////////
 
             int deplacement = this.deplacement;
+            System.out.println(type);
             this.deplacement += getDeplacement(type.getName(), (ArrayList<Integer>) veCount.clone());
 
 
@@ -296,6 +297,10 @@ public class Scope {
         if (name.equals("BLOCK")){
             child = child.getChild(0);
             return getType(child);
+        }
+
+        if (name.equals("input")){
+            return new Type("i32");
         }
 
         if (name.equals(".")){
@@ -623,8 +628,9 @@ public class Scope {
             return new Type("String");
         }
 
-        if (!child.getText().equals("CALLFUN"))
-            throw new SemanticException("Cannot find value `"+name+"` in this scope",child.getLine(), child.getCharPositionInLine());
+        if (!child.getText().equals("CALLFUN") && !child.getText().equals("input")) {
+            throw new SemanticException("Cannot find value `" + name + "` in this scope", child.getLine(), child.getCharPositionInLine());
+        }
         return null;
     }
 

@@ -1,14 +1,10 @@
-fn d(f : i32) -> i32{
-	if (true){
-	    print!("yes");
-	    return 56;
-	} else {
-	    print!("no");
-	    return 123;
-	    }
-}
-
 fn main(){
-    let c = 52;
-    }
+    let a = input("A : ");
+    print!(a+5);
+    let b = input("B : ");
+    let c = a+2;
+    print!("Valeur de a : ",a);
+    print!("Valeur de c : ",c);
+    print!("Valeur de b : ",b);
+}
 

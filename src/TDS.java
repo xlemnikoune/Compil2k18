@@ -305,6 +305,7 @@ public class TDS {
                 keywords.add("RES");
                 keywords.add("print");
                 keywords.add("BLOCK");
+                keywords.add("input");
                 keywords.add("len");
                 for (Tree j : t.getAncestors()){
                     String node = j.getText();

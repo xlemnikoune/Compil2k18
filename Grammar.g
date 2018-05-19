@@ -111,6 +111,7 @@ atom : INT
 
 expr : 'vec' '!' '[' expr(',' expr)* ']' -> ^('vec' expr*)
 |'print' '!' '(' exS  (',' exS)* ')' -> ^('print' exS*)
+|'input' '(' STRING ')' -> ^('input' STRING)
 |	binExpr1;
 
 exS : expr
@@ -146,6 +147,7 @@ bigunExpr : (UNAIRE^|EPERLU^)? bigdotExpr;
 bigExpr 
 :	'vec' '!' '[' expr (',' expr)*']' -> ^('vec' expr*)
 |   'print' '!' '(' exS (',' exS)* ')' -> ^('print' exS*)
+|'input' '(' STRING ')' -> ^('input' STRING)
 |	bigbinExpr1;
 
 bigatom : INT

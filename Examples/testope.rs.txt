@@ -1,0 +1,8 @@
+fn main () {
+	let a=3;
+	let b=&a;
+	let c=*b;
+	print!(a);
+	print!(b);
+	print!(c);
+}

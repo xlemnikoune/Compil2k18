@@ -33,7 +33,7 @@ public class MiniRustCompiler {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         PrintStream old = System.err;
-        System.setErr(ps);
+        //System.setErr(ps);
         if (args.length > 0){
             input = new ANTLRFileStream(args[0]);
             if (args.length >1)
@@ -62,7 +62,7 @@ public class MiniRustCompiler {
         assert t != null;
         parseTree(t,tds,false,false);
         tds.validate();
-        //System.out.println(tds);
+        System.out.println(tds);
         if (baos.toString().length() > 0){
             System.setErr(old);
             System.err.println(baos.toString());

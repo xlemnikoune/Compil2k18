@@ -1,11 +1,14 @@
-     fn test(){
-print!("Hey",5);
+fn d(f : i32) -> i32{
+	if (true){
+	    print!("yes");
+	    return 56;
+	} else {
+	    print!("no");
+	    return 123;
+	    }
 }
 
 fn main(){
-	let i = 9+6;
-	print !(9);
-	let i = 9+6;
-	print !("Le resultat est : ",i);
-}
+    let c = 52;
+    }
 

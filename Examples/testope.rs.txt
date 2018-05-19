@@ -1,17 +1,8 @@
-fn f(x:i32) -> i32{
-	if (x>2) {
-		return(x);
-	}
-	else {
-		return(x);
-	}
-}
-	
 fn main () {
-	if(2>1) {
-	print!(4);
-	}
-	else {
-	print!(5);
-	}
+	let a=3;
+	let b=&a;
+	let c=*b;
+	print!(a);
+	print!(b);
+	print!(c);
 }

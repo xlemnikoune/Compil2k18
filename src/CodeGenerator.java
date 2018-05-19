@@ -391,6 +391,43 @@ public class CodeGenerator{
     }
 
     /**
+     * Generate code corresponding to the definition of a vector
+     * @param t Corresponding node
+     * @return ATM, ""
+     */
+    private String generateVec1(BaseTree t) {
+        int a = getDeplacement(t.getText());
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append("LDW R12, -(SP)\n\n");
+
+        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
+            codeBuilder.append(generateValue(t2));
+            codeBuilder.append("LDW R0, (R12)\n\n");
+            codeBuilder.append("ADQ R12, #"+String.valueOf(getDeplacement(t2.getText()))+"\n\n");
+        }
+        return "";
+
+    }
+    private String generateVec2(BaseTree t) {
+        int a = getDeplacement(t.getText());
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append("LDW R12, (R12)\n\n");
+
+        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
+            codeBuilder.append(generateValue(t2));
+            codeBuilder.append("LDW R0, (R12)\n\n");
+            codeBuilder.append("ADQ R12, #"+String.valueOf(getDeplacement(t2.getText()))+"\n\n");
+        }
+        return "";
+
+    }
+    private String callVec(String name, int indice) {
+        StringBuilder codeBuilder = new StringBuilder();
+        return "";
+    }
+
+
+    /**
      * Genereate code corresponding to an operation node
      * @param t2 Corresponding node
      * @return Assembly code
@@ -637,7 +674,9 @@ public class CodeGenerator{
     }
 
     private String generateAddress(BaseTree t2){
-        return "";
+        BaseTree Value = (BaseTree) t2.getChild(0);
+
+        return  "LDW R1,BP \n\n"+ "LDW R0,#"+ String.valueOf(getDeplacement(Value.getText())) + " \n\n"+ "ADD R1,R0,R0 \n\n";
     }
 
     private String generateUniSub(BaseTree t2){
@@ -647,7 +686,8 @@ public class CodeGenerator{
     }
 
     private String generateUniStar(BaseTree t2){
-        return "";
+        BaseTree Value = (BaseTree) t2.getChild(0);
+        return generateOperation(Value)+"LDW R0 ,(R0)\n\n";
     }
 
     private String generateAndBool(BaseTree t2){

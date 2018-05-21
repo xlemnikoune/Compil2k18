@@ -367,6 +367,7 @@ public class Scope {
                 ch = ch.getChild(0);
                 i++;
             }
+            System.out.println(ch);
             BaseTree chi;
             chi = (BaseTree) ch.getAncestors().get(ch.getAncestors().size() - 1);
             Type varType = getType(chi.getChild(0));
@@ -378,13 +379,14 @@ public class Scope {
                         return new Type(varType.getName().split(" ",i+1)[i]);
                     }
                     int val = Integer.parseInt(child.getChild(1).getText());
+                    System.out.println(table.get(var));
                     if (isIn(var)){
-                        if (val > Integer.parseInt(table.get(var).get(3+i))){
+                        if (Integer.parseInt(table.get(var).get(3+i)) > 0 && val > Integer.parseInt(table.get(var).get(3+i))){
                             throw new SemanticException("Index out of bounds ("+val+" > "+Integer.parseInt(table.get(var).get(3+i))+")" ,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
                         }
                     } else {
                         if (isInAncestor(var)){
-                            if (val > Integer.parseInt(getFromAncestor(var).get(3+i))){
+                            if (Integer.parseInt(getFromAncestor(var).get(3+i))>0 && val > Integer.parseInt(getFromAncestor(var).get(3+i))){
                                 throw new SemanticException("Index out of bounds ("+val+" > "+Integer.parseInt(getFromAncestor(var).get(3+i))+")" ,child.getChild(1).getLine(),child.getChild(1).getCharPositionInLine());
                             }
                         } else {
@@ -670,6 +672,20 @@ public class Scope {
         param.add(type.getName());
         param.add(String.valueOf(deplacement));
         param.add("false");
+        if (type.getName().startsWith("&vec")){
+            try {
+                if (child.getChild(1)!=null) {
+                    ArrayList<String> res = find(child.getChild(1).getChild(0).getText());
+                    param.addAll(res.subList(4, res.size()));
+                } else {
+                    for (int kl = 0; kl < type.getName().length() - type.getName().replace("vec", "").length();kl+=3){
+                        param.add("-1");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         table.put(name,param);
         MiniRustCompiler.tds.getList().put(name,"param");
 

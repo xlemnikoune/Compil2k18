@@ -225,6 +225,12 @@ public class CodeGenerator{
      * @return Assembly line updating R5 if needed, "" otherwise
      */
     private String genR5(int mode){
+        return genR5(mode,false);
+    }
+
+    private String genR5(int mode, boolean force){
+        if (force)
+            return "LDW R5,#"+mode+"\n\n";
         if (isPrint)
             if (!isR5Done)
                 return "LDW R5,#"+mode+"\n\n";
@@ -623,6 +629,7 @@ public class CodeGenerator{
             }
         }
         code+="LDW R0, #"+v+"_\n\n";
+        code+=genR5(0);
         code+="MPC WR\n\n";
         code+="ADQ 6, WR\n\n";
         code+="STW WR, -(SP)\n\n";
@@ -816,7 +823,9 @@ public class CodeGenerator{
                     codeBuilder.append(generateAffect((BaseTree) t.getChild(0)));
                 break;
             case "return":
+                System.out.println("hey");
                 codeBuilder.append(genExpr((BaseTree) t.getChild(0)));
+                codeBuilder.append(genR5(0,true));
                 codeBuilder.append(goBack(sc.getName(),false));
                 codeBuilder.append("LDW WR, (SP)+\n\n");
                 codeBuilder.append("JEA (WR)\n\n");
@@ -903,7 +912,7 @@ public class CodeGenerator{
             l = sc.find(text);
             if (l.get(0).equals("param")) {
                 String type = l.get(1);
-                int dep = 2+Integer.valueOf(l.get(2));
+                int dep = Integer.valueOf(l.get(2));
                 if (type.equals("i32")){
                     dep+=4;
                 } else {

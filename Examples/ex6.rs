@@ -1,8 +1,8 @@
+fn test(v : i32)->i32{
+    print!(v);
+    return 5;
+}
+
 fn main(){
-   let v = vec![1,2,3];
-   let d = &v;
-   let mut w = *d;
-   w[0] = 2;
-   print!(w[0]);
-   print!(v[0]);
+    print!(test(56));
 }

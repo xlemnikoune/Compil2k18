@@ -63,13 +63,13 @@ public class CodeGenerator{
 
     /**
      * Allows to know if there is a need to update R5
-     * @see #generatePrint(BaseTree)
+     * @see #generatePrint(BaseTree, boolean)
      */
     private boolean isPrint = false;
 
     /**
      * Allows to know if there is a need to update R5
-     * @see #generatePrint(BaseTree)
+     * @see #generatePrint(BaseTree, boolean)
      */
     private boolean isR5Done = false;
 
@@ -80,7 +80,7 @@ public class CodeGenerator{
 
     /**
      * Count static Strings defined (for printing)
-     * @see #generatePrint(BaseTree)
+     * @see #generatePrint(BaseTree, boolean)
      */
     private int scounter = 0;
 
@@ -308,7 +308,7 @@ public class CodeGenerator{
      * @param t Corresponding node
      * @return Assembly code
      */
-    private String generatePrint(BaseTree t){
+    private String generatePrint(BaseTree t, boolean raw){
         isPrint=true;
         String s = "";
         for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
@@ -317,7 +317,8 @@ public class CodeGenerator{
                     "MPC WR \n\n" + "ADQ 6,WR\n\n" + // Calling the print subroutine
                     "JMP #print_-$-2\n\n";
         }
-        s += "LDW R5, #3\n\n" + // Adding automatically a \n at the end of the string (artificially)
+        if (!raw)
+            s += "LDW R5, #3\n\n" + // Adding automatically a \n at the end of the string (artificially)
                 "MPC WR \n\n" + "ADQ 6,WR\n\n" +
                 "JMP #print_-$-2\n\n";
         isPrint = false;
@@ -327,7 +328,7 @@ public class CodeGenerator{
     private String generateInput(BaseTree t){
         String s = "";
         if (t.getChildCount()>0){
-            s+=generatePrint(t);
+            s+=generatePrint(t, true);
         }
         s += "LDW R5, #3\n\n" + // Adding automatically a \n at the end of the string (artificially)
                 "MPC WR \n\n" + "ADQ 6,WR\n\n" +
@@ -339,7 +340,7 @@ public class CodeGenerator{
      * Generate assembly code for a node corresponding to an expression
      * @param t Corresponding node
      * @return Assembly code
-     * @see #generatePrint(BaseTree)
+     * @see #generatePrint(BaseTree, boolean)
      * @see #genVec(BaseTree)
      * @see #generateAffect(BaseTree)
      * @see #generateOperation(BaseTree)
@@ -348,7 +349,10 @@ public class CodeGenerator{
         StringBuilder codeBuilder = new StringBuilder();
         switch (t.getText()){
             case "print":
-                codeBuilder.append(generatePrint(t));
+                codeBuilder.append(generatePrint(t, false));
+                break;
+            case "raw_print":
+                codeBuilder.append(generatePrint(t, true));
                 break;
             case "input":
                 codeBuilder.append(generateInput((t)));
@@ -443,6 +447,9 @@ public class CodeGenerator{
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("STW HP, -(SP)\n\n");
         for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
+            if (t2.getText().equals("struct")){
+
+            }
             codeBuilder.append(genExpr(t2));
             if (!t2.getText().equals("vec"))
                 codeBuilder.append("STW R0, (HP)+\n\n");
@@ -463,7 +470,6 @@ public class CodeGenerator{
         ArrayList<Integer> array= new ArrayList<>();;
         BaseTree t1 = (BaseTree) t.getChild(0);
         BaseTree t2 = (BaseTree) t.getChild(1);
-        System.out.println(t.getText()+t1.getText()+","+t2.getText()+"]");
         if (t1.getText().equals("[")){
             array = getVecDepl(t1,level+1);
             d = array.get(0);
@@ -789,7 +795,10 @@ public class CodeGenerator{
         StringBuilder codeBuilder = new StringBuilder();
         switch (t.getText()){
             case "print":
-                codeBuilder.append(generatePrint(t));
+                codeBuilder.append(generatePrint(t,false));
+                break;
+            case "raw_print":
+                codeBuilder.append(generatePrint(t, true));
                 break;
             case "input":
                 codeBuilder.append(generateInput(t));
@@ -1002,9 +1011,17 @@ public class CodeGenerator{
         Tree t1 = t.getChild(0);
         Tree t2 = t.getChild(1);
         String expr = genExpr((BaseTree) t2);
-        int deplacement = 0;
-        deplacement = getDeplacement(t1.getText());
         codeBuilder.append(expr);
+        int deplacement = 0;
+        if (t1.getText().equals("[")){
+            ArrayList<Integer> res = getVecDepl((BaseTree) t1, 0);
+            int d = res.get(0);
+            int index = res.get(1);
+            codeBuilder.append("LDW R1, (BP)"+d+"\n\n");
+            codeBuilder.append("STW R0, (R1)"+2*index+"\n\n");
+            return codeBuilder.toString();
+        }
+        deplacement = getDeplacement(t1.getText());
         codeBuilder.append("STW R0, (BP)"+deplacement+"\n\n");
         return codeBuilder.toString();
 

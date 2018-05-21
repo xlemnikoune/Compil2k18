@@ -304,6 +304,7 @@ public class TDS {
                 ArrayList<String> keywords = new ArrayList<>();
                 keywords.add("RES");
                 keywords.add("print");
+                keywords.add("raw_print");
                 keywords.add("BLOCK");
                 keywords.add("input");
                 keywords.add("len");

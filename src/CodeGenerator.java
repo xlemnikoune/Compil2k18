@@ -420,7 +420,18 @@ public class CodeGenerator{
      * @return ATM, ""
      */
     private String generateStruct(BaseTree t) {
-        return "";
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append("STW HP, -(SP)\n\n");
+        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
+            codeBuilder.append(genExpr(t2));
+            if (!t2.getText().equals("vec"))
+                codeBuilder.append("STW R0, (HP)+\n\n");
+            if (!t2.getText().equals("struct")) {
+
+            }
+        }
+        codeBuilder.append("LDW R0, (SP)+\n\n");
+        return codeBuilder.toString();
     }
 
     /**
@@ -435,10 +446,13 @@ public class CodeGenerator{
             codeBuilder.append(genExpr(t2));
             if (!t2.getText().equals("vec"))
                 codeBuilder.append("STW R0, (HP)+\n\n");
+
         }
         codeBuilder.append("LDW R0, (SP)+\n\n");
         return codeBuilder.toString();
     }
+
+
     
     private ArrayList<Integer> getVecDepl(BaseTree t, int level){
         int d;

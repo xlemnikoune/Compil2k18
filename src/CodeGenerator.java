@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -428,40 +429,60 @@ public class CodeGenerator{
      * @return ATM, ""
      */
     private String generateVec1(BaseTree t) {
-        //int a = getDeplacement(t.getText());
         StringBuilder codeBuilder = new StringBuilder();
         codeBuilder.append("STW HP, -(SP)\n\n");
-
         for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
-            codeBuilder.append(generateValue(t2));
-            codeBuilder.append("STW R0, (HP)\n\n");
-            codeBuilder.append("ADQ 2,HP\n\n"); //TODO À modifier, oon a déjà le type du tableau
+            codeBuilder.append(genExpr(t2));
+            if (!t2.getText().equals("vec"))
+                codeBuilder.append("STW R0, (HP)+\n\n");
         }
-        codeBuilder.append("LDW R0, (SP)+\n\nTRP R0\n\n");
+        codeBuilder.append("LDW R0, (SP)+\n\n");
         return codeBuilder.toString();
-
     }
 
-    private String generateVec2(BaseTree t) {
-        int a = getDeplacement(t.getText());
-        StringBuilder codeBuilder = new StringBuilder();
-        codeBuilder.append("STW HP, (HP)\n\n");
+    private ArrayList<Integer> getVecDepl(BaseTree t, int level){
 
-        for (BaseTree t2 : (List<BaseTree>) t.getChildren()){
-            codeBuilder.append(generateValue(t2));
-            codeBuilder.append("LDW R0, (HP)\n\n");
-            codeBuilder.append("ADQ HP, #4\n\n");
-        }
-        return "";
-
-    }
-    private String callVec(BaseTree t) {
-        String s = "";
+        int d;
+        int i = 0;
+        int dec=1;
+        ArrayList<Integer> toAdd = new ArrayList<>();
+        ArrayList<Integer> res = new ArrayList<>();
+        ArrayList<Integer> array= new ArrayList<>();;
         BaseTree t1 = (BaseTree) t.getChild(0);
         BaseTree t2 = (BaseTree) t.getChild(1);
-        int d = getDeplacement(t1.getText());
-        int index = Integer.parseInt(t2.getText());
-        s+="LDW R0, (BP)"+d+"\n\n"+
+        System.out.println(t.getText()+t1.getText()+","+t2.getText()+"]");
+        if (t1.getText().equals("[")){
+            array = getVecDepl(t1,level+1);
+            d = array.get(0);
+            i = array.get(1);
+            toAdd.addAll(array.subList(2,array.size()));
+        } else {
+            System.out.println(t1.getText());
+            d = getDeplacement(t1.getText());
+            try {
+                ArrayList<String> a = sc.find(t1.getText());
+                for (String s : a.subList(4,a.size())){
+                    toAdd.add(Integer.parseInt(s));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (level!=0)
+            dec = toAdd.get(level)+1;
+        res.add(d);
+        res.add(i+dec*Integer.parseInt(t2.getText()));
+        res.addAll(toAdd);
+        System.out.println(res);
+        return res;
+    }
+
+    private String callVec(BaseTree t) {
+        String s = "";
+        ArrayList<Integer> array = getVecDepl(t,0);
+        int d = array.get(0);
+        int index = array.get(1);
+        s+="LDW R0, (BP)"+d+"\n\n // On appelle notre tableau >< \n\n"+
                 "LDW R0,(R0)"+index*2+"\n\n";
         return s;
     }
@@ -525,7 +546,7 @@ public class CodeGenerator{
      * @return
      */
     private String generateValue(BaseTree t2){
-        if (t2.getChildCount()>0){
+        if (t2.getChildCount()>0) {
             return genCall(t2);
         }
         String s = t2.getText();

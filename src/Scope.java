@@ -211,7 +211,7 @@ public class Scope {
             ////////// Counting children for vec declaration
             ArrayList<Integer> veCount = new ArrayList<>();
             BaseTree child = childrens.get(1);
-            while (child.getText().equals("vec")){
+            while (child!=null && child.getText().equals("vec")){
                 vecChildCount = child.getChildCount();
                 veCount.add(vecChildCount);
                 if (vecChildCount > 0){

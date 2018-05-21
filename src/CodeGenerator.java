@@ -441,7 +441,6 @@ public class CodeGenerator{
     }
     
     private ArrayList<Integer> getVecDepl(BaseTree t, int level){
-
         int d;
         int i = 0;
         int dec=1;
@@ -484,6 +483,7 @@ public class CodeGenerator{
         int index = array.get(1);
         s+="LDW R0, (BP)"+d+"\n\n // On appelle notre tableau >< \n\n"+
                 "LDW R0,(R0)"+index*2+"\n\n";
+        s+=genR5(0);
         return s;
     }
 

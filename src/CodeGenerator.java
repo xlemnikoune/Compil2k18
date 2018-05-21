@@ -922,7 +922,7 @@ public class CodeGenerator{
                 }
                 return dep;
             }
-            return Integer.valueOf(l.get(2))+d;
+            return d-Integer.valueOf(l.get(2));
         } catch (Exception e) {
             System.out.println(text);
             System.err.println("Error ancestor");

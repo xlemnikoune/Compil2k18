@@ -1,7 +1,8 @@
 fn main(){
-   raw_print!("test");
-   raw_print!("couille");
-   print!(89);
-   print!(true);
+   let c = 5;
+   let test = 32;
+   let d = true;
+   print!(d);
+   print!(test);
+   print!(c);
 }
-

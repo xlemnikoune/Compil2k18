@@ -175,7 +175,7 @@ public class Scope {
             index++;
         }
 
-        if (!children.get(index).getText().equals("=")){ //Should be able to get the correct type
+        if (!children.get(index).getText().equals("=")){ //Should be able to get the correct type (constant or var)
             type = getRawType(children.get(index));
             index++;
         }
@@ -229,6 +229,7 @@ public class Scope {
                 }
             }
 
+
             /////////
 
             int deplacement = this.deplacement;
@@ -246,7 +247,22 @@ public class Scope {
                     param.add(String.valueOf(i-1));
                 }
             }
-
+            if (type.getName().startsWith("&vec")){
+                try {
+                    ArrayList<String> res = find(children.get(index).getChild(1).getChild(0).getText());
+                    param.addAll(res.subList(4,res.size()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (children.get(index).getChildCount()>1 && children.get(index).getChild(1).getText().equals("UNISTAR")){
+                try {
+                    ArrayList<String> res = find(children.get(index).getChild(1).getChild(0).getText());
+                    param.addAll(res.subList(4,res.size()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             table.put(name,param);
             MiniRustCompiler.tds.getList().put(name,"var");
         } else {
